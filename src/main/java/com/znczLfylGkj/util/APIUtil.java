@@ -94,7 +94,7 @@ public class APIUtil {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void zhuaPaiHuiDiao() {
 		JSONObject resultJO=APIUtil.getDingDan();
         if("ok".equals(resultJO.getString("status"))) {
         	JSONObject ddJO=resultJO.getJSONObject("dingDan");
@@ -105,6 +105,26 @@ public class APIUtil {
         else {
         	System.out.println("message==="+resultJO.getString("message"));
         }
+	}
+	
+	public static JSONObject editBangDanJiLu() {
+		JSONObject resultJO = null;
+		try {
+			Map parames = new HashMap<String, String>();
+	        parames.put("ddId", 7);
+	        parames.put("mz", 1000);
+	        resultJO = APIUtil.doHttp("editBangDanJiLu",parames);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return resultJO;
+		}
+	}
+	
+	public static void main(String[] args) {
+		APIUtil.editBangDanJiLu();
 		
 		//这里是磅房外的车牌识别摄像头抓拍到车牌号后回调的方法，回调时根据抓拍到的车牌号找到状态是排队中的订单（每次只能获得一条订单，根据上一部审核的先后顺序，先来后到，先审核的先进行车牌识别）
 		//识别后根据抓拍到的订单号与订单里的订单号对比，一致的话抬起道闸，订单状态变为一检上磅
