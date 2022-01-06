@@ -12,6 +12,8 @@ import java.util.Map.*;
 
 import org.json.JSONObject;
 
+import com.znczLfylGkj.entity.*;
+
 public class APIUtil {
 	
 	public static final String SERVICE_URL="http://localhost:8080/ZnczLfyl/gkj/";
@@ -62,13 +64,68 @@ public class APIUtil {
 		return resultJO;
 	}
 
-	public static JSONObject getDingDan() {
+	public static JSONObject getDingDan(String cph, String ddztMc) {
 		JSONObject resultJO = null;
 		try {
 			Map parames = new HashMap<String, String>();
-	        parames.put("cph", "9008");  
-	        parames.put("ddztMc", "已审核");
+	        parames.put("cph", cph);  
+	        parames.put("ddztMc", ddztMc);
 	        resultJO = APIUtil.doHttp("getDingDan",parames);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return resultJO;
+		}
+	}
+
+	public static JSONObject getDingDanByZt(String ddztMc, Integer yjzt, Integer ejzt) {
+		JSONObject resultJO = null;
+		try {
+			Map parames = new HashMap<String, String>();
+	        parames.put("ddztMc", ddztMc);
+	        parames.put("yjzt", yjzt);
+	        parames.put("ejzt", ejzt);
+	        resultJO = APIUtil.doHttp("getDingDanByZt",parames);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return resultJO;
+		}
+	}
+	
+	public static JSONObject editDingDan(DingDan dd) {
+		JSONObject resultJO = null;
+		try {
+			Map parames = new HashMap<String, String>();
+	        parames.put("id", dd.getId());
+	        parames.put("ddztMc", dd.getDdztMc());
+	        resultJO = APIUtil.doHttp("editDingDan",parames);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return resultJO;
+		}
+	}
+	
+	public static JSONObject editDingDanByZt(DingDan dd) {
+		JSONObject resultJO = null;
+		try {
+			Map parames = new HashMap<String, String>();
+	        parames.put("ddztMc", dd.getDdztMc());
+	        parames.put("yjzt", dd.getYjzt());
+	        parames.put("ejzt", dd.getEjzt());
+			/*
+	        parames.put("xddztMc", dd.getXddztMc());
+	        parames.put("xyjzt", dd.getXyjzt());
+	        parames.put("xejzt", dd.getXejzt());
+	        */
+	        resultJO = APIUtil.doHttp("editDingDanByZt",parames);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,7 +141,6 @@ public class APIUtil {
 			Map parames = new HashMap<String, String>();
 	        parames.put("ddId", ddId);  
 	        resultJO = APIUtil.doHttp("newBangDanJiLu",parames);
-			System.out.println("33333333="+resultJO.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,19 +148,6 @@ public class APIUtil {
 		finally {
 			return resultJO;
 		}
-	}
-	
-	public static void zhuaPaiHuiDiao() {
-		JSONObject resultJO=APIUtil.getDingDan();
-        if("ok".equals(resultJO.getString("status"))) {
-        	JSONObject ddJO=resultJO.getJSONObject("dingDan");
-        	System.out.println("ddId==="+ddJO.getInt("id"));
-        	JSONObject bdJO=APIUtil.newBangDanJiLu(ddJO.getInt("id"));
-        	System.out.println("bdJO==="+bdJO.toString());
-        }
-        else {
-        	System.out.println("message==="+resultJO.getString("message"));
-        }
 	}
 	
 	public static JSONObject editBangDanJiLu() {
@@ -123,8 +166,41 @@ public class APIUtil {
 		}
 	}
 	
+	public static void zhuaPaiHuiDiao(String cph) {
+		JSONObject resultJO=APIUtil.getDingDan(cph,DingDanZhuangTai.PAI_DUI_ZHONG_TEXT);
+        if("ok".equals(resultJO.getString("status"))) {
+        	System.out.println("存在该订单");
+        	System.out.println("抬起道闸");
+        	JSONObject ddJO=resultJO.getJSONObject("dingDan");
+        	System.out.println("ddId==="+ddJO.getInt("id"));
+        	System.out.println("生成磅单记录");
+        	APIUtil.newBangDanJiLu(ddJO.getInt("id"));
+        	System.out.println("改变订单状态为一检上磅");
+        	DingDan dd=new DingDan();
+        	dd.setId(ddJO.getInt("id"));
+        	dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+        	dd.setYjzt(DingDan.DAI_SHANG_BANG);
+        	APIUtil.editDingDan(dd);
+        }
+        else {
+        	System.out.println("message==="+resultJO.getString("message"));
+        }
+	}
+	
+	public static void yiJianShangBang() {
+		DingDan dd=new DingDan();
+		dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+		dd.setYjzt(DingDan.DAI_SHANG_BANG);
+		dd.setXyjzt(DingDan.SHANG_BANG_ZHONG);
+		APIUtil.editDingDanByZt(dd);
+		
+		//JSONObject resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.SHANG_BANG_ZHONG,DingDan.DAI_SHANG_BANG);
+		
+	}
+	
 	public static void main(String[] args) {
-		APIUtil.editBangDanJiLu();
+		//APIUtil.zhuaPaiHuiDiao("9028");
+		APIUtil.yiJianShangBang();
 		
 		//这里是磅房外的车牌识别摄像头抓拍到车牌号后回调的方法，回调时根据抓拍到的车牌号找到状态是排队中的订单（每次只能获得一条订单，根据上一部审核的先后顺序，先来后到，先审核的先进行车牌识别）
 		//识别后根据抓拍到的订单号与订单里的订单号对比，一致的话抬起道闸，订单状态变为一检上磅
