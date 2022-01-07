@@ -120,11 +120,9 @@ public class APIUtil {
 	        parames.put("ddztMc", dd.getDdztMc());
 	        parames.put("yjzt", dd.getYjzt());
 	        parames.put("ejzt", dd.getEjzt());
-			/*
 	        parames.put("xddztMc", dd.getXddztMc());
 	        parames.put("xyjzt", dd.getXyjzt());
 	        parames.put("xejzt", dd.getXejzt());
-	        */
 	        resultJO = APIUtil.doHttp("editDingDanByZt",parames);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -150,13 +148,49 @@ public class APIUtil {
 		}
 	}
 	
-	public static JSONObject editBangDanJiLu() {
+	public static JSONObject editBangDanJiLu(Integer id, Float mz) {
 		JSONObject resultJO = null;
 		try {
 			Map parames = new HashMap<String, String>();
-	        parames.put("ddId", 7);
-	        parames.put("mz", 1000);
+	        parames.put("id", id);
+	        parames.put("mz", mz);
 	        resultJO = APIUtil.doHttp("editBangDanJiLu",parames);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return resultJO;
+		}
+	}
+	
+	public static JSONObject selectBangDanJiLuByDdId(Integer ddId) {
+		JSONObject resultJO = null;
+		try {
+			Map parames = new HashMap<String, String>();
+	        parames.put("ddId", ddId);
+	        resultJO = APIUtil.doHttp("selectBangDanJiLuByDdId",parames);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return resultJO;
+		}
+	}
+	
+	public static JSONObject newGuoBangJiLu(GuoBangJiLu gbjl) {
+		JSONObject resultJO = null;
+		try {
+			Map parames = new HashMap<String, String>();
+	        parames.put("gbzl", gbjl.getGbzl());
+	        parames.put("zp1", gbjl.getZp1());
+	        parames.put("zp2", gbjl.getZp2());
+	        parames.put("zp3", gbjl.getZp3());
+	        parames.put("gbzt", gbjl.getGbzt());
+	        parames.put("gblx", gbjl.getGblx());
+	        parames.put("ddId", gbjl.getDdId());
+	        resultJO = APIUtil.doHttp("newGuoBangJiLu",parames);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -188,14 +222,39 @@ public class APIUtil {
 	}
 	
 	public static void yiJianShangBang() {
+		/*
 		DingDan dd=new DingDan();
 		dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 		dd.setYjzt(DingDan.DAI_SHANG_BANG);
 		dd.setXyjzt(DingDan.SHANG_BANG_ZHONG);
 		APIUtil.editDingDanByZt(dd);
 		
-		//JSONObject resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.SHANG_BANG_ZHONG,DingDan.DAI_SHANG_BANG);
+		JSONObject resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.SHANG_BANG_ZHONG,DingDan.DAI_SHANG_BANG);
+		DingDan dd=(DingDan)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(resultJO.get("dingDan").toString()), DingDan.class);
+		float zhongLiang=998;
+		JSONObject gbjlJO=APIUtil.selectBangDanJiLuByDdId(dd.getId());
+		JSONObject bdJO=gbjlJO.getJSONObject("bdjl");
+		int bdId = bdJO.getInt("id");
+		APIUtil.editBangDanJiLu(bdId,zhongLiang);
 		
+		GuoBangJiLu gbjl=new GuoBangJiLu();
+		gbjl.setGbzl(zhongLiang);
+		//gbjl.setZp1(zp1);
+		//gbjl.setZp2(zp2);
+		//gbjl.setZp3(zp3);
+		gbjl.setGbzt(GuoBangJiLu.ZHENG_CHANG);
+		gbjl.setGblx(GuoBangJiLu.RU_CHANG_GUO_BANG);
+		gbjl.setDdId(dd.getId());
+		APIUtil.newGuoBangJiLu(gbjl);
+		*/
+		
+		System.out.println("更改订单一检状态为已完成");
+    	DingDan dd=new DingDan();
+    	dd.setId(10);
+    	dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+    	dd.setYjzt(DingDan.SHANG_BANG_ZHONG);
+    	dd.setXyjzt(DingDan.YI_WAN_CHENG);
+    	APIUtil.editDingDanByZt(dd);
 	}
 	
 	public static void main(String[] args) {
