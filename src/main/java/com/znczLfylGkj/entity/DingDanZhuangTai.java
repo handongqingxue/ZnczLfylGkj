@@ -7,6 +7,8 @@ public class DingDanZhuangTai {
 	public static final String PAI_DUI_ZHONG_TEXT="排队中";
 	public static final String YI_JIAN_SHANG_BANG_TEXT="一检上磅";
 	public static final String DAI_YI_JIAN_SHEN_HE_TEXT="待一检审核";
+	public static final String ER_JIAN_SHANG_BANG_TEXT="二检上磅";
+	public static final String DAI_ER_JIAN_SHEN_HE_TEXT="待二检审核";
 
 	private Integer id;
 	public Integer getId() {
