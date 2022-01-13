@@ -123,6 +123,10 @@ public class APIUtil {
 	        parames.put("xddztMc", dd.getXddztMc());
 	        parames.put("xyjzt", dd.getXyjzt());
 	        parames.put("xejzt", dd.getXejzt());
+	        if(dd.getSjzl()!=null)
+	        	parames.put("sjzl", dd.getSjzl());
+	        if(dd.getZlceb()!=null)
+	        	parames.put("zlceb", dd.getZlceb());
 	        resultJO = APIUtil.doHttp("editDingDanByZt",parames);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -201,6 +205,7 @@ public class APIUtil {
 	}
 	
 	public static void zhuaPaiHuiDiao(String cph) {
+		System.out.println("查询订单状态为排队中的订单");
 		JSONObject resultJO=APIUtil.getDingDan(cph,DingDanZhuangTai.PAI_DUI_ZHONG_TEXT);
         if("ok".equals(resultJO.getString("status"))) {
         	System.out.println("存在该订单");
@@ -222,21 +227,33 @@ public class APIUtil {
 	}
 	
 	public static void yiJianShangBang() {
-		/*
+		System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待上磅更改为上磅中");
 		DingDan dd=new DingDan();
 		dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 		dd.setYjzt(DingDan.DAI_SHANG_BANG);
 		dd.setXyjzt(DingDan.SHANG_BANG_ZHONG);
 		APIUtil.editDingDanByZt(dd);
 		
+		System.out.println("查询订单状态为一检上磅，一检状态为上磅中的订单");
 		JSONObject resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.SHANG_BANG_ZHONG,DingDan.DAI_SHANG_BANG);
-		DingDan dd=(DingDan)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(resultJO.get("dingDan").toString()), DingDan.class);
-		float zhongLiang=998;
-		JSONObject gbjlJO=APIUtil.selectBangDanJiLuByDdId(dd.getId());
+		DingDan dd1=(DingDan)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(resultJO.get("dingDan").toString()), DingDan.class);
+		System.out.println("根据称重出来的重量，修改订单对应的磅单记录");
+		float zhongLiang=4998;
+		JSONObject gbjlJO=APIUtil.selectBangDanJiLuByDdId(dd1.getId());
 		JSONObject bdJO=gbjlJO.getJSONObject("bdjl");
 		int bdId = bdJO.getInt("id");
 		APIUtil.editBangDanJiLu(bdId,zhongLiang);
-		
+
+		System.out.println("更改订单的实际重量、重量差额比");
+    	DingDan dd2=new DingDan();
+    	dd2.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+    	dd2.setYjzt(DingDan.SHANG_BANG_ZHONG);
+    	dd2.setSjzl(zhongLiang);
+    	dd2.setZlceb(dd1.getYzxzl()/zhongLiang);
+		APIUtil.editDingDanByZt(dd2);
+
+		//float zhongLiang=2998;
+		System.out.println("生成一检过磅记录");
 		GuoBangJiLu gbjl=new GuoBangJiLu();
 		gbjl.setGbzl(zhongLiang);
 		//gbjl.setZp1(zp1);
@@ -244,17 +261,18 @@ public class APIUtil {
 		//gbjl.setZp3(zp3);
 		gbjl.setGbzt(GuoBangJiLu.ZHENG_CHANG);
 		gbjl.setGblx(GuoBangJiLu.RU_CHANG_GUO_BANG);
-		gbjl.setDdId(dd.getId());
+		gbjl.setDdId(dd1.getId());
+		//gbjl.setDdId(16);
 		APIUtil.newGuoBangJiLu(gbjl);
-		*/
 		
-		System.out.println("更改订单一检状态为已完成");
-    	DingDan dd=new DingDan();
-    	dd.setId(10);
-    	dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
-    	dd.setYjzt(DingDan.SHANG_BANG_ZHONG);
-    	dd.setXyjzt(DingDan.YI_WAN_CHENG);
-    	APIUtil.editDingDanByZt(dd);
+		System.out.println("更改订单状态为待一检审核、一检状态为已完成");
+    	DingDan dd3=new DingDan();
+    	dd3.setId(10);
+    	dd3.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+    	dd3.setXddztMc(DingDanZhuangTai.DAI_YI_JIAN_SHEN_HE_TEXT);
+    	dd3.setYjzt(DingDan.SHANG_BANG_ZHONG);
+    	dd3.setXyjzt(DingDan.YI_WAN_CHENG);
+    	APIUtil.editDingDanByZt(dd3);
 	}
 	
 	public static void main(String[] args) {
