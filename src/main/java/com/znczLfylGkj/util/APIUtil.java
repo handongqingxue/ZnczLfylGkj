@@ -280,7 +280,6 @@ public class APIUtil {
 	}
 	
 	public static void erJianShangBang() {
-		/*
 		System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从待上磅更改为上磅中");
 		DingDan dd=new DingDan();
 		dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
@@ -288,7 +287,6 @@ public class APIUtil {
 		dd.setEjzt(DingDan.DAI_SHANG_BANG);
 		dd.setXejzt(DingDan.SHANG_BANG_ZHONG);
 		APIUtil.editDingDanByZt(dd);
-		*/
 
 		System.out.println("查询订单状态为二检上磅，二检状态为上磅中的订单");
 		JSONObject resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT,DingDan.YI_WAN_CHENG,DingDan.SHANG_BANG_ZHONG);
@@ -322,7 +320,7 @@ public class APIUtil {
 	}
 	
 	public static void main(String[] args) {
-		//APIUtil.zhuaPaiHuiDiao("9028");
+		//APIUtil.zhuaPaiHuiDiao("9008");
 		//APIUtil.yiJianShangBang();
 		APIUtil.erJianShangBang();
 		
