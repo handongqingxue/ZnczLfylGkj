@@ -5,6 +5,9 @@ public class DingDan {
 	public static final Integer DAI_SHANG_BANG=1;
 	public static final Integer SHANG_BANG_ZHONG=2;
 	public static final Integer YI_WAN_CHENG=3;
+	
+	public static final Integer SONG_YUN=1;
+	public static final Integer QU_YUN=2;
 
 	private Integer id;
 	public Integer getId() {

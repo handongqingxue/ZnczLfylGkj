@@ -243,24 +243,37 @@ public class APIUtil {
 		JSONObject resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.SHANG_BANG_ZHONG,DingDan.DAI_SHANG_BANG);
 		DingDan dd1=(DingDan)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(resultJO.get("dingDan").toString()), DingDan.class);
 		System.out.println("根据称重出来的重量，修改订单对应的磅单记录");
-		float zhongLiang=4998;
+		Float mz=null;
+		Float pz=null;
+		Float jz=null;
 		JSONObject gbjlJO=APIUtil.selectBangDanJiLuByDdId(dd1.getId());
 		JSONObject bdJO=gbjlJO.getJSONObject("bdjl");
 		int bdId = bdJO.getInt("id");
-		APIUtil.editBangDanJiLu(bdId,zhongLiang,null,null);
+		if(dd1.getLxlx()==DingDan.SONG_YUN) {
+			mz=(float)4998;
+		}
+		else {
+			pz=(float)1000;
+		}
+		APIUtil.editBangDanJiLu(bdId,mz,pz,jz);
 
-		System.out.println("更改订单的实际重量、重量差额比");
-    	DingDan dd2=new DingDan();
-    	dd2.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
-    	dd2.setYjzt(DingDan.SHANG_BANG_ZHONG);
-    	dd2.setSjzl(zhongLiang);
-    	dd2.setZlceb(dd1.getYzxzl()/zhongLiang);
-		APIUtil.editDingDanByZt(dd2);
+    	if(dd1.getLxlx()==DingDan.SONG_YUN) {
+			System.out.println("更改订单的实际重量、重量差额比");
+	    	DingDan dd2=new DingDan();
+	    	dd2.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+	    	dd2.setYjzt(DingDan.SHANG_BANG_ZHONG);
+	    	dd2.setSjzl(mz);
+	    	dd2.setZlceb(dd1.getYzxzl()/mz);
+	    	APIUtil.editDingDanByZt(dd2);
+    	}
 
 		//float zhongLiang=2998;
 		System.out.println("生成一检过磅记录");
 		GuoBangJiLu gbjl=new GuoBangJiLu();
-		gbjl.setGbzl(zhongLiang);
+		if(dd1.getLxlx()==DingDan.SONG_YUN)
+			gbjl.setGbzl(mz);
+		else
+			gbjl.setGbzl(pz);
 		//gbjl.setZp1(zp1);
 		//gbjl.setZp2(zp2);
 		//gbjl.setZp3(zp3);
@@ -292,16 +305,42 @@ public class APIUtil {
 		JSONObject resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT,DingDan.YI_WAN_CHENG,DingDan.SHANG_BANG_ZHONG);
 		DingDan dd1=(DingDan)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(resultJO.get("dingDan").toString()), DingDan.class);
 		System.out.println("根据称重出来的重量，修改订单对应的磅单记录");
-		float zhongLiang=1000;
+		Float mz=null;
+		Float pz=null;
+		Float jz=null;
 		JSONObject gbjlJO=APIUtil.selectBangDanJiLuByDdId(dd1.getId());
 		JSONObject bdJO=gbjlJO.getJSONObject("bdjl");
 		int bdId = bdJO.getInt("id");
-		float mz = (float)bdJO.getDouble("mz");
-		APIUtil.editBangDanJiLu(bdId,null,zhongLiang,mz-zhongLiang);
+		if(dd1.getLxlx()==DingDan.SONG_YUN) {
+			mz=(float)bdJO.getDouble("mz");
+			pz=(float)1000;
+			jz=mz-pz;
+			APIUtil.editBangDanJiLu(bdId,null,pz,jz);
+		}
+		else {
+			mz=(float)4998;
+			pz=(float)bdJO.getDouble("pz");
+			jz=mz-pz;
+			APIUtil.editBangDanJiLu(bdId,mz,pz,jz);
+		}
+		
+    	if(dd1.getLxlx()==DingDan.QU_YUN) {
+			System.out.println("更改订单的实际重量、重量差额比");
+	    	DingDan dd2=new DingDan();
+	    	dd2.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
+	    	dd2.setYjzt(DingDan.YI_WAN_CHENG);
+	    	dd2.setEjzt(DingDan.SHANG_BANG_ZHONG);
+	    	dd2.setSjzl(mz);
+	    	dd2.setZlceb(dd1.getYzxzl()/mz);
+	    	APIUtil.editDingDanByZt(dd2);
+    	}
 		
 		System.out.println("生成二检过磅记录");
 		GuoBangJiLu gbjl=new GuoBangJiLu();
-		gbjl.setGbzl(zhongLiang);
+		if(dd1.getLxlx()==DingDan.SONG_YUN)
+			gbjl.setGbzl(pz);
+		else
+			gbjl.setGbzl(mz);
 		//gbjl.setZp1(zp1);
 		//gbjl.setZp2(zp2);
 		//gbjl.setZp3(zp3);
@@ -320,7 +359,7 @@ public class APIUtil {
 	}
 	
 	public static void main(String[] args) {
-		//APIUtil.zhuaPaiHuiDiao("9008");
+		//APIUtil.zhuaPaiHuiDiao("9035");
 		//APIUtil.yiJianShangBang();
 		APIUtil.erJianShangBang();
 		
