@@ -46,7 +46,7 @@ public class BangDanPrint implements Printable {
 		line+=heigth;
 
 		//…Ë÷√∂©µ•∫≈  
-		g2.drawString("∂©µ•∫≈:202010240001", (float)x+20,(float)y+line);  
+		g2.drawString("∂©µ•∫≈:202010240001", (float)x+20,(float)y+line);
 		line+=heigth+2;
 		
 		switch (pageIndex) {  

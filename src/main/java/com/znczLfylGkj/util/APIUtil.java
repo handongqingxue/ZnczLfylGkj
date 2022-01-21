@@ -209,22 +209,43 @@ public class APIUtil {
 		}
 	}
 	
+	public static JSONObject checkDingDanIfExistByZt(String ddztMc, Integer yjzt, Integer ejzt) {
+		JSONObject resultJO = null;
+		try {
+			Map parames = new HashMap<String, String>();
+			parames.put("ddztMc", ddztMc);
+			parames.put("yjzt", yjzt);
+			parames.put("ejzt", ejzt);
+			resultJO = APIUtil.doHttp("checkDingDanIfExistByZt",parames);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return resultJO;
+		}
+	}
+	
 	public static void zhuaPaiHuiDiao(String cph) {
 		System.out.println("查询订单状态为排队中的订单");
 		JSONObject resultJO=APIUtil.getDingDan(cph,DingDanZhuangTai.PAI_DUI_ZHONG_TEXT);
         if("ok".equals(resultJO.getString("status"))) {
         	System.out.println("存在该订单");
-        	System.out.println("抬起道闸");
-        	JSONObject ddJO=resultJO.getJSONObject("dingDan");
-        	System.out.println("ddId==="+ddJO.getInt("id"));
-        	System.out.println("生成磅单记录");
-        	APIUtil.newBangDanJiLu(ddJO.getInt("id"));
-        	System.out.println("改变订单状态为一检上磅");
-        	DingDan dd=new DingDan();
-        	dd.setId(ddJO.getInt("id"));
-        	dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
-        	dd.setYjzt(DingDan.DAI_SHANG_BANG);
-        	APIUtil.editDingDan(dd);
+        	System.out.println("根据其他订单状态验证是否存在其他订单");
+        	JSONObject ddExistResult = APIUtil.checkDingDanIfExistByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_SHANG_BANG,DingDan.DAI_SHANG_BANG);
+        	if(!"ok".equals(ddExistResult.getString("status"))) {
+	        	System.out.println("抬起道闸");
+	        	JSONObject ddJO=resultJO.getJSONObject("dingDan");
+	        	System.out.println("ddId==="+ddJO.getInt("id"));
+	        	System.out.println("生成磅单记录");
+	        	APIUtil.newBangDanJiLu(ddJO.getInt("id"));
+	        	System.out.println("改变订单状态为一检上磅");
+	        	DingDan dd=new DingDan();
+	        	dd.setId(ddJO.getInt("id"));
+	        	dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+	        	dd.setYjzt(DingDan.DAI_SHANG_BANG);
+	        	APIUtil.editDingDan(dd);
+        	}
         }
         else {
         	System.out.println("message==="+resultJO.getString("message"));
@@ -250,10 +271,10 @@ public class APIUtil {
 		JSONObject bdJO=gbjlJO.getJSONObject("bdjl");
 		int bdId = bdJO.getInt("id");
 		if(dd1.getLxlx()==DingDan.SONG_YUN) {
-			mz=(float)4998;
+			mz=(float)238;
 		}
 		else {
-			pz=(float)1000;
+			pz=(float)100;
 		}
 		APIUtil.editBangDanJiLu(bdId,mz,pz,jz);
 
@@ -313,12 +334,12 @@ public class APIUtil {
 		int bdId = bdJO.getInt("id");
 		if(dd1.getLxlx()==DingDan.SONG_YUN) {
 			mz=(float)bdJO.getDouble("mz");
-			pz=(float)1000;
+			pz=(float)100;
 			jz=mz-pz;
 			APIUtil.editBangDanJiLu(bdId,null,pz,jz);
 		}
 		else {
-			mz=(float)4998;
+			mz=(float)238;
 			pz=(float)bdJO.getDouble("pz");
 			jz=mz-pz;
 			APIUtil.editBangDanJiLu(bdId,mz,pz,jz);
@@ -359,9 +380,11 @@ public class APIUtil {
 	}
 	
 	public static void main(String[] args) {
-		//APIUtil.zhuaPaiHuiDiao("9035");
+		//APIUtil.zhuaPaiHuiDiao("9024");
 		//APIUtil.yiJianShangBang();
-		APIUtil.erJianShangBang();
+		//APIUtil.erJianShangBang();
+		
+		//APIUtil.checkDingDanIfExistByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_SHANG_BANG,DingDan.DAI_SHANG_BANG);
 		
 		//这里是磅房外的车牌识别摄像头抓拍到车牌号后回调的方法，回调时根据抓拍到的车牌号找到状态是排队中的订单（每次只能获得一条订单，根据上一部审核的先后顺序，先来后到，先审核的先进行车牌识别）
 		//识别后根据抓拍到的订单号与订单里的订单号对比，一致的话抬起道闸，订单状态变为一检上磅

@@ -62,12 +62,13 @@ public class XPPrinter {
 	}
     
     public static void main(String[] args) {
-    	/*
         BangDanPrint bdp=new BangDanPrint();
         XPPrinter xpp=new XPPrinter(bdp);
-        p.printer();
-    	*/
+        xpp.printer();
+    	/*
     	XPPrinter xpp=new XPPrinter();
     	xpp.findPrinter("DL-801PN");
+    	xpp.findPrinter("DL-801P(NEW)");
+        */
 	}
 }
