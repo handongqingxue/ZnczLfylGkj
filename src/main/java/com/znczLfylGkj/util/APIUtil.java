@@ -382,7 +382,7 @@ public class APIUtil {
 	public static void main(String[] args) {
 		//APIUtil.zhuaPaiHuiDiao("9024");
 		//APIUtil.yiJianShangBang();
-		//APIUtil.erJianShangBang();
+		APIUtil.erJianShangBang();
 		
 		//APIUtil.checkDingDanIfExistByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_SHANG_BANG,DingDan.DAI_SHANG_BANG);
 		
