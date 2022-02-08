@@ -10,6 +10,10 @@
  */
 package com.znczLfylGkj.cpsbsxt;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
@@ -18,18 +22,15 @@ import com.sun.jna.examples.win32.GDI32.RECT;
 import com.sun.jna.examples.win32.W32API;
 import com.sun.jna.examples.win32.W32API.HWND;
 import com.sun.jna.ptr.ByteByReference;
-import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.ShortByReference;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.sun.jna.win32.StdCallLibrary;
+import com.sun.jna.win32.StdCallLibrary.StdCallCallback;
 
 //SDK接口说明,HCNetSDK.dll
 public interface HCNetSDK extends StdCallLibrary {
-	HCNetSDK INSTANCE = (HCNetSDK) Native.loadLibrary(HCNetSDKPath.DLL_PATH + "HCNetSDK",HCNetSDK.class);
-    //HCNetSDK INSTANCE = (HCNetSDK) Native.loadLibrary("D:/resource/HCNetSDK",HCNetSDK.class);
+	//HCNetSDK INSTANCE = (HCNetSDK) Native.loadLibrary(HCNetSDKPath.DLL_PATH + "HCNetSDK\\HCNetSDK.dll",HCNetSDK.class);
+    HCNetSDK INSTANCE = (HCNetSDK) Native.loadLibrary("D:\\resource\\HCNetSDK\\HCNetSDK.dll",HCNetSDK.class);
     /***宏定义***/
     //常量
 

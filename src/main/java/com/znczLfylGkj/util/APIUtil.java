@@ -271,10 +271,10 @@ public class APIUtil {
 		JSONObject bdJO=gbjlJO.getJSONObject("bdjl");
 		int bdId = bdJO.getInt("id");
 		if(dd1.getLxlx()==DingDan.SONG_YUN) {
-			mz=(float)238;
+			mz=(float)5000;
 		}
 		else {
-			pz=(float)100;
+			pz=(float)1000;
 		}
 		APIUtil.editBangDanJiLu(bdId,mz,pz,jz);
 
@@ -334,12 +334,12 @@ public class APIUtil {
 		int bdId = bdJO.getInt("id");
 		if(dd1.getLxlx()==DingDan.SONG_YUN) {
 			mz=(float)bdJO.getDouble("mz");
-			pz=(float)100;
+			pz=(float)1000;
 			jz=mz-pz;
 			APIUtil.editBangDanJiLu(bdId,null,pz,jz);
 		}
 		else {
-			mz=(float)238;
+			mz=(float)5000;
 			pz=(float)bdJO.getDouble("pz");
 			jz=mz-pz;
 			APIUtil.editBangDanJiLu(bdId,mz,pz,jz);
@@ -380,7 +380,7 @@ public class APIUtil {
 	}
 	
 	public static void main(String[] args) {
-		//APIUtil.zhuaPaiHuiDiao("9024");
+		//APIUtil.zhuaPaiHuiDiao("265366");
 		//APIUtil.yiJianShangBang();
 		APIUtil.erJianShangBang();
 		
