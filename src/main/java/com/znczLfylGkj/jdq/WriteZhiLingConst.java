@@ -3,10 +3,6 @@ package com.znczLfylGkj.jdq;
 public class WriteZhiLingConst {
 
 	/**
-	 * 连接
-	 * */
-	public static final String LIAN_JIE="CCDDB00100000DBE7C";
-	/**
 	 * 开继电器1
 	 * */
 	public static final String KAI_JI_DIAN_QI1="CCDDA10100010001A448";
@@ -31,12 +27,12 @@ public class WriteZhiLingConst {
 	 * */
 	public static final String QUAN_GUAN="CCDDA1010000FFFFA040";
 	/**
-	 * 读取状态
+	 * 读取继电器状态
 	 * */
-	public static final String DU_QU_ZHUANG_TAI="CCDDB00100000DBE7C";
+	public static final String DU_QU_JI_DIAN_QI_ZHUANG_TAI="CCDDB00100000DBE7C";
 	/**
-	 * 手动读取
+	 * 读取开关量状态
 	 * */
-	public static final String SHOU_DONG_DU_QU="CCDDC00100000DCE9C";
+	public static final String DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI="CCDDC00100000DCE9C";
 	
 }

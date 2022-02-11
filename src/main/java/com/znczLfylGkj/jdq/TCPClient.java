@@ -14,7 +14,7 @@ public class TCPClient {
 
 	public void open() {
 		try {
-			client=new Socket("192.168.1.166",50000);
+			client=new Socket("192.168.1.20",50000);
 			t_read= new Thread(new ThreadReadSocket(client));
 			t_read.start();
 			System.out.println("Á¬½Ó");
@@ -54,18 +54,20 @@ public class TCPClient {
 	}
 	
 	public static void main(String[] args) {
-		try {
+		//try {
 			TCPClient tc=new TCPClient();
 			tc.open();
-			tc.sendData(WriteZhiLingConst.LIAN_JIE);
-			Thread.sleep(3000);
-			tc.sendData(WriteZhiLingConst.KAI_JI_DIAN_QI1);
-			Thread.sleep(3000);
-			tc.sendData(WriteZhiLingConst.GUAN_JI_DIAN_QI1);
+			//tc.sendData(WriteZhiLingConst.KAI_JI_DIAN_QI1);
+			tc.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+			//Thread.sleep(3000);
+			//tc.sendData(WriteZhiLingConst.GUAN_JI_DIAN_QI1);
+			
 			//tc.close();
+			/*
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 	}
 }

@@ -14,9 +14,9 @@ public class StartTask {
 		cpsbsxtTask.start();
 		
 		// 其他线程启动
-				while (true) {
-					// main程序一直运行
-					
-				}
+		while (true) {
+			// main程序一直运行
+			
+		}
 	}
 }

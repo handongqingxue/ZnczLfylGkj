@@ -21,6 +21,7 @@ import com.sun.jna.Pointer;
 import com.znczLfylGkj.cpsbsxt.HCNetSDK.NET_DVR_ALARMER;
 import com.znczLfylGkj.cpsbsxt.HCNetSDK.NET_DVR_PLATE_INFO;
 import com.znczLfylGkj.cpsbsxt.HCNetSDK.RECV_ALARM;
+import com.znczLfylGkj.util.LoadProperties;
 
 /**
  * 	车辆识别回调函数
@@ -70,7 +71,7 @@ public class FMSGCallBack implements HCNetSDK.FMSGCallBack
         	
         case HCNetSDK.COMM_UPLOAD_PLATE_RESULT:
         	// 创建车辆对象
-        	// Car car = new Car();
+        	Car car = new Car();
         	
             HCNetSDK.NET_DVR_PLATE_RESULT strPlateResult = new HCNetSDK.NET_DVR_PLATE_RESULT();
             
@@ -80,7 +81,7 @@ public class FMSGCallBack implements HCNetSDK.FMSGCallBack
             
             byte byVehicleType = strPlateResult.byVehicleType;
             
-            //car.setType(byVehicleType);
+            car.setType(byVehicleType);
             
             System.out.println("车辆类型: " + byVehicleType);
             strPlateResult.write();
@@ -100,13 +101,13 @@ public class FMSGCallBack implements HCNetSDK.FMSGCallBack
             	
                 srt3=new String(strPlateResult.struPlateInfo.sLicense,"GBK");
                 System.out.println("车牌号: " + sLicense);
-                //car.setsLicense(srt3);
+                car.setsLicense(srt3);
                 sAlarmType = sAlarmType + "：交通抓拍上传，车牌："+ srt3.toString();
                 
                 // 车牌颜色
                 byte byColor = struPlateInfo.byColor;
                 System.out.println("车牌颜色： " + byColor);
-               //car.setsLicenseColor(byColor);
+                car.setsLicenseColor(byColor);
             }
             catch (UnsupportedEncodingException e1) {
                 // TODO Auto-generated catch block
@@ -123,7 +124,7 @@ public class FMSGCallBack implements HCNetSDK.FMSGCallBack
             sIP = new String(pAlarmer.sDeviceIP).split("\0", 2);
             System.out.println("报警设备ip地址sIP ： " + new String(pAlarmer.sDeviceIP).trim());
             // 设置ip地址
-            //car.setIp(new String(pAlarmer.sDeviceIP).trim());
+            car.setIp(new String(pAlarmer.sDeviceIP).trim());
             newRow[2] = sIP[0];
             alarmTableModel.insertRow(0, newRow);
 
@@ -160,29 +161,27 @@ public class FMSGCallBack implements HCNetSDK.FMSGCallBack
             */
             
             // 车牌的对象
-            //System.out.println(car.toString());
+            System.out.println(car.toString());
             
             // 拿到车牌对象的 car
             // 根据车牌号， 查询有匹配的待入厂的订单, 如果有则抬杆， 修改订单状态为【已入厂】，排队号的状态改为【受理中】
             // 创建台账信息， 台账信息包含【车辆入场时间】、【车辆入场照片】、【台账与订单、车辆建立关系】
             
-            /*
             try {
             	String ip = car.getIp().trim();
-            	if(LoadProperties.getHikvisionJinMenIP().equals(ip)) {
-            		//  进门车辆识别摄像头
-            		uploadingCarInfo(car);
-            	} else if (LoadProperties.getHikvisionChuMenIP().equals(ip)) {
+            	if(LoadProperties.getHikvisionYiJianIP().equals(ip)) {
+            		//  一检车辆识别摄像头
+            		//uploadingCarInfo(car);
+            	} else if (LoadProperties.getHikvisionErJianIP().equals(ip)) {
             		// 出门车辆识别摄像头
-            		uploadingCarInfoLiChang(car);
+            		//uploadingCarInfoLiChang(car);
             	} else {
-            		logger.info("车辆识别摄像头ip地址配置错误");
+            		System.out.println("车辆识别摄像头ip地址配置错误");
             	}
 			} catch (Exception e) {
-				logger.debug(e + "");
+				System.out.println(e + "");
 				e.printStackTrace();
 			}
-			*/
             break;
         case HCNetSDK.COMM_ITS_PLATE_RESULT:
             HCNetSDK.NET_ITS_PLATE_RESULT strItsPlateResult = new HCNetSDK.NET_ITS_PLATE_RESULT();
