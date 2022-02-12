@@ -14,6 +14,10 @@ import org.json.JSONObject;
 
 import com.znczLfylGkj.cpsbsxt.Car;
 import com.znczLfylGkj.entity.*;
+import com.znczLfylGkj.jdq.JdqZlUtil;
+import com.znczLfylGkj.jdq.WriteZhiLingConst;
+import com.znczLfylGkj.jdq.YiJianJdq;
+import com.znczLfylGkj.task.DiBangTask3124;
 import com.znczLfylGkj.task.YinZhuTask;
 import com.znczLfylGkj.yz.YzZlUtil;
 
@@ -140,11 +144,18 @@ public class APIUtil {
 		}
 	}
 	
-	public static JSONObject newBangDanJiLu(Integer ddId) {
+	public static JSONObject newBangDanJiLu(Float mz, Float pz, Float jz, Integer ddId) {
 		JSONObject resultJO = null;
 		try {
 			Map parames = new HashMap<String, String>();
-	        parames.put("ddId", ddId);  
+	        if(mz!=null)
+	        	parames.put("mz", mz);
+	        if(pz!=null)
+	        	parames.put("pz", pz);
+	        if(jz!=null)
+	        	parames.put("jz", jz);
+	        if(ddId!=null)
+	        	parames.put("ddId", ddId);  
 	        resultJO = APIUtil.doHttp("newBangDanJiLu",parames);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -244,12 +255,11 @@ public class APIUtil {
             	System.out.println("音柱播报：其他订单状态存在其他订单");
         	}
         	else {
-	        	System.out.println("抬起道闸");
-	        	JSONObject ddJO=resultJO.getJSONObject("dingDan");
-	        	System.out.println("ddId==="+ddJO.getInt("id"));
-	        	System.out.println("生成磅单记录");
-	        	APIUtil.newBangDanJiLu(ddJO.getInt("id"));
+	        	System.out.println("抬起一检上磅道闸");
+	        	JdqZlUtil.openYiJianShangBangDz();
+	        	
 	        	System.out.println("改变订单状态为一检上磅");
+				JSONObject ddJO=resultJO.getJSONObject("dingDan");
 	        	DingDan dd=new DingDan();
 	        	dd.setId(ddJO.getInt("id"));
 	        	dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
@@ -264,65 +274,197 @@ public class APIUtil {
         }
 	}
 	
-	public static void yiJianShangBang() {
-		System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待上磅更改为上磅中");
+	/**
+	 * 更新一检称重订单信息
+	 */
+	public static void updateYJCZDDXX() {
+		checkYJSBHWGSState();
+		checkYJSBHXBHWGSState();
+		yiJianChengZhongZhong();
+		checkYJXBHWGSState();
+		yiJianChengZhongYwc();
+	}
+	
+	/**
+	 * 检测一检上磅红外光栅状态
+	 */
+	public static void checkYJSBHWGSState() {
+		try {
+			//YiJianJdq yjjdq=new YiJianJdq();
+			//yjjdq.open();
+			YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
+			System.out.println("前open1==="+yjjdq.isKgl1Open());
+			while (true) {
+				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+				System.out.println("后open1==="+yjjdq.isKgl1Open());
+				if(yjjdq.isKgl1Open()) {
+					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待上磅更改为上磅中");
+					/*
+					DingDan dd=new DingDan();
+					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+					dd.setYjzt(DingDan.DAI_SHANG_BANG);
+					dd.setXyjzt(DingDan.SHANG_BANG_ZHONG);
+					APIUtil.editDingDanByZt(dd);
+					*/
+					break;
+				}
+				else
+					Thread.sleep(1000);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	/**
+	 * 检测一检上磅和下磅红外光栅状态
+	 */
+	public static void checkYJSBHXBHWGSState() {
+		try {
+			YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
+			System.out.println("前open1==="+yjjdq.isKgl1Open());
+			System.out.println("前open2==="+yjjdq.isKgl2Open());
+			while (true) {
+				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+				System.out.println("后open1==="+yjjdq.isKgl1Open());
+				System.out.println("后open2==="+yjjdq.isKgl2Open());
+				if(!yjjdq.isKgl1Open()&&!yjjdq.isKgl2Open()) {
+					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从上磅中更改为待称重");
+					DingDan dd=new DingDan();
+					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+					dd.setYjzt(DingDan.SHANG_BANG_ZHONG);
+					dd.setXyjzt(DingDan.DAI_CHENG_ZHONG);
+					APIUtil.editDingDanByZt(dd);
+					break;
+				}
+				else
+					Thread.sleep(1000);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void yiJianChengZhongZhong() {
+		try {
+			System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待称重更改为称重中");
+			DingDan dd=new DingDan();
+			dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+			dd.setYjzt(DingDan.DAI_CHENG_ZHONG);
+			dd.setXyjzt(DingDan.CHENG_ZHONG_ZHONG);
+			APIUtil.editDingDanByZt(dd);
+			
+			System.out.println("请确保车辆稳定，5秒后开始一检称重");
+			Thread.sleep(5000);
+			
+			System.out.println("查询订单状态为一检上磅，一检状态为称重中的订单");
+			JSONObject resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.CHENG_ZHONG_ZHONG,DingDan.DAI_SHANG_BANG);
+			DingDan dd1=(DingDan)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(resultJO.get("dingDan").toString()), DingDan.class);
+			
+			System.out.println("根据称重出来的重量，添加订单对应的磅单记录");
+			Float mz=null;
+			Float pz=null;
+			Float jz=null;
+			if(dd1.getLxlx()==DingDan.SONG_YUN) {
+				//mz=(float)5000;
+				mz=(float)DiBangTask3124.getWeight();
+			}
+			else {
+				//pz=(float)1000;
+				pz=(float)DiBangTask3124.getWeight();
+			}
+			
+			JSONObject ddJO=resultJO.getJSONObject("dingDan");
+	    	int ddId = ddJO.getInt("id");
+	    	System.out.println("ddId==="+ddId);
+	    	System.out.println("生成磅单记录");
+	    	APIUtil.newBangDanJiLu(mz, pz, jz, ddId);
+
+	    	if(dd1.getLxlx()==DingDan.SONG_YUN) {
+				System.out.println("更改订单的实际重量、重量差额比");
+		    	DingDan dd2=new DingDan();
+		    	dd2.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+		    	dd2.setYjzt(DingDan.CHENG_ZHONG_ZHONG);
+		    	dd2.setSjzl(mz);
+		    	dd2.setZlceb(dd1.getYzxzl()/mz);
+		    	APIUtil.editDingDanByZt(dd2);
+	    	}
+
+			//float zhongLiang=2998;
+			System.out.println("生成一检过磅记录");
+			GuoBangJiLu gbjl=new GuoBangJiLu();
+			if(dd1.getLxlx()==DingDan.SONG_YUN)
+				gbjl.setGbzl(mz);
+			else
+				gbjl.setGbzl(pz);
+			//gbjl.setZp1(zp1);
+			//gbjl.setZp2(zp2);
+			//gbjl.setZp3(zp3);
+			gbjl.setGbzt(GuoBangJiLu.ZHENG_CHANG);
+			gbjl.setGblx(GuoBangJiLu.RU_CHANG_GUO_BANG);
+			gbjl.setDdId(dd1.getId());
+			//gbjl.setDdId(16);
+			APIUtil.newGuoBangJiLu(gbjl);
+			
+			System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从称重中更改为待下磅");
+			dd=new DingDan();
+			dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+			dd.setYjzt(DingDan.CHENG_ZHONG_ZHONG);
+			dd.setXyjzt(DingDan.DAI_XIA_BANG);
+			APIUtil.editDingDanByZt(dd);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 检测一检下磅红外光栅状态
+	 */
+	public static void checkYJXBHWGSState() {
+		try {
+			YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
+			System.out.println("前open2==="+yjjdq.isKgl2Open());
+			while (true) {
+				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+				System.out.println("后open2==="+yjjdq.isKgl2Open());
+				if(yjjdq.isKgl2Open()) {
+		        	System.out.println("抬起一检下磅道闸");
+		        	JdqZlUtil.openYiJianXiaBangDz();
+		        	
+					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待下磅更改为下磅中");
+					/*
+					DingDan dd=new DingDan();
+					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+					dd.setYjzt(DingDan.DAI_XIA_BANG);
+					dd.setXyjzt(DingDan.XIA_BANG_ZHONG);
+					APIUtil.editDingDanByZt(dd);
+					*/
+					break;
+				}
+				else
+					Thread.sleep(1000);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 更改一检上磅订单的上磅状态为已完成
+	 */
+	public static void yiJianChengZhongYwc() {
+		System.out.println("查找订单状态为一检上磅的订单，更改订单状态为待一检审核、一检状态从下磅中更改为已完成");
 		DingDan dd=new DingDan();
-		dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
-		dd.setYjzt(DingDan.DAI_SHANG_BANG);
-		dd.setXyjzt(DingDan.SHANG_BANG_ZHONG);
-		APIUtil.editDingDanByZt(dd);
-		
-		System.out.println("查询订单状态为一检上磅，一检状态为上磅中的订单");
-		JSONObject resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.SHANG_BANG_ZHONG,DingDan.DAI_SHANG_BANG);
-		DingDan dd1=(DingDan)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(resultJO.get("dingDan").toString()), DingDan.class);
-		System.out.println("根据称重出来的重量，修改订单对应的磅单记录");
-		Float mz=null;
-		Float pz=null;
-		Float jz=null;
-		JSONObject gbjlJO=APIUtil.selectBangDanJiLuByDdId(dd1.getId());
-		JSONObject bdJO=gbjlJO.getJSONObject("bdjl");
-		int bdId = bdJO.getInt("id");
-		if(dd1.getLxlx()==DingDan.SONG_YUN) {
-			mz=(float)5000;
-		}
-		else {
-			pz=(float)1000;
-		}
-		APIUtil.editBangDanJiLu(bdId,mz,pz,jz);
-
-    	if(dd1.getLxlx()==DingDan.SONG_YUN) {
-			System.out.println("更改订单的实际重量、重量差额比");
-	    	DingDan dd2=new DingDan();
-	    	dd2.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
-	    	dd2.setYjzt(DingDan.SHANG_BANG_ZHONG);
-	    	dd2.setSjzl(mz);
-	    	dd2.setZlceb(dd1.getYzxzl()/mz);
-	    	APIUtil.editDingDanByZt(dd2);
-    	}
-
-		//float zhongLiang=2998;
-		System.out.println("生成一检过磅记录");
-		GuoBangJiLu gbjl=new GuoBangJiLu();
-		if(dd1.getLxlx()==DingDan.SONG_YUN)
-			gbjl.setGbzl(mz);
-		else
-			gbjl.setGbzl(pz);
-		//gbjl.setZp1(zp1);
-		//gbjl.setZp2(zp2);
-		//gbjl.setZp3(zp3);
-		gbjl.setGbzt(GuoBangJiLu.ZHENG_CHANG);
-		gbjl.setGblx(GuoBangJiLu.RU_CHANG_GUO_BANG);
-		gbjl.setDdId(dd1.getId());
-		//gbjl.setDdId(16);
-		APIUtil.newGuoBangJiLu(gbjl);
-		
-		System.out.println("更改订单状态为待一检审核、一检状态为已完成");
-    	DingDan dd3=new DingDan();
-    	dd3.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
-    	dd3.setXddztMc(DingDanZhuangTai.DAI_YI_JIAN_SHEN_HE_TEXT);
-    	dd3.setYjzt(DingDan.SHANG_BANG_ZHONG);
-    	dd3.setXyjzt(DingDan.YI_WAN_CHENG);
-    	APIUtil.editDingDanByZt(dd3);
+    	dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+    	dd.setXddztMc(DingDanZhuangTai.DAI_YI_JIAN_SHEN_HE_TEXT);
+    	dd.setYjzt(DingDan.XIA_BANG_ZHONG);
+    	dd.setXyjzt(DingDan.YI_WAN_CHENG);
+    	APIUtil.editDingDanByZt(dd);
 	}
 	
 	public static void erJianShangBang() {
@@ -392,13 +534,12 @@ public class APIUtil {
 	}
 	
 	public static void main(String[] args) {
-		//APIUtil.updateYJCPSBDDXX("265366");
-		//APIUtil.yiJianShangBang();
-		APIUtil.erJianShangBang();
+		Car car=new Car();
+		car.setsLicense("鲁B9023");
+		APIUtil.updateYJCPSBDDXX(car);
+		//APIUtil.updateYJCZDDXX();
+		//APIUtil.erJianShangBang();
 		
 		//APIUtil.checkDingDanIfExistByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_SHANG_BANG,DingDan.DAI_SHANG_BANG);
-		
-		//这里是磅房外的车牌识别摄像头抓拍到车牌号后回调的方法，回调时根据抓拍到的车牌号找到状态是排队中的订单（每次只能获得一条订单，根据上一部审核的先后顺序，先来后到，先审核的先进行车牌识别）
-		//识别后根据抓拍到的订单号与订单里的订单号对比，一致的话抬起道闸，订单状态变为一检上磅
 	}
 }

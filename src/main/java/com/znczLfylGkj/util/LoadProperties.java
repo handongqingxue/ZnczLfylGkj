@@ -542,6 +542,25 @@ public class LoadProperties {
 		
 		return parseInt;
 	}
+
+	/**
+	 * 获得一检继电器脉冲
+	 * @return
+	 */
+	public static Integer getYiJianJdqMaiChong() {
+		if (prop == null) {
+			prop = Method2();
+		}
+		String trim = prop.getProperty("yiJianJdqMaiChong").trim();
+		if (StringUtils.isBlank(trim)) {
+			logger.debug("请在配置文件中配置yiJianJdqMaiChong");
+			return null;
+		}
+		
+		int parseInt = Integer.parseInt(trim);
+		
+		return parseInt;
+	}
 	
 	/**
 	 * 获得二检继电器ip
@@ -570,6 +589,25 @@ public class LoadProperties {
 		String trim = prop.getProperty("erJianJdqPort").trim();
 		if (StringUtils.isBlank(trim)) {
 			logger.debug("请在配置文件中配置erJianJdqPort");
+			return null;
+		}
+		
+		int parseInt = Integer.parseInt(trim);
+		
+		return parseInt;
+	}
+
+	/**
+	 * 获得二检继电器脉冲
+	 * @return
+	 */
+	public static Integer getErJianJdqMaiChong() {
+		if (prop == null) {
+			prop = Method2();
+		}
+		String trim = prop.getProperty("erJianJdqMaiChong").trim();
+		if (StringUtils.isBlank(trim)) {
+			logger.debug("请在配置文件中配置erJianJdqMaiChong");
 			return null;
 		}
 		

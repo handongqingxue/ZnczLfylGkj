@@ -4,7 +4,11 @@ public class DingDan {
 
 	public static final Integer DAI_SHANG_BANG=1;
 	public static final Integer SHANG_BANG_ZHONG=2;
-	public static final Integer YI_WAN_CHENG=3;
+	public static final Integer DAI_CHENG_ZHONG=3;
+	public static final Integer CHENG_ZHONG_ZHONG=4;
+	public static final Integer DAI_XIA_BANG=5;
+	public static final Integer XIA_BANG_ZHONG=6;
+	public static final Integer YI_WAN_CHENG=7;
 	
 	public static final Integer SONG_YUN=1;
 	public static final Integer QU_YUN=2;

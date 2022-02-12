@@ -12,15 +12,31 @@ public class YiJianJdq {
 
     private Socket client;
     private Thread t_read; 
+    private boolean kgl1Open;
+    private boolean kgl2Open;
+    
+	public boolean isKgl2Open() {
+		return kgl2Open;
+	}
+
+	public void setKgl2Open(boolean kgl2Open) {
+		this.kgl2Open = kgl2Open;
+	}
+
+	public boolean isKgl1Open() {
+		return kgl1Open;
+	}
+
+	public void setKgl1Open(boolean kgl1Open) {
+		this.kgl1Open = kgl1Open;
+	}
 
 	public void open() {
 		try {
 			String yiJianJdqIp = LoadProperties.getYiJianJdqIp();
 			int yiJianJdqPort = LoadProperties.getYiJianJdqPort();
-			System.out.println("yiJianJdqIp==="+yiJianJdqIp);
-			System.out.println("yiJianJdqPort==="+yiJianJdqPort);
 			client=new Socket(yiJianJdqIp,yiJianJdqPort);
-			t_read= new Thread(new ThreadReadSocket(client));
+			t_read= new Thread(new ReadYiJianJdqSocket(client,YiJianJdq.this));
 			t_read.start();
 			System.out.println("连接一检继电器");
 		} catch (UnknownHostException e) {
