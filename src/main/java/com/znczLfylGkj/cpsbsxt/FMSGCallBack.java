@@ -21,6 +21,7 @@ import com.sun.jna.Pointer;
 import com.znczLfylGkj.cpsbsxt.HCNetSDK.NET_DVR_ALARMER;
 import com.znczLfylGkj.cpsbsxt.HCNetSDK.NET_DVR_PLATE_INFO;
 import com.znczLfylGkj.cpsbsxt.HCNetSDK.RECV_ALARM;
+import com.znczLfylGkj.util.APIUtil;
 import com.znczLfylGkj.util.LoadProperties;
 
 /**
@@ -170,10 +171,10 @@ public class FMSGCallBack implements HCNetSDK.FMSGCallBack
             try {
             	String ip = car.getIp().trim();
             	if(LoadProperties.getHikvisionYiJianIP().equals(ip)) {
-            		//  一检车辆识别摄像头
-            		//uploadingCarInfo(car);
+            		//一检车辆识别摄像头
+            		APIUtil.updateYJCPSBDDXX(car);
             	} else if (LoadProperties.getHikvisionErJianIP().equals(ip)) {
-            		// 出门车辆识别摄像头
+            		//二检车辆识别摄像头
             		//uploadingCarInfoLiChang(car);
             	} else {
             		System.out.println("车辆识别摄像头ip地址配置错误");

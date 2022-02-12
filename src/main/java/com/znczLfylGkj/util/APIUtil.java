@@ -12,7 +12,10 @@ import java.util.Map.*;
 
 import org.json.JSONObject;
 
+import com.znczLfylGkj.cpsbsxt.Car;
 import com.znczLfylGkj.entity.*;
+import com.znczLfylGkj.task.YinZhuTask;
+import com.znczLfylGkj.yz.YzZlUtil;
 
 public class APIUtil {
 	
@@ -226,14 +229,21 @@ public class APIUtil {
 		}
 	}
 	
-	public static void zhuaPaiHuiDiao(String cph) {
+	/**
+	 * 更新一检车牌识别订单信息
+	 * @param car
+	 */
+	public static void updateYJCPSBDDXX(Car car) {
 		System.out.println("查询订单状态为排队中的订单");
-		JSONObject resultJO=APIUtil.getDingDan(cph,DingDanZhuangTai.PAI_DUI_ZHONG_TEXT);
+		JSONObject resultJO=APIUtil.getDingDan(car.getsLicense(),DingDanZhuangTai.PAI_DUI_ZHONG_TEXT);
         if("ok".equals(resultJO.getString("status"))) {
         	System.out.println("存在该订单");
         	System.out.println("根据其他订单状态验证是否存在其他订单");
         	JSONObject ddExistResult = APIUtil.checkDingDanIfExistByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_SHANG_BANG,DingDan.DAI_SHANG_BANG);
-        	if(!"ok".equals(ddExistResult.getString("status"))) {
+        	if("ok".equals(ddExistResult.getString("status"))) {
+            	System.out.println("音柱播报：其他订单状态存在其他订单");
+        	}
+        	else {
 	        	System.out.println("抬起道闸");
 	        	JSONObject ddJO=resultJO.getJSONObject("dingDan");
 	        	System.out.println("ddId==="+ddJO.getInt("id"));
@@ -249,6 +259,8 @@ public class APIUtil {
         }
         else {
         	System.out.println("message==="+resultJO.getString("message"));
+        	System.out.println("音柱播报：没有找到匹配订单");
+    		YinZhuTask.sendMsg(YzZlUtil.get86().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
         }
 	}
 	
@@ -380,7 +392,7 @@ public class APIUtil {
 	}
 	
 	public static void main(String[] args) {
-		//APIUtil.zhuaPaiHuiDiao("265366");
+		//APIUtil.updateYJCPSBDDXX("265366");
 		//APIUtil.yiJianShangBang();
 		APIUtil.erJianShangBang();
 		

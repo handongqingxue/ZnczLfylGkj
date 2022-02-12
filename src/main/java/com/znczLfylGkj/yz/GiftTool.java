@@ -42,7 +42,7 @@ public class GiftTool {
 
 	public static void main(String[] args) {
 		try {
-			GiftTool.run(ByteUtil.hex2byte(ZhiLingUtil.getByDuanHao(83).replaceAll(" ", "")));
+			GiftTool.run(ByteUtil.hex2byte(YzZlUtil.getByDuanHao(83).replaceAll(" ", "")));
 			//GiftTool.run(ByteUtil.hex2byte(ZhiLingUtil.getByDuanHao(81).replaceAll(" ", "")));
 			/*
 			while (true) {

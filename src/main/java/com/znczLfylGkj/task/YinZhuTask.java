@@ -1,15 +1,34 @@
 package com.znczLfylGkj.task;
 
 import com.znczLfylGkj.util.HexadecimalUtil;
+import com.znczLfylGkj.util.LoadProperties;
 import com.znczLfylGkj.util.RXTXUtil;
-import com.znczLfylGkj.yz.ZhiLingUtil;
+import com.znczLfylGkj.yz.YzZlUtil;
 
 public class YinZhuTask {
+	
+	public static final int YI_JIAN=1;
+	public static final int ER_JIAN=2;
 
-	public static String sendMsg(String zhiLing, long sleepTime) {
+	/**
+	 * 发送指令给音柱
+	 * @param zhiLing
+	 * @param sleepTime
+	 * @param jyFlag
+	 * @return
+	 */
+	public static String sendMsg(String zhiLing, long sleepTime, int jyFlag) {
 		try {
-			//String serialPortName = LoadProperties.getSerialPortName();
-			String serialPortName = "COM6";
+			String serialPortName = null;
+			switch (jyFlag) {
+			case YI_JIAN:
+				serialPortName=LoadProperties.getYiJianYinZhuCom();
+				break;
+			case ER_JIAN:
+				serialPortName=LoadProperties.getErJianYinZhuCom();
+				break;
+			}
+			//String serialPortName = "COM6";
 			// 开启串口
 			//RXTXUtil.openSerialPort(LoadProperties.getSerialPortName(), 100);
 			RXTXUtil.openSerialPort(serialPortName, 9600);
@@ -26,12 +45,12 @@ public class YinZhuTask {
 	}
 	
 	public static void main(String[] args) {
-		YinZhuTask.sendMsg(ZhiLingUtil.get83().replaceAll(" ", ""), 1500);
-		YinZhuTask.sendMsg(ZhiLingUtil.getByStr("鲁").replaceAll(" ", ""), 800);
-		YinZhuTask.sendMsg(ZhiLingUtil.getByStr("9").replaceAll(" ", ""), 800);
-		YinZhuTask.sendMsg(ZhiLingUtil.getByStr("8").replaceAll(" ", ""), 800);
-		YinZhuTask.sendMsg(ZhiLingUtil.getByStr("8").replaceAll(" ", ""), 800);
-		YinZhuTask.sendMsg(ZhiLingUtil.getByStr("8").replaceAll(" ", ""), 800);
-		YinZhuTask.sendMsg(ZhiLingUtil.get81().replaceAll(" ", ""), 1500);
+		YinZhuTask.sendMsg(YzZlUtil.get83().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
+		YinZhuTask.sendMsg(YzZlUtil.getByStr("鲁").replaceAll(" ", ""), 800,YinZhuTask.YI_JIAN);
+		YinZhuTask.sendMsg(YzZlUtil.getByStr("9").replaceAll(" ", ""), 800,YinZhuTask.YI_JIAN);
+		YinZhuTask.sendMsg(YzZlUtil.getByStr("8").replaceAll(" ", ""), 800,YinZhuTask.YI_JIAN);
+		YinZhuTask.sendMsg(YzZlUtil.getByStr("8").replaceAll(" ", ""), 800,YinZhuTask.YI_JIAN);
+		YinZhuTask.sendMsg(YzZlUtil.getByStr("8").replaceAll(" ", ""), 800,YinZhuTask.YI_JIAN);
+		YinZhuTask.sendMsg(YzZlUtil.get81().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 	}
 }

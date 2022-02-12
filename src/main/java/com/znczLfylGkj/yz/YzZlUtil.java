@@ -1,6 +1,6 @@
 package com.znczLfylGkj.yz;
 
-public class ZhiLingUtil {
+public class YzZlUtil {
 	
 	/**
 	 * 

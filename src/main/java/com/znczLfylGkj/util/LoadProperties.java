@@ -333,18 +333,37 @@ public class LoadProperties {
 	}
 
 	/**
-	 * 音柱串口配置 serialPortName=COM4
+	 * 一检音柱串口配置
 	 * 
 	 * @return
 	 */
-	public static String getSerialPortName() {
+	public static String getYiJianYinZhuCom() {
 		if (prop == null) {
 			prop = Method2();
 		}
 
-		String trim = prop.getProperty("serialPortName").trim();
+		String trim = prop.getProperty("yiJianYinZhuCom").trim();
 		if (StringUtils.isBlank(trim)) {
-			logger.debug("请在配置文件中配置serialPortName");
+			logger.debug("请在配置文件中配置yiJianYinZhuCom");
+			return null;
+		}
+
+		return trim;
+	}
+
+	/**
+	 * 二检音柱串口配置
+	 * 
+	 * @return
+	 */
+	public static String getErJianYinZhuCom() {
+		if (prop == null) {
+			prop = Method2();
+		}
+
+		String trim = prop.getProperty("erJianYinZhuCom").trim();
+		if (StringUtils.isBlank(trim)) {
+			logger.debug("请在配置文件中配置erJianYinZhuCom");
 			return null;
 		}
 
@@ -353,7 +372,7 @@ public class LoadProperties {
 
 	/////////////////////
 	/**
-	 * #一检车辆摄像头的ip hikvisionJinMenIP
+	 * #一检车辆摄像头的ip hikvisionYiJianIP
 	 * 
 	 * @return
 	 */
@@ -387,7 +406,7 @@ public class LoadProperties {
 	}
 
 	/**
-	 * ##一检摄像头用户名 hikvisionJinMenUserName
+	 * ##一检摄像头用户名 hikvisionYiJianUserName
 	 * 
 	 * @return
 	 */
@@ -439,7 +458,7 @@ public class LoadProperties {
 	}
 
 	/**
-	 * #二检车辆摄像头的端口 hikvisionChuMenPort
+	 * #二检车辆摄像头的端口 hikvisionErJianPort
 	 * 
 	 * @return
 	 */
@@ -489,6 +508,79 @@ public class LoadProperties {
 		return trim;
 	}
 	
+	/**
+	 * 获得一检继电器ip
+	 * @return
+	 */
+	public static String getYiJianJdqIp() {
+		if (prop == null) {
+			prop = Method2();
+		}
+		String trim = prop.getProperty("yiJianJdqIp").trim();
+		if (StringUtils.isBlank(trim)) {
+			logger.debug("请在配置文件中配置yiJianJdqIp");
+			return null;
+		}
+		return trim;
+	}
+	
+	/**
+	 * 获得一检继电器端口号
+	 * @return
+	 */
+	public static Integer getYiJianJdqPort() {
+		if (prop == null) {
+			prop = Method2();
+		}
+		String trim = prop.getProperty("yiJianJdqPort").trim();
+		if (StringUtils.isBlank(trim)) {
+			logger.debug("请在配置文件中配置yiJianJdqPort");
+			return null;
+		}
+		
+		int parseInt = Integer.parseInt(trim);
+		
+		return parseInt;
+	}
+	
+	/**
+	 * 获得二检继电器ip
+	 * @return
+	 */
+	public static String getErJianJdqIp() {
+		if (prop == null) {
+			prop = Method2();
+		}
+		String trim = prop.getProperty("erJianJdqIp").trim();
+		if (StringUtils.isBlank(trim)) {
+			logger.debug("请在配置文件中配置erJianJdqIp");
+			return null;
+		}
+		return trim;
+	}
+	
+	/**
+	 * 获得二检继电器端口号
+	 * @return
+	 */
+	public static Integer getErJianJdqPort() {
+		if (prop == null) {
+			prop = Method2();
+		}
+		String trim = prop.getProperty("erJianJdqPort").trim();
+		if (StringUtils.isBlank(trim)) {
+			logger.debug("请在配置文件中配置erJianJdqPort");
+			return null;
+		}
+		
+		int parseInt = Integer.parseInt(trim);
+		
+		return parseInt;
+	}
+	
+	
+	
+	///////////////////////以下代码是从王工做的项目里拷贝过来的，暂时用不到
 	/**
 	 * 
 	 * #启用二维码还是启用IF卡, value: QR or  IF
