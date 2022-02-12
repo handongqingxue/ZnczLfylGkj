@@ -52,7 +52,7 @@ public class ThreadReadSocket implements Runnable {
 						}
 					} catch (SocketException err) {
 						// TODO Auto-generated catch block
-						err.printStackTrace();
+						//err.printStackTrace();
 						System.out.println("已断开连接");
 						client.close();
 					}
