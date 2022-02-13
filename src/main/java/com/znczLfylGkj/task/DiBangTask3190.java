@@ -22,10 +22,13 @@ public class DiBangTask3190 extends Thread {
 		}
 	}
 	
-    public static void getWeight() throws InterruptedException {
+    public static int getWeight() throws InterruptedException {
         SerialPort serialPortTest = null;
         byte[] bytes = null;
         String dataReceive = null;
+        int preWeight=0;
+        int weight=0;
+        int steadyCount=0;//稳定次数
         int i = 1;
         //循环遍历串口
         List<String> serialPorts = MachineTool.uartPortUseAblefind();
@@ -44,7 +47,7 @@ public class DiBangTask3190 extends Thread {
 	                //在此处可以对数据进行判断处理，识别操作
 	                System.out.println((i++) + ". 从串口" + name + "接收的数据：" + dataReceive);
 	                //String str=ByteUtil.byte2hex(bytes);
-	    			String str="022B30303030363030314403";
+	    			String str="022B30303030313030314403";
 	    			//str=str.substring(str.indexOf("022b"), 32);
 	    			
 	    			String str5 = str.substring(4, 6);
@@ -68,8 +71,19 @@ public class DiBangTask3190 extends Thread {
 	    			list.add(ByteUtil.hex2Zf(str8));
 	    			list.add(ByteUtil.hex2Zf(str9));
 	    			list.add(ByteUtil.hex2Zf(str10));
-	    			int weight=ByteUtil.connectZf2Weight(list);
+	    			weight=ByteUtil.connectZf2Weight(list);
 	    			System.out.println("重量==="+weight);
+					if(weight>0) {
+						if(steadyCount>5) {
+							break;
+						}
+						
+						if(weight==preWeight)
+							steadyCount++;
+						else
+							steadyCount=0;
+						preWeight=weight;
+					}
 	            //} else {
 	            	//System.out.println("串口号：" + name + "接收到的数据为空！");
 	            //}
@@ -77,5 +91,6 @@ public class DiBangTask3190 extends Thread {
             
             //serialPortTest.close();
         }
+        return weight;
     }
 }

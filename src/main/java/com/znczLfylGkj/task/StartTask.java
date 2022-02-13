@@ -1,6 +1,7 @@
 package com.znczLfylGkj.task;
 
 import com.znczLfylGkj.cpsbsxt.Car;
+import com.znczLfylGkj.jdq.ErJianJdq;
 import com.znczLfylGkj.jdq.JdqZlUtil;
 import com.znczLfylGkj.jdq.YiJianJdq;
 import com.znczLfylGkj.util.APIUtil;
@@ -20,6 +21,9 @@ public class StartTask {
 		
 		YiJianJdq yjjdq=new YiJianJdq();
 		JdqZlUtil.open(yjjdq);
+		
+		ErJianJdq ejjdq=new ErJianJdq();
+		JdqZlUtil.open(ejjdq);
 
 		testLiuCheng();
 		
