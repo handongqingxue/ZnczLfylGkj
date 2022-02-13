@@ -46,7 +46,7 @@ public class DiBangTask3124 extends Thread {
 	                //在此处可以对数据进行判断处理，识别操作
 	                System.out.println((i++) + ". 从串口" + name + "接收的数据：" + dataReceive);
 	                //String str=ByteUtil.byte2hex(bytes);
-					String str="022930203030303037303030303030300D31";
+					String str="022930203030303031303030303030300D31";
 					String str5 = str.substring(8, 10);
 					String str6 = str.substring(10, 12);
 					String str7 = str.substring(12, 14);

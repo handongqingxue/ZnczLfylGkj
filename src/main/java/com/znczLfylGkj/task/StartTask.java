@@ -37,27 +37,30 @@ public class StartTask {
 	public static void testLiuCheng() {
 		try {
 			///////////一检上磅开始
-			/*
-			Car car1=new Car();
-			car1.setsLicense(" 鲁B9023");
-			APIUtil.updateYJCPSBDDXX(car1);
-			*/
-			//APIUtil.checkYJSBHXBHWGSState();
+			//Car car1=new Car();
+			//car1.setsLicense(" 鲁B9025");
+			//APIUtil.updateYJCPSBDDXX(car1);
+			
+			//APIUtil.checkYJSBHWGSState();
+
 			//Thread.sleep(10000);
+			//APIUtil.checkYJSBHXBHWGSState();
+			
 			//APIUtil.yiJianChengZhongZhong();
-			//Thread.sleep(1000);
+			
 			//APIUtil.checkYJXBHWGSState();
+			
 			//Thread.sleep(10000);
 			//APIUtil.checkIfYJXBYwc();
 			///////////一检上磅结束
-			
-			/*
-			Car car2=new Car();
-			car2.setsLicense(" 鲁B9023");
-			APIUtil.updateEJCPSBDDXX(car2);
-			*/
+
+			///////////二检上磅开始
+			//Car car2=new Car();
+			//car2.setsLicense(" 鲁B9025");
+			//APIUtil.updateEJCPSBDDXX(car2);
 			
 			//APIUtil.checkEJSBHWGSState();
+			
 			//Thread.sleep(10000);
 			//APIUtil.checkEJSBHXBHWGSState();
 			
@@ -65,8 +68,9 @@ public class StartTask {
 			
 			//APIUtil.checkEJXBHWGSState();
 
-			Thread.sleep(10000);
+			//Thread.sleep(10000);
 			APIUtil.checkIfEJXBYwc();
+			///////////二检上磅结束
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

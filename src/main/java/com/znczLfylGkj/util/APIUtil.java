@@ -299,20 +299,17 @@ public class APIUtil {
 			System.out.println("前open1==="+yjjdq.isKgl1Open());
 			while (true) {
 				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+				Thread.sleep(1000);
 				System.out.println("后open1==="+yjjdq.isKgl1Open());
 				if(yjjdq.isKgl1Open()) {
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待上磅更改为上磅中");
-					/*
 					DingDan dd=new DingDan();
 					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 					dd.setYjzt(DingDan.DAI_SHANG_BANG);
 					dd.setXyjzt(DingDan.SHANG_BANG_ZHONG);
 					APIUtil.editDingDanByZt(dd);
-					*/
 					break;
 				}
-				else
-					Thread.sleep(1000);
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -330,6 +327,7 @@ public class APIUtil {
 			System.out.println("前open2==="+yjjdq.isKgl2Open());
 			while (true) {
 				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+				Thread.sleep(1000);
 				System.out.println("后open1==="+yjjdq.isKgl1Open());
 				System.out.println("后open2==="+yjjdq.isKgl2Open());
 				if(!yjjdq.isKgl1Open()&&!yjjdq.isKgl2Open()) {
@@ -341,8 +339,6 @@ public class APIUtil {
 					APIUtil.editDingDanByZt(dd);
 					break;
 				}
-				else
-					Thread.sleep(1000);
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -444,6 +440,7 @@ public class APIUtil {
 			System.out.println("前open2==="+yjjdq.isKgl2Open());
 			while (true) {
 				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+				Thread.sleep(1000);
 				System.out.println("后open2==="+yjjdq.isKgl2Open());
 				if(yjjdq.isKgl2Open()) {
 		        	System.out.println("抬起一检下磅道闸");
@@ -457,8 +454,6 @@ public class APIUtil {
 					APIUtil.editDingDanByZt(dd);
 					break;
 				}
-				else
-					Thread.sleep(1000);
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -472,12 +467,10 @@ public class APIUtil {
 	public static void checkIfYJXBYwc() {
 		try {
 			YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
-			System.out.println("前open1==="+yjjdq.isKgl1Open());
 			System.out.println("前open2==="+yjjdq.isKgl2Open());
 			while (true) {
 				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
 				Thread.sleep(1000);
-				System.out.println("后open1==="+yjjdq.isKgl1Open());
 				System.out.println("后open2==="+yjjdq.isKgl2Open());
 				if(!yjjdq.isKgl2Open()) {
 					System.out.println("查找订单状态为一检上磅的订单，更改订单状态为待一检审核、一检状态从下磅中更改为已完成");
@@ -551,6 +544,7 @@ public class APIUtil {
 			System.out.println("前open1==="+ejjdq.isKgl1Open());
 			while (true) {
 				ejjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+				Thread.sleep(1000);
 				System.out.println("后open1==="+ejjdq.isKgl1Open());
 				if(ejjdq.isKgl1Open()) {
 					System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从待上磅更改为上磅中");
@@ -562,8 +556,6 @@ public class APIUtil {
 					APIUtil.editDingDanByZt(dd);
 					break;
 				}
-				else
-					Thread.sleep(1000);
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -698,6 +690,7 @@ public class APIUtil {
 			System.out.println("前open1==="+ejjdq.isKgl1Open());
 			while (true) {
 				ejjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+				Thread.sleep(1000);
 				System.out.println("后open1==="+ejjdq.isKgl1Open());
 				if(ejjdq.isKgl1Open()) {
 		        	System.out.println("抬起二检下磅道闸");
@@ -711,8 +704,6 @@ public class APIUtil {
 					APIUtil.editDingDanByZt(dd);
 					break;
 				}
-				else
-					Thread.sleep(1000);
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
