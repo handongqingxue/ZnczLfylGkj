@@ -1,5 +1,6 @@
 package com.znczLfylGkj.task;
 
+import com.znczLfylGkj.cpsbsxt.Car;
 import com.znczLfylGkj.jdq.JdqZlUtil;
 import com.znczLfylGkj.jdq.YiJianJdq;
 import com.znczLfylGkj.util.APIUtil;
@@ -19,19 +20,35 @@ public class StartTask {
 		
 		YiJianJdq yjjdq=new YiJianJdq();
 		JdqZlUtil.open(yjjdq);
-		APIUtil.updateYJCZDDXX();
-		try {
-			Thread.sleep(20000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		APIUtil.checkYJSBHXBHWGSState();
+
+		testLiuCheng();
 		
 		// 其他线程启动
 		while (true) {
 			// main程序一直运行
 			
+		}
+	}
+	
+	public static void testLiuCheng() {
+		/*
+		Car car=new Car();
+		car.setsLicense(" 鲁B9023");
+		APIUtil.updateYJCPSBDDXX(car);
+		*/
+		
+		try {
+			//APIUtil.checkYJSBHXBHWGSState();
+			//Thread.sleep(10000);
+			//APIUtil.yiJianChengZhongZhong();
+			//Thread.sleep(1000);
+			//APIUtil.checkYJXBHWGSState();
+			Thread.sleep(10000);
+			APIUtil.checkIfYJXBYwc();
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
