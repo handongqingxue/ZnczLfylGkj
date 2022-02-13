@@ -86,6 +86,23 @@ public class JdqZlUtil {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * 抬起二检下磅道闸
+	 */
+	public static void openErJianXiaBangDz() {
+		try {
+			ejjdq.sendData(WriteZhiLingConst.KAI_JI_DIAN_QI1);
+			int yiJianJdqMaiChong = LoadProperties.getYiJianJdqMaiChong();
+			Thread.sleep(yiJianJdqMaiChong);
+			ejjdq.sendData(WriteZhiLingConst.GUAN_JI_DIAN_QI1);//脉冲时间过后执行复位操作
+			//Thread.sleep(1000);
+			//yjjdq.close();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public static void main(String[] args) {
 		

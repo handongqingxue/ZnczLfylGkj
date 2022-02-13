@@ -2,13 +2,16 @@ package com.znczLfylGkj.entity;
 
 public class DingDanZhuangTai {
 
-	public static final String DAI_SHEN_HE_TEXT="待审核";
-	public static final String YI_SHEN_HE_TEXT="已审核";
-	public static final String PAI_DUI_ZHONG_TEXT="排队中";
-	public static final String YI_JIAN_SHANG_BANG_TEXT="一检上磅";
-	public static final String DAI_YI_JIAN_SHEN_HE_TEXT="待一检审核";
-	public static final String ER_JIAN_SHANG_BANG_TEXT="二检上磅";
-	public static final String DAI_ER_JIAN_SHEN_HE_TEXT="待二检审核";
+	public static final String DAI_SHEN_HE_TEXT="待审核";//1
+	public static final String YI_SHEN_HE_TEXT="已审核";//2
+	public static final String YI_JIAN_PAI_DUI_ZHONG_TEXT="一检排队中";//3
+	public static final String YI_JIAN_SHANG_BANG_TEXT="一检上磅";//4
+	public static final String DAI_YI_JIAN_SHEN_HE_TEXT="待一检审核";//5
+	public static final String DAI_RU_KU_TEXT="待入库";//6
+	public static final String ER_JIAN_PAI_DUI_ZHONG_TEXT="二检排队中";//7
+	public static final String ER_JIAN_SHANG_BANG_TEXT="二检上磅";//8
+	public static final String DAI_ER_JIAN_SHEN_HE_TEXT="待二检审核";//9
+	public static final String YI_WAN_CHENG_TEXT="已完成";//10
 
 	private Integer id;
 	public Integer getId() {

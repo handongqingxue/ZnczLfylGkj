@@ -247,8 +247,8 @@ public class APIUtil {
 	 * @param car
 	 */
 	public static void updateYJCPSBDDXX(Car car) {
-		System.out.println("查询订单状态为排队中的订单");
-		JSONObject resultJO=APIUtil.getDingDan(car.getsLicense(),DingDanZhuangTai.PAI_DUI_ZHONG_TEXT);
+		System.out.println("查询订单状态为一检排队中的订单");
+		JSONObject resultJO=APIUtil.getDingDan(car.getsLicense(),DingDanZhuangTai.YI_JIAN_PAI_DUI_ZHONG_TEXT);
         if("ok".equals(resultJO.getString("status"))) {
         	System.out.println("存在该订单");
         	System.out.println("根据其他订单状态验证是否存在其他订单");
@@ -350,6 +350,9 @@ public class APIUtil {
 		}
 	}
 	
+	/**
+	 * 一检称重中
+	 */
 	public static void yiJianChengZhongZhong() {
 		try {
 			System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待称重更改为称重中");
@@ -493,26 +496,53 @@ public class APIUtil {
 		}
 	}
 	
+	/**
+	 * 更新二检车牌识别订单信息
+	 * @param car
+	 */
+	public static void updateEJCPSBDDXX(Car car) {
+		System.out.println("查询订单状态为二检排队中的订单");
+		JSONObject resultJO=APIUtil.getDingDan(car.getsLicense(),DingDanZhuangTai.ER_JIAN_PAI_DUI_ZHONG_TEXT);
+        if("ok".equals(resultJO.getString("status"))) {
+        	System.out.println("存在该订单");
+        	System.out.println("根据其他订单状态验证是否存在其他订单");
+        	JSONObject ddExistResult = APIUtil.checkDingDanIfExistByZt(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT,DingDan.YI_WAN_CHENG,DingDan.DAI_SHANG_BANG);
+        	if("ok".equals(ddExistResult.getString("status"))) {
+            	System.out.println("音柱播报：其他订单状态存在其他订单");
+        	}
+        	else {
+	        	System.out.println("抬起二检上磅道闸");
+	        	JdqZlUtil.openErJianShangBangDz();
+	        	
+	        	System.out.println("改变订单状态为二检上磅");
+				JSONObject ddJO=resultJO.getJSONObject("dingDan");
+	        	DingDan dd=new DingDan();
+	        	dd.setId(ddJO.getInt("id"));
+	        	dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
+	        	dd.setEjzt(DingDan.DAI_SHANG_BANG);
+	        	APIUtil.editDingDan(dd);
+        	}
+        }
+        else {
+        	System.out.println("message==="+resultJO.getString("message"));
+        	System.out.println("音柱播报：没有找到匹配订单");
+        	//这段代码到现场有了音柱后再打开
+    		//YinZhuTask.sendMsg(YzZlUtil.get86().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
+        }
+	}
+	
 	public static void updateEJCZDDXX() {
 		checkEJSBHWGSState();
 		checkEJSBHXBHWGSState();
 		erJianChengZhongZhong();
-
-		
-		
-    	
-		
-		
-		
-		System.out.println("更改订单状态为待二检审核、二检状态为已完成");
-    	DingDan dd3=new DingDan();
-    	dd3.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
-    	dd3.setXddztMc(DingDanZhuangTai.DAI_ER_JIAN_SHEN_HE_TEXT);
-    	dd3.setEjzt(DingDan.SHANG_BANG_ZHONG);
-    	dd3.setXejzt(DingDan.YI_WAN_CHENG);
-    	APIUtil.editDingDanByZt(dd3);
+		checkEJXBHWGSState();
+		checkIfEJXBYwc();
 	}
+
 	
+	/**
+	 * 检测二检上磅红外光栅状态
+	 */
 	public static void checkEJSBHWGSState() {
 		try {
 			//ErJianJdq ejjdq=new ErJianJdq();
@@ -552,6 +582,7 @@ public class APIUtil {
 			System.out.println("前open2==="+ejjdq.isKgl2Open());
 			while (true) {
 				ejjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+				Thread.sleep(1000);
 				System.out.println("后open1==="+ejjdq.isKgl1Open());
 				System.out.println("后open2==="+ejjdq.isKgl2Open());
 				if(!ejjdq.isKgl1Open()&&!ejjdq.isKgl2Open()) {
@@ -563,15 +594,16 @@ public class APIUtil {
 					APIUtil.editDingDanByZt(dd);
 					break;
 				}
-				else
-					Thread.sleep(1000);
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * 二检称重中
+	 */
 	public static void erJianChengZhongZhong() {
 		try {
 			System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从待称重更改为称重中");
@@ -655,16 +687,79 @@ public class APIUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+	}
+
+	/**
+	 * 检测二检下磅红外光栅状态
+	 */
+	public static void checkEJXBHWGSState() {
+		try {
+			ErJianJdq ejjdq = JdqZlUtil.getEjjdq();
+			System.out.println("前open1==="+ejjdq.isKgl1Open());
+			while (true) {
+				ejjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+				System.out.println("后open1==="+ejjdq.isKgl1Open());
+				if(ejjdq.isKgl1Open()) {
+		        	System.out.println("抬起二检下磅道闸");
+		        	JdqZlUtil.openErJianXiaBangDz();
+		        	
+					System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从待下磅更改为下磅中");
+					DingDan dd=new DingDan();
+					dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
+					dd.setEjzt(DingDan.DAI_XIA_BANG);
+					dd.setXejzt(DingDan.XIA_BANG_ZHONG);
+					APIUtil.editDingDanByZt(dd);
+					break;
+				}
+				else
+					Thread.sleep(1000);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 检测二检下磅是否完成
+	 */
+	public static void checkIfEJXBYwc() {
+		try {
+			ErJianJdq ejjdq = JdqZlUtil.getEjjdq();
+			System.out.println("前open1==="+ejjdq.isKgl1Open());
+			while (true) {
+				ejjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+				Thread.sleep(1000);
+				System.out.println("后open1==="+ejjdq.isKgl1Open());
+				if(!ejjdq.isKgl1Open()) {
+			    	System.out.println("查找订单状态为二检上磅的订单，更改订单状态为待二检审核、二检状态从下磅中更改为已完成");
+			    	DingDan dd=new DingDan();
+			    	dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
+			    	dd.setXddztMc(DingDanZhuangTai.DAI_ER_JIAN_SHEN_HE_TEXT);
+			    	dd.setEjzt(DingDan.XIA_BANG_ZHONG);
+			    	dd.setXejzt(DingDan.YI_WAN_CHENG);
+			    	APIUtil.editDingDanByZt(dd);
+					break;
+				}
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) {
-		//Car car=new Car();
-		//car.setsLicense(" 鲁B9023");
-		//APIUtil.updateYJCPSBDDXX(car);
+		//Car car1=new Car();
+		//car1.setsLicense(" 鲁B9023");
+		//APIUtil.updateYJCPSBDDXX(car1);
 		
 		//APIUtil.updateYJCZDDXX();
-		APIUtil.updateEJCZDDXX();
+
+		//Car car2=new Car();
+		//car2.setsLicense(" 鲁B9023");
+		//APIUtil.updateEJCPSBDDXX(car2);
+		
+		//APIUtil.updateEJCZDDXX();
 		
 		//APIUtil.checkDingDanIfExistByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_SHANG_BANG,DingDan.DAI_SHANG_BANG);
 	}
