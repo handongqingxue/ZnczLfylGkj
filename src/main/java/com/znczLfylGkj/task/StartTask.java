@@ -20,10 +20,10 @@ public class StartTask {
 		//cpsbsxtTask.start();
 		
 		//YiJianJdq yjjdq=new YiJianJdq();
-		//JdqZlUtil.open(yjjdq);
+		//JdqZlUtil.setYjjdq(yjjdq);
 		
 		ErJianJdq ejjdq=new ErJianJdq();
-		JdqZlUtil.open(ejjdq);
+		JdqZlUtil.setEjjdq(ejjdq);
 
 		testLiuCheng();
 		
@@ -38,7 +38,7 @@ public class StartTask {
 		try {
 			///////////一检上磅开始
 			//Car car1=new Car();
-			//car1.setsLicense(" 鲁B9025");
+			//car1.setsLicense(" 鲁A9008");
 			//APIUtil.updateYJCPSBDDXX(car1);
 			
 			//APIUtil.checkYJSBHWGSState();
@@ -55,9 +55,9 @@ public class StartTask {
 			///////////一检上磅结束
 
 			///////////二检上磅开始
-			//Car car2=new Car();
-			//car2.setsLicense(" 鲁B9025");
-			//APIUtil.updateEJCPSBDDXX(car2);
+			Car car2=new Car();
+			car2.setsLicense(" 鲁A9008");
+			APIUtil.updateEJCPSBDDXX(car2);
 			
 			//APIUtil.checkEJSBHWGSState();
 			
@@ -69,7 +69,7 @@ public class StartTask {
 			//APIUtil.checkEJXBHWGSState();
 
 			//Thread.sleep(10000);
-			APIUtil.checkIfEJXBYwc();
+			//APIUtil.checkIfEJXBYwc();
 			///////////二检上磅结束
 			
 		} catch (Exception e) {

@@ -26,14 +26,33 @@ public class JdqZlUtil {
 		JdqZlUtil.yjjdq = yjjdq;
 	}
 
-	public static void open(YiJianJdq yjjdq) {
-		JdqZlUtil.yjjdq=yjjdq;
+	/**
+	 * 开启一检继电器
+	 */
+	public static void openYiJianJdq() {
 		JdqZlUtil.yjjdq.open();
 	}
 
-	public static void open(ErJianJdq ejjdq) {
-		JdqZlUtil.ejjdq=ejjdq;
+	/**
+	 * 关闭一检继电器
+	 */
+	public static void closeYiJianJdq() {
+		JdqZlUtil.yjjdq.close();
+	}
+
+	/**
+	 * 开启二检继电器
+	 */
+	public static void openErJianJdq() {
+    	System.out.println("开启二检继电器");
 		JdqZlUtil.ejjdq.open();
+	}
+
+	/**
+	 * 关闭二检继电器
+	 */
+	public static void closeErJianJdq() {
+		JdqZlUtil.ejjdq.close();
 	}
 
 	/**

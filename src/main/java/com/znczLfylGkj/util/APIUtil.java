@@ -257,6 +257,8 @@ public class APIUtil {
             	System.out.println("音柱播报：其他订单状态存在其他订单");
         	}
         	else {
+            	System.out.println("开启一检继电器");
+	    		JdqZlUtil.openYiJianJdq();
 	        	System.out.println("抬起一检上磅道闸");
 	        	JdqZlUtil.openYiJianShangBangDz();
 	        	
@@ -267,6 +269,8 @@ public class APIUtil {
 	        	dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 	        	dd.setYjzt(DingDan.DAI_SHANG_BANG);
 	        	APIUtil.editDingDan(dd);
+	        	
+	    		checkYJSBHWGSState();
         	}
         }
         else {
@@ -308,6 +312,8 @@ public class APIUtil {
 					dd.setYjzt(DingDan.DAI_SHANG_BANG);
 					dd.setXyjzt(DingDan.SHANG_BANG_ZHONG);
 					APIUtil.editDingDanByZt(dd);
+					
+					checkYJSBHXBHWGSState();
 					break;
 				}
 			}
@@ -337,6 +343,8 @@ public class APIUtil {
 					dd.setYjzt(DingDan.SHANG_BANG_ZHONG);
 					dd.setXyjzt(DingDan.DAI_CHENG_ZHONG);
 					APIUtil.editDingDanByZt(dd);
+					
+					yiJianChengZhongZhong();
 					break;
 				}
 			}
@@ -418,6 +426,8 @@ public class APIUtil {
 				dd.setYjzt(DingDan.CHENG_ZHONG_ZHONG);
 				dd.setXyjzt(DingDan.DAI_XIA_BANG);
 				APIUtil.editDingDanByZt(dd);
+				
+				checkYJXBHWGSState();
 			}
 			else {
 				String message = resultJO.getString("message");
@@ -452,6 +462,8 @@ public class APIUtil {
 					dd.setYjzt(DingDan.DAI_XIA_BANG);
 					dd.setXyjzt(DingDan.XIA_BANG_ZHONG);
 					APIUtil.editDingDanByZt(dd);
+					
+					checkIfYJXBYwc();
 					break;
 				}
 			}
@@ -480,6 +492,9 @@ public class APIUtil {
 			    	dd.setYjzt(DingDan.XIA_BANG_ZHONG);
 			    	dd.setXyjzt(DingDan.YI_WAN_CHENG);
 			    	APIUtil.editDingDanByZt(dd);
+			    	
+	            	System.out.println("关闭一检继电器");
+		    		JdqZlUtil.closeYiJianJdq();
 					break;
 				}
 			}
@@ -504,6 +519,8 @@ public class APIUtil {
             	System.out.println("音柱播报：其他订单状态存在其他订单");
         	}
         	else {
+            	System.out.println("开启二检继电器");
+	    		JdqZlUtil.openErJianJdq();
 	        	System.out.println("抬起二检上磅道闸");
 	        	JdqZlUtil.openErJianShangBangDz();
 	        	
@@ -514,6 +531,8 @@ public class APIUtil {
 	        	dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
 	        	dd.setEjzt(DingDan.DAI_SHANG_BANG);
 	        	APIUtil.editDingDan(dd);
+	        	
+	    		checkEJSBHWGSState();
         	}
         }
         else {
@@ -554,6 +573,8 @@ public class APIUtil {
 					dd.setEjzt(DingDan.DAI_SHANG_BANG);
 					dd.setXejzt(DingDan.SHANG_BANG_ZHONG);
 					APIUtil.editDingDanByZt(dd);
+
+					checkEJSBHXBHWGSState();
 					break;
 				}
 			}
@@ -584,6 +605,8 @@ public class APIUtil {
 					dd.setEjzt(DingDan.SHANG_BANG_ZHONG);
 					dd.setXejzt(DingDan.DAI_CHENG_ZHONG);
 					APIUtil.editDingDanByZt(dd);
+					
+					erJianChengZhongZhong();
 					break;
 				}
 			}
@@ -668,6 +691,8 @@ public class APIUtil {
 				dd.setEjzt(DingDan.CHENG_ZHONG_ZHONG);
 				dd.setXejzt(DingDan.DAI_XIA_BANG);
 				APIUtil.editDingDanByZt(dd);
+				
+				checkEJXBHWGSState();
 			}
 			else {
 				String message = resultJO.getString("message");
@@ -702,6 +727,8 @@ public class APIUtil {
 					dd.setEjzt(DingDan.DAI_XIA_BANG);
 					dd.setXejzt(DingDan.XIA_BANG_ZHONG);
 					APIUtil.editDingDanByZt(dd);
+					
+					checkIfEJXBYwc();
 					break;
 				}
 			}
@@ -730,6 +757,9 @@ public class APIUtil {
 			    	dd.setEjzt(DingDan.XIA_BANG_ZHONG);
 			    	dd.setXejzt(DingDan.YI_WAN_CHENG);
 			    	APIUtil.editDingDanByZt(dd);
+			    	
+	            	System.out.println("关闭二检继电器");
+		    		JdqZlUtil.closeErJianJdq();
 					break;
 				}
 			}
