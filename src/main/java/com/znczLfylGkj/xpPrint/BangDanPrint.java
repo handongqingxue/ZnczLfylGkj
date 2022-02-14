@@ -11,7 +11,17 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
+import org.json.JSONObject;
+
+import com.znczLfylGkj.entity.GuoBangJiLu;
+
 public class BangDanPrint implements Printable {
+	
+	private GuoBangJiLu gbjl;
+	
+	public BangDanPrint(GuoBangJiLu gbjl) {
+		this.gbjl=gbjl;
+	}
 
 	@Override
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
@@ -34,19 +44,39 @@ public class BangDanPrint implements Printable {
 		float heigth = font.getSize2D();//获取字体的高度  
 		
 		//设置小票的标题标题  
-		g2.drawString("索通发展有限公司",(float)x+25,(float)y+heigth);
+		g2.drawString("蓝帆健康有限公司",(float)x+25,(float)y+heigth);
 
 		float line = 2*heigth; //下一行开始打印的高度
 		g2.setFont(new Font("宋体", Font.PLAIN,8));//设置正文字体  
 		heigth = font.getSize2D();// 字体高度  
 
+		//设置订单号  
+		g2.drawString("订单号:"+gbjl.getDdh(), (float)x+20,(float)y+line);
+		line+=heigth+2;
+
+		//设置车牌号  
+		g2.drawString("车牌号:"+gbjl.getCph(), (float)x+20,(float)y+line);
+		line+=heigth+2;
+
+		//设置司机姓名  
+		g2.drawString("司机姓名:"+gbjl.getSjxm(), (float)x+20,(float)y+line);
+		line+=heigth+2;
+
+		//设置司机身份证号  
+		g2.drawString("司机身份证号:"+gbjl.getSjsfzh(), (float)x+20,(float)y+line);
+		line+=heigth+2;
+
+		//设置过磅重量  
+		g2.drawString("过磅重量:"+gbjl.getGbzl() , (float)x+20,(float)y+line);
+		line+=heigth+2;
+		
 		line+=2;
-		//设置操作员 
-		g2.drawString("操作员:李天赐",(float)x+20,(float)y+line); 
+		//设置过磅类型 
+		g2.drawString("过磅类型:"+gbjl.getGblxName(),(float)x+20,(float)y+line);
 		line+=heigth;
 
-		//设置订单号  
-		g2.drawString("订单号:202010240001", (float)x+20,(float)y+line);
+		//设置过磅时间  
+		g2.drawString("过磅时间:"+gbjl.getGbsj(), (float)x+20,(float)y+line);
 		line+=heigth+2;
 		
 		switch (pageIndex) {  

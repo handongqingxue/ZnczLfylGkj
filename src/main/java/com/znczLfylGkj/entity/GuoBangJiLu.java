@@ -5,8 +5,8 @@ public class GuoBangJiLu {
 	public static final Integer ZHENG_CHANG=1;
 	public static final Integer YI_CHANG=2;
 	
-	public static final Integer RU_CHANG_GUO_BANG=1;
-	public static final Integer CHU_CHANG_GUO_BANG=2;
+	public static final int RU_CHANG_GUO_BANG=1;
+	public static final int CHU_CHANG_GUO_BANG=2;
 	
 	private Integer id;
 	public Integer getId() {
@@ -57,6 +57,12 @@ public class GuoBangJiLu {
 	public void setGblx(Integer gblx) {
 		this.gblx = gblx;
 	}
+	public String getGblxName() {
+		return gblxName;
+	}
+	public void setGblxName(String gblxName) {
+		this.gblxName = gblxName;
+	}
 	public Integer getDdId() {
 		return ddId;
 	}
@@ -75,6 +81,42 @@ public class GuoBangJiLu {
 	public void setCph(String cph) {
 		this.cph = cph;
 	}
+	public String getSjsfzh() {
+		return sjsfzh;
+	}
+	public void setSjsfzh(String sjsfzh) {
+		this.sjsfzh = sjsfzh;
+	}
+	public String getSjxm() {
+		return sjxm;
+	}
+	public void setSjxm(String sjxm) {
+		this.sjxm = sjxm;
+	}
+	public Integer getLxlx() {
+		return lxlx;
+	}
+	public void setLxlx(Integer lxlx) {
+		this.lxlx = lxlx;
+	}
+	public String getYssMc() {
+		return yssMc;
+	}
+	public void setYssMc(String yssMc) {
+		this.yssMc = yssMc;
+	}
+	public String getFhdwMc() {
+		return fhdwMc;
+	}
+	public void setFhdwMc(String fhdwMc) {
+		this.fhdwMc = fhdwMc;
+	}
+	public String getShbmMc() {
+		return shbmMc;
+	}
+	public void setShbmMc(String shbmMc) {
+		this.shbmMc = shbmMc;
+	}
 	private Float gbzl;
 	private String zp1;
 	private String zp2;
@@ -82,7 +124,14 @@ public class GuoBangJiLu {
 	private Integer gbzt;
 	private String gbsj;
 	private Integer gblx;
+	private String gblxName;
 	private Integer ddId;
 	private String ddh;
 	private String cph;
+	private String sjsfzh;
+	private String sjxm;
+	private Integer lxlx;//流向类型
+	private String yssMc;
+	private String fhdwMc;
+	private String shbmMc;
 }

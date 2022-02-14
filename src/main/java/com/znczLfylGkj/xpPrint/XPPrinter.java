@@ -11,6 +11,13 @@ import javax.print.PrintServiceLookup;
 import javax.print.attribute.HashAttributeSet;
 import javax.print.attribute.standard.PrinterName;
 
+import org.json.JSONObject;
+
+import com.znczLfylGkj.entity.DingDan;
+import com.znczLfylGkj.entity.DingDanZhuangTai;
+import com.znczLfylGkj.entity.GuoBangJiLu;
+import com.znczLfylGkj.util.APIUtil;
+
 public class XPPrinter {
 
 	private BangDanPrint bangDanPrint;
@@ -62,9 +69,7 @@ public class XPPrinter {
 	}
     
     public static void main(String[] args) {
-        BangDanPrint bdp=new BangDanPrint();
-        XPPrinter xpp=new XPPrinter(bdp);
-        xpp.printer();
+    	APIUtil.printYjGbjl();
     	/*
     	XPPrinter xpp=new XPPrinter();
     	xpp.findPrinter("DL-801PN");

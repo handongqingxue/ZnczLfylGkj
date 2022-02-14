@@ -21,6 +21,8 @@ import com.znczLfylGkj.jdq.YiJianJdq;
 import com.znczLfylGkj.task.DiBangTask3124;
 import com.znczLfylGkj.task.DiBangTask3190;
 import com.znczLfylGkj.task.YinZhuTask;
+import com.znczLfylGkj.xpPrint.BangDanPrint;
+import com.znczLfylGkj.xpPrint.XPPrinter;
 import com.znczLfylGkj.yz.YzZlUtil;
 
 public class APIUtil {
@@ -512,12 +514,52 @@ public class APIUtil {
 			    	
 	            	System.out.println("关闭一检继电器");
 		    		JdqZlUtil.closeYiJianJdq();
+		    		
+		    		//打印一检过磅记录
+		    		printYjGbjl();
 					break;
 				}
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	public static void printYjGbjl() {
+		System.out.println("查询订单状态为待一检审核，一检状态为已完成的订单");
+		JSONObject resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.DAI_YI_JIAN_SHEN_HE_TEXT,DingDan.YI_WAN_CHENG,DingDan.DAI_SHANG_BANG);
+		String status = resultJO.getString("status");
+		if("ok".equals(status)) {
+			JSONObject dingDanJO=resultJO.getJSONObject("dingDan");
+			int ddId = dingDanJO.getInt("id");
+			JSONObject gbjlResultJO=selectGuoBangJiLuByDdId(ddId,GuoBangJiLu.RU_CHANG_GUO_BANG);
+			
+			GuoBangJiLu gbjl=(GuoBangJiLu)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(gbjlResultJO.get("gbjl").toString()), GuoBangJiLu.class);
+			
+	        BangDanPrint bdp=new BangDanPrint(gbjl);
+	        XPPrinter xpp=new XPPrinter(bdp);
+	        xpp.printer();
+		}
+		else {
+        	System.out.println("message==="+resultJO.getString("message"));
+        	System.out.println("音柱播报：找不到相关过磅记录");
+		}
+	}
+	
+	public static JSONObject selectGuoBangJiLuByDdId(Integer ddId, Integer gblx) {
+		JSONObject resultJO = null;
+		try {
+			Map parames = new HashMap<String, String>();
+	        parames.put("ddId", ddId);
+	        parames.put("gblx", gblx);
+	        resultJO = APIUtil.doHttp("selectGuoBangJiLuByDdId",parames);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return resultJO;
 		}
 	}
 	
