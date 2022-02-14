@@ -69,7 +69,7 @@ public class XPPrinter {
 	}
     
     public static void main(String[] args) {
-    	APIUtil.printYjGbjl();
+    	APIUtil.printGbjl(GuoBangJiLu.RU_CHANG_GUO_BANG);
     	/*
     	XPPrinter xpp=new XPPrinter();
     	xpp.findPrinter("DL-801PN");

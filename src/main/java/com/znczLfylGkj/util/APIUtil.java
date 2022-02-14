@@ -516,7 +516,7 @@ public class APIUtil {
 		    		JdqZlUtil.closeYiJianJdq();
 		    		
 		    		//打印一检过磅记录
-		    		printYjGbjl();
+		    		printGbjl(GuoBangJiLu.RU_CHANG_GUO_BANG);
 					break;
 				}
 			}
@@ -526,14 +526,24 @@ public class APIUtil {
 		}
 	}
 	
-	public static void printYjGbjl() {
-		System.out.println("查询订单状态为待一检审核，一检状态为已完成的订单");
-		JSONObject resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.DAI_YI_JIAN_SHEN_HE_TEXT,DingDan.YI_WAN_CHENG,DingDan.DAI_SHANG_BANG);
+	public static void printGbjl(int gblx) {
+		JSONObject resultJO = null;
+		switch (gblx) {
+		case GuoBangJiLu.RU_CHANG_GUO_BANG:
+			System.out.println("查询订单状态为待一检审核，一检状态为已完成的订单");
+			resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.DAI_YI_JIAN_SHEN_HE_TEXT,DingDan.YI_WAN_CHENG,DingDan.DAI_SHANG_BANG);
+			break;
+		case GuoBangJiLu.CHU_CHANG_GUO_BANG:
+			System.out.println("查询订单状态为待二检审核，二检状态为已完成的订单");
+			resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.DAI_ER_JIAN_SHEN_HE_TEXT,DingDan.YI_WAN_CHENG,DingDan.YI_WAN_CHENG);
+			break;
+		}
+		
 		String status = resultJO.getString("status");
 		if("ok".equals(status)) {
 			JSONObject dingDanJO=resultJO.getJSONObject("dingDan");
 			int ddId = dingDanJO.getInt("id");
-			JSONObject gbjlResultJO=selectGuoBangJiLuByDdId(ddId,GuoBangJiLu.RU_CHANG_GUO_BANG);
+			JSONObject gbjlResultJO=selectGuoBangJiLuByDdId(ddId,gblx);
 			
 			GuoBangJiLu gbjl=(GuoBangJiLu)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(gbjlResultJO.get("gbjl").toString()), GuoBangJiLu.class);
 			
@@ -837,6 +847,9 @@ public class APIUtil {
 			    	
 	            	System.out.println("关闭二检继电器");
 		    		JdqZlUtil.closeErJianJdq();
+
+		    		//打印二检过磅记录
+		    		printGbjl(GuoBangJiLu.CHU_CHANG_GUO_BANG);
 					break;
 				}
 			}

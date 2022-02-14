@@ -19,11 +19,11 @@ public class StartTask {
 		//CpsbsxtTask cpsbsxtTask = new CpsbsxtTask();
 		//cpsbsxtTask.start();
 		
-		YiJianJdq yjjdq=new YiJianJdq();
-		JdqZlUtil.setYjjdq(yjjdq);
+		//YiJianJdq yjjdq=new YiJianJdq();
+		//JdqZlUtil.setYjjdq(yjjdq);
 		
-		//ErJianJdq ejjdq=new ErJianJdq();
-		//JdqZlUtil.setEjjdq(ejjdq);
+		ErJianJdq ejjdq=new ErJianJdq();
+		JdqZlUtil.setEjjdq(ejjdq);
 
 		testLiuCheng();
 		
@@ -42,9 +42,9 @@ public class StartTask {
 	public static void testLiuCheng() {
 		try {
 			///////////一检上磅开始
-			Car car1=new Car();
-			car1.setsLicense(" 鲁A9029");
-			APIUtil.updateYJCPSBDDXX(car1);
+			//Car car1=new Car();
+			//car1.setsLicense(" 鲁A9031");
+			//APIUtil.updateYJCPSBDDXX(car1);
 			
 			//APIUtil.checkYJSBHWGSState();
 
@@ -60,9 +60,9 @@ public class StartTask {
 			///////////一检上磅结束
 
 			///////////二检上磅开始
-			//Car car2=new Car();
-			//car2.setsLicense(" 鲁A9028");
-			//APIUtil.updateEJCPSBDDXX(car2);
+			Car car2=new Car();
+			car2.setsLicense(" 鲁A9031");
+			APIUtil.updateEJCPSBDDXX(car2);
 			
 			//APIUtil.checkEJSBHWGSState();
 			
