@@ -46,7 +46,8 @@ public class DiBangTask3124 extends Thread {
 	                //在此处可以对数据进行判断处理，识别操作
 	                System.out.println((i++) + ". 从串口" + name + "接收的数据：" + dataReceive);
 	                //String str=ByteUtil.byte2hex(bytes);
-					String str="022930203030303031303030303030300D31";
+					//String str="022930203030303030303030303030300D31";
+					String str="022930203030303037303030303030300D31";
 					String str5 = str.substring(8, 10);
 					String str6 = str.substring(10, 12);
 					String str7 = str.substring(12, 14);
@@ -70,7 +71,7 @@ public class DiBangTask3124 extends Thread {
 					list.add(ByteUtil.hex2Zf(str10));
 					weight=ByteUtil.connectZf2Weight(list);
 					System.out.println("重量==="+weight);
-					if(weight>0) {
+					//if(weight>0) {
 						if(steadyCount>5) {
 							break;
 						}
@@ -80,14 +81,14 @@ public class DiBangTask3124 extends Thread {
 						else
 							steadyCount=0;
 						preWeight=weight;
-					}
+					//}
 					
 	            //} else {
 	            	//System.out.println("串口号：" + name + "接收到的数据为空！");
 	            //}
 			}
             
-            //serialPortTest.close();
+            serialPortTest.close();
         }
         return weight;
     }
