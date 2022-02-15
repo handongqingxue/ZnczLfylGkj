@@ -59,10 +59,10 @@ public class ClientSocket implements Runnable {
 	}
 	
 	private void sendName(){
-		int yjFlag= 0;
+		int jyFlag= 0;
 		//name = JOptionPane.showInputDialog(f, "«Î ‰»Î–’√˚:");
-		yjFlag=1;
-		this.sendMessageToServer(yjFlag+"");
+		jyFlag=1;
+		this.sendMessageToServer(jyFlag+"");
 	}
 	
 	private void sendMessageToServer(String mes){
