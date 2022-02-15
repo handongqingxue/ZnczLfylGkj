@@ -4,6 +4,7 @@ import com.znczLfylGkj.cpsbsxt.Car;
 import com.znczLfylGkj.jdq.ErJianJdq;
 import com.znczLfylGkj.jdq.JdqZlUtil;
 import com.znczLfylGkj.jdq.YiJianJdq;
+import com.znczLfylGkj.socket.ClientSocket;
 import com.znczLfylGkj.util.APIUtil;
 
 public class StartTask {
@@ -22,10 +23,13 @@ public class StartTask {
 		//YiJianJdq yjjdq=new YiJianJdq();
 		//JdqZlUtil.setYjjdq(yjjdq);
 		
-		ErJianJdq ejjdq=new ErJianJdq();
-		JdqZlUtil.setEjjdq(ejjdq);
+		//ErJianJdq ejjdq=new ErJianJdq();
+		//JdqZlUtil.setEjjdq(ejjdq);
 
-		testLiuCheng();
+		//testLiuCheng();
+		
+		ClientSocket cs = new ClientSocket();
+		cs.connectServer();
 		
 		// 其他线程启动
 		while (true) {
@@ -60,9 +64,9 @@ public class StartTask {
 			///////////一检上磅结束
 
 			///////////二检上磅开始
-			Car car2=new Car();
-			car2.setsLicense(" 鲁A9031");
-			APIUtil.updateEJCPSBDDXX(car2);
+			//Car car2=new Car();
+			//car2.setsLicense(" 鲁A9031");
+			//APIUtil.updateEJCPSBDDXX(car2);
 			
 			//APIUtil.checkEJSBHWGSState();
 			
