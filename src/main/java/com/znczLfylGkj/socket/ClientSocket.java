@@ -9,12 +9,16 @@ import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
+import com.znczLfylGkj.cpsbsxt.Car;
+import com.znczLfylGkj.util.APIUtil;
+
 import net.sf.json.JSONObject;
 
 public class ClientSocket implements Runnable {
 
 	public static final int YI_JIAN=1;
 	public static final int ER_JIAN=2;
+	public static final String PUSH_CPH="pushCph";
 	private OutputStreamWriter out;
 	private BufferedReader in;
 
@@ -44,6 +48,14 @@ public class ClientSocket implements Runnable {
 		JSONObject mesJO = net.sf.json.JSONObject.fromObject(mesJOStr);
 		String action = mesJO.getString("action");
 		System.out.println("action==="+action);
+		switch (action) {
+		case PUSH_CPH:
+			Car car1=new Car();
+			String cph = mesJO.getString("cph");
+			car1.setsLicense(" "+cph);
+			APIUtil.updateYJCPSBDDXX(car1);
+			break;
+		}
 	}
 	
 	private void sendName(){

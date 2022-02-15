@@ -20,8 +20,8 @@ public class StartTask {
 		//CpsbsxtTask cpsbsxtTask = new CpsbsxtTask();
 		//cpsbsxtTask.start();
 		
-		//YiJianJdq yjjdq=new YiJianJdq();
-		//JdqZlUtil.setYjjdq(yjjdq);
+		YiJianJdq yjjdq=new YiJianJdq();
+		JdqZlUtil.setYjjdq(yjjdq);
 		
 		//ErJianJdq ejjdq=new ErJianJdq();
 		//JdqZlUtil.setEjjdq(ejjdq);
