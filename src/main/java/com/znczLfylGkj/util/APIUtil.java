@@ -493,7 +493,6 @@ public class APIUtil {
 
 		    		//打印一检过磅记录
 		    		printGbjl(GuoBangJiLu.RU_CHANG_GUO_BANG);
-					Thread.sleep(5000);
 		    		
 					playWeight(djczl,YinZhuTask.YI_JIAN);
 					Thread.sleep(2000);
