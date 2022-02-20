@@ -31,6 +31,8 @@ public class YinZhuTask {
 			//String serialPortName = "COM6";
 			// ¿ªÆô´®¿Ú
 			//RXTXUtil.openSerialPort(LoadProperties.getSerialPortName(), 100);
+			
+			System.out.println("serialPortName=="+serialPortName);
 			RXTXUtil.openSerialPort(serialPortName, 9600);
 
 			String executeOrder = RXTXUtil.executeOrder(zhiLing, serialPortName, 9600);

@@ -157,6 +157,16 @@ public class RXTXUtil {
         }
 
     }
+    
+    public static void main(String[] args) {
+    	try {
+    		CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier("COM4");
+    		System.out.println("portIdentifier==="+portIdentifier);
+		} catch (NoSuchPortException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
     /**
      * 	向串口发送数�?

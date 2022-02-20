@@ -111,10 +111,10 @@ public class JdqZlUtil {
 	 */
 	public static void openErJianXiaBangDz() {
 		try {
-			ejjdq.sendData(WriteZhiLingConst.KAI_JI_DIAN_QI1);
+			ejjdq.sendData(WriteZhiLingConst.KAI_JI_DIAN_QI2);
 			int yiJianJdqMaiChong = LoadProperties.getYiJianJdqMaiChong();
 			Thread.sleep(yiJianJdqMaiChong);
-			ejjdq.sendData(WriteZhiLingConst.GUAN_JI_DIAN_QI1);//脉冲时间过后执行复位操作
+			ejjdq.sendData(WriteZhiLingConst.GUAN_JI_DIAN_QI2);//脉冲时间过后执行复位操作
 			//Thread.sleep(1000);
 			//yjjdq.close();
 		} catch (InterruptedException e) {
@@ -124,6 +124,14 @@ public class JdqZlUtil {
 	}
 	
 	public static void main(String[] args) {
+		//YiJianJdq yjjdq=new YiJianJdq();
+		//JdqZlUtil.setYjjdq(yjjdq);
+		//JdqZlUtil.openYiJianJdq();
+    	//JdqZlUtil.openYiJianShangBangDz();
 		
+		ErJianJdq ejjdq=new ErJianJdq();
+		JdqZlUtil.setEjjdq(ejjdq);
+		JdqZlUtil.openErJianJdq();
+    	JdqZlUtil.openErJianXiaBangDz();
 	}
 }

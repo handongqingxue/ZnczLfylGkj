@@ -5,6 +5,8 @@ import gnu.io.SerialPort;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.znczLfylGkj.task.YinZhuTask;
+
 public class GiftTool {
 
 	private final static Logger LOGGER = Logger.getLogger("GiftTool");
@@ -42,15 +44,18 @@ public class GiftTool {
 
 	public static void main(String[] args) {
 		try {
-			GiftTool.run(ByteUtil.hex2byte(YzZlUtil.getByDuanHao(83).replaceAll(" ", "")));
+			//GiftTool.run(ByteUtil.hex2byte(YzZlUtil.getByDuanHao(86).replaceAll(" ", "")));
 			//GiftTool.run(ByteUtil.hex2byte(ZhiLingUtil.getByDuanHao(81).replaceAll(" ", "")));
+
+    		//YinZhuTask.sendMsg(YzZlUtil.get89().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
+    		YinZhuTask.sendMsg(YzZlUtil.getByDuanHao(36).replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 			/*
 			while (true) {
 				GiftTool.run(ByteUtil.hex2byte(WriteZhiLingConst.XIA_YI_QU));
 				Thread.sleep(2000);
 			}
 			 */
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

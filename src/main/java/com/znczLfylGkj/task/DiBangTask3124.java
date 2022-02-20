@@ -38,16 +38,19 @@ public class DiBangTask3124 extends Thread {
 			serialPortTest = MachineTool.portParameterOpen(name, 9600);
 			
 			while (true) {
-				Thread.sleep(3000);
+				Thread.sleep(2000);
 	            //接收数据
 	            bytes = MachineTool.uartReceiveDatafromSingleChipMachine(serialPortTest);
-	            //if (bytes != null && bytes.length > 0) {
+	            if (bytes != null && bytes.length > 0) {
 	                //dataReceive = ByteUtil.byte2hex(bytes);
 	                //在此处可以对数据进行判断处理，识别操作
 	                System.out.println((i++) + ". 从串口" + name + "接收的数据：" + dataReceive);
-	                //String str=ByteUtil.byte2hex(bytes);
+	                String str=ByteUtil.byte2hex(bytes);
 					//String str="022930203030303030303030303030300D31";
-					String str="022930203030303037303030303030300D31";
+					//String str="022930203030303037303030303030300D31";
+	                if(!str.startsWith("0229"))
+	                	continue;
+	                
 					String str5 = str.substring(8, 10);
 					String str6 = str.substring(10, 12);
 					String str7 = str.substring(12, 14);
@@ -83,7 +86,8 @@ public class DiBangTask3124 extends Thread {
 						preWeight=weight;
 					//}
 					
-	            //} else {
+	            } 
+	            //else {
 	            	//System.out.println("串口号：" + name + "接收到的数据为空！");
 	            //}
 			}

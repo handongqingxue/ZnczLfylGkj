@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import com.znczLfylGkj.util.LoadProperties;
 import com.znczLfylGkj.util.StringUtil;
 
 public class TCPClient {
@@ -14,7 +15,9 @@ public class TCPClient {
 
 	public void open() {
 		try {
-			client=new Socket("192.168.1.20",50000);
+			String yiJianJdqIp = LoadProperties.getYiJianJdqIp();
+			int yiJianJdqPort = LoadProperties.getYiJianJdqPort();
+			client=new Socket(yiJianJdqIp,yiJianJdqPort);
 			t_read= new Thread(new ThreadReadSocket(client));
 			t_read.start();
 			System.out.println("Á¬½Ó");
@@ -58,7 +61,7 @@ public class TCPClient {
 			TCPClient tc=new TCPClient();
 			tc.open();
 			//tc.sendData(WriteZhiLingConst.KAI_JI_DIAN_QI1);
-			tc.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+			tc.sendData(WriteZhiLingConst.GUAN_JI_DIAN_QI2);
 			//Thread.sleep(3000);
 			//tc.sendData(WriteZhiLingConst.GUAN_JI_DIAN_QI1);
 			

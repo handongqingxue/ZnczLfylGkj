@@ -46,6 +46,7 @@ public class CpsbsxtTask extends Thread {
             return;
         }
         
+        /*
         //注册2
 	    String  erJianDeviceIP = LoadProperties.getHikvisionErJianIP();//设备ip地址
 	    int erJianPort = Integer.parseInt(LoadProperties.getHikvisionErJianPort());
@@ -66,5 +67,6 @@ public class CpsbsxtTask extends Thread {
         	System.out.println(erJianDeviceIP + "布防失败！");
             return;
         }
+        */
 	}
 }

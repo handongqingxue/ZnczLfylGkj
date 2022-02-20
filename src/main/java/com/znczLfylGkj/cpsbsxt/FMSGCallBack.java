@@ -16,13 +16,21 @@ import java.util.Map;
 
 import javax.swing.table.DefaultTableModel;
 
+import org.json.JSONObject;
+
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.znczLfylGkj.cpsbsxt.HCNetSDK.NET_DVR_ALARMER;
 import com.znczLfylGkj.cpsbsxt.HCNetSDK.NET_DVR_PLATE_INFO;
 import com.znczLfylGkj.cpsbsxt.HCNetSDK.RECV_ALARM;
+import com.znczLfylGkj.entity.DingDan;
+import com.znczLfylGkj.entity.DingDanZhuangTai;
+import com.znczLfylGkj.task.YinZhuTask;
 import com.znczLfylGkj.util.APIUtil;
 import com.znczLfylGkj.util.LoadProperties;
+import com.znczLfylGkj.yz.ByteUtil;
+import com.znczLfylGkj.yz.GiftTool;
+import com.znczLfylGkj.yz.YzZlUtil;
 
 /**
  * 	车辆识别回调函数
@@ -172,10 +180,44 @@ public class FMSGCallBack implements HCNetSDK.FMSGCallBack
             	String ip = car.getIp().trim();
             	if(LoadProperties.getHikvisionYiJianIP().equals(ip)) {
             		//一检车辆识别摄像头
-            		APIUtil.updateYJCPSBDDXX(car);
+            		//APIUtil.updateYJCPSBDDXX(car);
+            		
+            		JSONObject resultJO=null;
+            		resultJO=APIUtil.getDingDan(car.getsLicense(),DingDanZhuangTai.YI_JIAN_PAI_DUI_ZHONG_TEXT);
+            		if(resultJO!=null) {
+	                    if("ok".equals(resultJO.getString("status"))) {
+	                		//一检车辆识别摄像头
+	                		APIUtil.updateYJCPSBDDXX(car);
+	                    }
+	                    else {
+	                		//目前地磅处只有一个摄像头，先用这个摄像头负责二检
+	                		resultJO=APIUtil.getDingDan(car.getsLicense(),DingDanZhuangTai.ER_JIAN_PAI_DUI_ZHONG_TEXT);
+	                		if(resultJO!=null) {
+	    	                    if("ok".equals(resultJO.getString("status"))) {
+	    	                		//二检车辆识别摄像头
+	    	                		APIUtil.updateEJCPSBDDXX(car);
+	    	                    }
+	    	                    else {
+		                        	System.out.println("message==="+resultJO.getString("message"));
+		                        	System.out.println("音柱播报：没有找到匹配订单");
+		                    		YinZhuTask.sendMsg(YzZlUtil.get86().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
+	    	                    }
+	                		}
+	                    }
+            		}
             	} else if (LoadProperties.getHikvisionErJianIP().equals(ip)) {
             		//二检车辆识别摄像头
             		//uploadingCarInfoLiChang(car);
+            		//APIUtil.updateEJCPSBDDXX(car);
+            		
+            		JSONObject resultJO=null;
+            		resultJO=APIUtil.getDingDan(car.getsLicense(),DingDanZhuangTai.ER_JIAN_PAI_DUI_ZHONG_TEXT);
+            		if(resultJO!=null) {
+	                    if("ok".equals(resultJO.getString("status"))) {
+	                		//二检车辆识别摄像头
+	                		APIUtil.updateEJCPSBDDXX(car);
+	                    }
+            		}
             	} else {
             		System.out.println("车辆识别摄像头ip地址配置错误");
             	}

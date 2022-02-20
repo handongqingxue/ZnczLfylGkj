@@ -17,19 +17,19 @@ public class StartTask {
 		//diBangTask3190.start();
 		
 		// 车牌识别的线程任务
-		//CpsbsxtTask cpsbsxtTask = new CpsbsxtTask();
-		//cpsbsxtTask.start();
+		CpsbsxtTask cpsbsxtTask = new CpsbsxtTask();
+		cpsbsxtTask.start();
 		
 		YiJianJdq yjjdq=new YiJianJdq();
 		JdqZlUtil.setYjjdq(yjjdq);
 		
-		//ErJianJdq ejjdq=new ErJianJdq();
-		//JdqZlUtil.setEjjdq(ejjdq);
+		ErJianJdq ejjdq=new ErJianJdq();
+		JdqZlUtil.setEjjdq(ejjdq);
 
 		//testLiuCheng();
 		
-		ClientSocket cs = new ClientSocket();
-		cs.connectServer();
+		//ClientSocket cs = new ClientSocket();
+		//cs.connectServer();
 		
 		// 其他线程启动
 		while (true) {
