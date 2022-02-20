@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.znczLfylGkj.jdq.JdqZlUtil;
+import com.znczLfylGkj.jdq.WriteZhiLingConst;
+import com.znczLfylGkj.jdq.YiJianJdq;
+import com.znczLfylGkj.task.DiBangTask3124;
+
 public class GiftTool {
 
 	private final static Logger LOGGER = Logger.getLogger("GiftTool");
@@ -71,8 +76,11 @@ public class GiftTool {
 
 	public static void main(String[] args) {
 		try {
-			GiftTool.getWeight();
-		} catch (InterruptedException e) {
+			YiJianJdq yjjdq=new YiJianJdq();
+			JdqZlUtil.setYjjdq(yjjdq);
+			JdqZlUtil.openYiJianJdq();
+			DiBangTask3124.getWeight();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

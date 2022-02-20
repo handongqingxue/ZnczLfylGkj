@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.znczLfylGkj.db.xk3124.ByteUtil;
 import com.znczLfylGkj.db.xk3124.MachineTool;
+import com.znczLfylGkj.jdq.JdqZlUtil;
+import com.znczLfylGkj.jdq.WriteZhiLingConst;
+import com.znczLfylGkj.jdq.YiJianJdq;
 
 import gnu.io.SerialPort;
 
@@ -29,6 +32,7 @@ public class DiBangTask3124 extends Thread {
         int preWeight=0;
         int weight=0;
         int steadyCount=0;//稳定次数
+        int waitTime=0;
         int i = 1;
         //循环遍历串口
         List<String> serialPorts = MachineTool.uartPortUseAblefind();
@@ -78,12 +82,28 @@ public class DiBangTask3124 extends Thread {
 						if(steadyCount>5) {
 							break;
 						}
-						
-						if(weight==preWeight)
-							steadyCount++;
-						else
+						if(waitTime>30) {
+							weight=-1;
+							break;
+						}
+
+						YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
+						yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+						System.out.println("称重中open1==="+yjjdq.isKgl1Open());
+						System.out.println("称重中open2==="+yjjdq.isKgl2Open());
+						if(yjjdq.isKgl1Open()||yjjdq.isKgl2Open()) {
+							System.out.println("光栅被遮挡");
 							steadyCount=0;
-						preWeight=weight;
+							waitTime++;
+						}
+						else {
+							waitTime=0;
+							if(weight==preWeight)
+								steadyCount++;
+							else
+								steadyCount=0;
+							preWeight=weight;
+						}
 					//}
 					
 	            } 

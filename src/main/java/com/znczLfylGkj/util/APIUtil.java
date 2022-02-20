@@ -485,7 +485,7 @@ public class APIUtil {
 					
 					checkYJXBHWGSState();
 				}
-				else {//地磅上没有车辆
+				else if(djczl==0) {//地磅上没有车辆
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从称重中更改为待上磅");
 					dd=new DingDan();
 					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
@@ -496,6 +496,17 @@ public class APIUtil {
 		        	//这段代码到现场有了音柱后再打开
 		    		YinZhuTask.sendMsg(YzZlUtil.get87().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 					checkYJSBHWGSState();
+				}
+				else if(djczl==-1) {//称重失败
+					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从称重中更改为待上磅");
+					dd=new DingDan();
+					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+					dd.setXddztMc(DingDanZhuangTai.YI_JIAN_PAI_DUI_ZHONG_TEXT);
+					dd.setYjzt(DingDan.CHENG_ZHONG_ZHONG);
+					dd.setXyjzt(DingDan.DAI_SHANG_BANG);
+					APIUtil.editDingDanByZt(dd);
+					
+		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 				}
 			}
 			else {

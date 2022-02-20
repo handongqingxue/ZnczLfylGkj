@@ -127,6 +127,9 @@ public class YzZlUtil {
 	public static String get96() {
 		return getByDuanHao(96);
 	}
+	
+	//正在称重97
+	//当前重量98
 
 	public static String getByDuanHao(int num) {
 		String zlStr=null;
