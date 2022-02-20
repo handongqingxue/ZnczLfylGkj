@@ -75,6 +75,7 @@ public class GiftTool {
     }
 
 	public static void main(String[] args) {
+		/*
 		try {
 			YiJianJdq yjjdq=new YiJianJdq();
 			JdqZlUtil.setYjjdq(yjjdq);
@@ -84,5 +85,6 @@ public class GiftTool {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 	}
 }

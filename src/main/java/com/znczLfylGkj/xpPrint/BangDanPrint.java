@@ -77,7 +77,8 @@ public class BangDanPrint implements Printable {
 
 		//设置过磅时间  
 		g2.drawString("过磅时间:"+gbjl.getGbsj(), (float)x+20,(float)y+line);
-		line+=heigth+2;
+		line+=heigth+50;
+		g2.drawString(" ", (float)x+20,(float)y+line);
 		
 		switch (pageIndex) {  
 			case 0:  

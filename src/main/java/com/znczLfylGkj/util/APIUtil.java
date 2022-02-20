@@ -317,10 +317,18 @@ public class APIUtil {
 				System.out.println("后open1==="+yjjdq.isKgl1Open());
 				if(waitTime>30*1000) {
 					System.out.println("上磅失败，请重新车牌识别");
+					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待上磅更改为一检排队中");
+					DingDan dd=new DingDan();
+					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+					dd.setXddztMc(DingDanZhuangTai.YI_JIAN_PAI_DUI_ZHONG_TEXT);
+					APIUtil.editDingDanByZt(dd);
 					
 					waitTime+=1000;
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.YI_JIAN);
+					JdqZlUtil.openYiJianXiaBangDz();
 		        	JdqZlUtil.closeYiJianJdq();
+					Thread.sleep(2000);
+		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.YI_JIAN);
 					break;
 				}
 				else if(waitTime%(5*1000)==0) {
@@ -377,6 +385,8 @@ public class APIUtil {
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.YI_JIAN);
 		        	JdqZlUtil.openYiJianXiaBangDz();
 		        	JdqZlUtil.closeYiJianJdq();
+					Thread.sleep(2000);
+		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.YI_JIAN);
 					break;
 				}
 				else if(waitTime%(5*1000)==0) {
@@ -423,6 +433,7 @@ public class APIUtil {
 				System.out.println("请确保车辆稳定，5秒后开始一检称重");
 	    		YinZhuTask.sendMsg(YzZlUtil.get88().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 				Thread.sleep(5000);
+	    		YinZhuTask.sendMsg(YzZlUtil.get97().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 				
 				Float mz=null;
 				Float pz=null;
@@ -479,22 +490,14 @@ public class APIUtil {
 					dd.setYjzt(DingDan.CHENG_ZHONG_ZHONG);
 					dd.setXyjzt(DingDan.DAI_XIA_BANG);
 					APIUtil.editDingDanByZt(dd);
-					
-					String djczlStr = String.valueOf((int)djczl);
-					System.out.println("djczlStr==="+djczlStr);
-					for (int i = 0; i < djczlStr.length(); i++) {
-						char ch = djczlStr.charAt(i);
-						
-						String chStr = String.valueOf(ch);
-						System.out.println("chStr==="+chStr);
-						int chi = Integer.parseInt(chStr);
-						
-						if(chi==0)
-							chi=36;
-						System.out.println("chi==="+chi);
-			    		YinZhuTask.sendMsg(YzZlUtil.getByDuanHao(chi).replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
-					}
-		    		YinZhuTask.sendMsg(YzZlUtil.get89().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
+
+		    		//打印一检过磅记录
+		    		printGbjl(GuoBangJiLu.RU_CHANG_GUO_BANG);
+					Thread.sleep(5000);
+		    		
+					playWeight(djczl,YinZhuTask.YI_JIAN);
+					Thread.sleep(2000);
+					playWeight(djczl,YinZhuTask.YI_JIAN);
 					
 		        	System.out.println("抬起一检下磅道闸");
 		        	JdqZlUtil.openYiJianXiaBangDz();
@@ -526,6 +529,8 @@ public class APIUtil {
 		        	JdqZlUtil.closeYiJianJdq();
 					
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
+					Thread.sleep(2000);
+		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.YI_JIAN);
 				}
 			}
 			else {
@@ -592,9 +597,6 @@ public class APIUtil {
 			    	
 	            	System.out.println("关闭一检继电器");
 		    		JdqZlUtil.closeYiJianJdq();
-		    		
-		    		//打印一检过磅记录
-		    		printGbjl(GuoBangJiLu.RU_CHANG_GUO_BANG);
 					break;
 				}
 			}
@@ -605,15 +607,16 @@ public class APIUtil {
 	}
 	
 	public static void printGbjl(int gblx) {
+		System.out.println("打印小票");
 		JSONObject resultJO = null;
 		switch (gblx) {
 		case GuoBangJiLu.RU_CHANG_GUO_BANG:
-			System.out.println("查询订单状态为待一检审核，一检状态为已完成的订单");
-			resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.DAI_YI_JIAN_SHEN_HE_TEXT,DingDan.YI_WAN_CHENG,DingDan.DAI_SHANG_BANG);
+			System.out.println("查询订单状态为一检上磅，一检状态为待下磅的订单");
+			resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_XIA_BANG,DingDan.DAI_SHANG_BANG);
 			break;
 		case GuoBangJiLu.CHU_CHANG_GUO_BANG:
-			System.out.println("查询订单状态为待二检审核，二检状态为已完成的订单");
-			resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.DAI_ER_JIAN_SHEN_HE_TEXT,DingDan.YI_WAN_CHENG,DingDan.YI_WAN_CHENG);
+			System.out.println("查询订单状态为二检上磅，二检状态为待下磅的订单");
+			resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT,DingDan.YI_WAN_CHENG,DingDan.DAI_XIA_BANG);
 			break;
 		}
 		
@@ -938,6 +941,25 @@ public class APIUtil {
 		}
 	}
 	
+	public static void playWeight(float djczl, int jyFlag) {
+		YinZhuTask.sendMsg(YzZlUtil.get98().replaceAll(" ", ""), 1500,jyFlag);
+		String djczlStr = String.valueOf((int)djczl);
+		System.out.println("djczlStr==="+djczlStr);
+		for (int i = 0; i < djczlStr.length(); i++) {
+			char ch = djczlStr.charAt(i);
+			
+			String chStr = String.valueOf(ch);
+			System.out.println("chStr==="+chStr);
+			int chi = Integer.parseInt(chStr);
+			
+			if(chi==0)
+				chi=36;
+			System.out.println("chi==="+chi);
+    		YinZhuTask.sendMsg(YzZlUtil.getByDuanHao(chi).replaceAll(" ", ""), 800,jyFlag);
+		}
+		YinZhuTask.sendMsg(YzZlUtil.get89().replaceAll(" ", ""), 1500,jyFlag);
+	}
+	
 	public static void main(String[] args) {
 		//Car car1=new Car();
 		//car1.setsLicense(" 鲁B9023");
@@ -969,5 +991,6 @@ public class APIUtil {
     		YinZhuTask.sendMsg(YzZlUtil.getByDuanHao(chi).replaceAll(" ", ""), 500,YinZhuTask.YI_JIAN);
 		}
 		*/
+		printGbjl(GuoBangJiLu.RU_CHANG_GUO_BANG);
 	}
 }

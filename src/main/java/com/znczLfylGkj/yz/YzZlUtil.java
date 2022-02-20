@@ -128,9 +128,22 @@ public class YzZlUtil {
 		return getByDuanHao(96);
 	}
 	
-	//正在称重97
-	//当前重量98
-
+	/**
+	 * 
+	 * @return  正在称重
+	 */
+	public static String get97() {
+		return getByDuanHao(97);
+	}
+	
+	/**
+	 * 
+	 * @return  当前重量
+	 */
+	public static String get98() {
+		return getByDuanHao(98);
+	}
+	
 	public static String getByDuanHao(int num) {
 		String zlStr=null;
 		switch (num) {
@@ -421,6 +434,12 @@ public class YzZlUtil {
 			break;
 		case 96:
 			zlStr="F0 01 06 04 60 5B";
+			break;
+		case 97:
+			zlStr="F0 01 06 04 61 5C";
+			break;
+		case 98:
+			zlStr="F0 01 06 04 62 5D";
 			break;
 		}
 		return zlStr;

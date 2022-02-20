@@ -98,7 +98,7 @@ public class DiBangTask3124 extends Thread {
 						}
 						else {
 							waitTime=0;
-							if(weight==preWeight)
+							if(weight<=preWeight+preWeight*0.3||weight>=preWeight-preWeight*0.3)
 								steadyCount++;
 							else
 								steadyCount=0;
