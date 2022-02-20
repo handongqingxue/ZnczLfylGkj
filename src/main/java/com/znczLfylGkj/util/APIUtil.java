@@ -308,11 +308,27 @@ public class APIUtil {
 			//yjjdq.open();
 			YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
 			System.out.println("前open1==="+yjjdq.isKgl1Open());
+			int waitTime=0;
 			while (true) {
 				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
 				Thread.sleep(1000);
+				waitTime+=1000;
 					
 				System.out.println("后open1==="+yjjdq.isKgl1Open());
+				if(waitTime>30*1000) {
+					System.out.println("上磅失败，请重新车牌识别");
+					
+					waitTime+=1000;
+		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.YI_JIAN);
+		        	JdqZlUtil.closeYiJianJdq();
+					break;
+				}
+				else if(waitTime%(5*1000)==0) {
+					waitTime+=1000;
+		    		YinZhuTask.sendMsg(YzZlUtil.get87().replaceAll(" ", ""), 1000,YinZhuTask.YI_JIAN);
+				}
+				
+				
 				if(yjjdq.isKgl1Open()) {
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待上磅更改为上磅中");
 					DingDan dd=new DingDan();
@@ -505,6 +521,9 @@ public class APIUtil {
 					dd.setYjzt(DingDan.CHENG_ZHONG_ZHONG);
 					dd.setXyjzt(DingDan.DAI_SHANG_BANG);
 					APIUtil.editDingDanByZt(dd);
+					
+		        	JdqZlUtil.openYiJianXiaBangDz();
+		        	JdqZlUtil.closeYiJianJdq();
 					
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 				}

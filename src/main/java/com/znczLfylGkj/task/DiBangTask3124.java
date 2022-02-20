@@ -82,7 +82,7 @@ public class DiBangTask3124 extends Thread {
 						if(steadyCount>5) {
 							break;
 						}
-						if(waitTime>30) {
+						if(waitTime>10) {
 							weight=-1;
 							break;
 						}
