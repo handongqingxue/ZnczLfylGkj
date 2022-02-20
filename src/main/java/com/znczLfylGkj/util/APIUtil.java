@@ -439,14 +439,19 @@ public class APIUtil {
 					dd.setXyjzt(DingDan.DAI_XIA_BANG);
 					APIUtil.editDingDanByZt(dd);
 					
-					String djczlStr = String.valueOf(djczl);
+					String djczlStr = String.valueOf((int)djczl);
 					System.out.println("djczlStr==="+djczlStr);
 					for (int i = 0; i < djczlStr.length(); i++) {
-						int ch = (int)djczlStr.charAt(i);
-						if(ch==0)
-							ch=36;
-						System.out.println("ch==="+ch);
-			    		YinZhuTask.sendMsg(YzZlUtil.getByDuanHao(ch).replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
+						char ch = djczlStr.charAt(i);
+						
+						String chStr = String.valueOf(ch);
+						System.out.println("chStr==="+chStr);
+						int chi = Integer.parseInt(chStr);
+						
+						if(chi==0)
+							chi=36;
+						System.out.println("chi==="+chi);
+			    		YinZhuTask.sendMsg(YzZlUtil.getByDuanHao(chi).replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 					}
 		    		YinZhuTask.sendMsg(YzZlUtil.get89().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 					
@@ -892,5 +897,20 @@ public class APIUtil {
 		//APIUtil.updateEJCZDDXX();
 		
 		//APIUtil.checkDingDanIfExistByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_SHANG_BANG,DingDan.DAI_SHANG_BANG);
+		
+		String djczlStr = String.valueOf((int)70.0);
+		System.out.println("djczlStr==="+djczlStr.length());
+		for (int i = 0; i < djczlStr.length(); i++) {
+			System.out.println("i==="+i);
+			char ch = djczlStr.charAt(i);
+			System.out.println("ch==="+ch);
+			String chStr = String.valueOf(ch);
+			System.out.println("chStr==="+chStr);
+			int chi = Integer.parseInt(chStr);
+			if(chi==0)
+				chi=36;
+			System.out.println("chi==="+chi);
+    		YinZhuTask.sendMsg(YzZlUtil.getByDuanHao(chi).replaceAll(" ", ""), 500,YinZhuTask.YI_JIAN);
+		}
 	}
 }
