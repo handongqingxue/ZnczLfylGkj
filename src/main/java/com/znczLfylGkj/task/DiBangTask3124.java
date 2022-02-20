@@ -38,7 +38,7 @@ public class DiBangTask3124 extends Thread {
 			serialPortTest = MachineTool.portParameterOpen(name, 9600);
 			
 			while (true) {
-				Thread.sleep(2000);
+				Thread.sleep(600);
 	            //接收数据
 	            bytes = MachineTool.uartReceiveDatafromSingleChipMachine(serialPortTest);
 	            if (bytes != null && bytes.length > 0) {

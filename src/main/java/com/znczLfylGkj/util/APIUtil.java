@@ -311,6 +311,7 @@ public class APIUtil {
 			while (true) {
 				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
 				Thread.sleep(1000);
+					
 				System.out.println("后open1==="+yjjdq.isKgl1Open());
 				if(yjjdq.isKgl1Open()) {
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待上磅更改为上磅中");
@@ -338,11 +339,35 @@ public class APIUtil {
 			YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
 			System.out.println("前open1==="+yjjdq.isKgl1Open());
 			System.out.println("前open2==="+yjjdq.isKgl2Open());
+			int waitTime=0;
 			while (true) {
 				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
 				Thread.sleep(1000);
+				waitTime+=1000;
 				System.out.println("后open1==="+yjjdq.isKgl1Open());
 				System.out.println("后open2==="+yjjdq.isKgl2Open());
+				System.out.println("waitTime==="+waitTime);
+				if(waitTime>30*1000) {
+					System.out.println("称重失败，请重新车牌识别");
+					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待上磅更改为一检排队中");
+					DingDan dd=new DingDan();
+					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
+					dd.setXddztMc(DingDanZhuangTai.YI_JIAN_PAI_DUI_ZHONG_TEXT);
+					dd.setYjzt(DingDan.SHANG_BANG_ZHONG);
+					dd.setXyjzt(DingDan.DAI_SHANG_BANG);
+					APIUtil.editDingDanByZt(dd);
+					
+					waitTime+=1000;
+		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.YI_JIAN);
+		        	JdqZlUtil.openYiJianXiaBangDz();
+		        	JdqZlUtil.closeYiJianJdq();
+					break;
+				}
+				else if(waitTime%(5*1000)==0) {
+					waitTime+=1000;
+		    		YinZhuTask.sendMsg(YzZlUtil.get87().replaceAll(" ", ""), 1000,YinZhuTask.YI_JIAN);
+				}
+				
 				if(!yjjdq.isKgl1Open()&&!yjjdq.isKgl2Open()) {
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从上磅中更改为待称重");
 					DingDan dd=new DingDan();
@@ -898,6 +923,7 @@ public class APIUtil {
 		
 		//APIUtil.checkDingDanIfExistByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_SHANG_BANG,DingDan.DAI_SHANG_BANG);
 		
+		/*
 		String djczlStr = String.valueOf((int)70.0);
 		System.out.println("djczlStr==="+djczlStr.length());
 		for (int i = 0; i < djczlStr.length(); i++) {
@@ -912,5 +938,6 @@ public class APIUtil {
 			System.out.println("chi==="+chi);
     		YinZhuTask.sendMsg(YzZlUtil.getByDuanHao(chi).replaceAll(" ", ""), 500,YinZhuTask.YI_JIAN);
 		}
+		*/
 	}
 }

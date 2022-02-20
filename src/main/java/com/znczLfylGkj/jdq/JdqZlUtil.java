@@ -133,5 +133,6 @@ public class JdqZlUtil {
 		JdqZlUtil.setEjjdq(ejjdq);
 		JdqZlUtil.openErJianJdq();
     	JdqZlUtil.openErJianXiaBangDz();
+		JdqZlUtil.closeErJianJdq();
 	}
 }
