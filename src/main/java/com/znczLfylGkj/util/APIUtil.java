@@ -430,9 +430,9 @@ public class APIUtil {
 			if("ok".equals(status)) {
 				DingDan dd1=(DingDan)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(resultJO.get("dingDan").toString()), DingDan.class);
 				
-				System.out.println("请确保车辆稳定，10秒后开始一检称重");
+				System.out.println("请确保车辆稳定，15秒后开始一检称重");
 	    		YinZhuTask.sendMsg(YzZlUtil.get88().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
-				Thread.sleep(10000);
+				Thread.sleep(15000);
 	    		YinZhuTask.sendMsg(YzZlUtil.get97().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 				
 				Float mz=null;
@@ -914,6 +914,14 @@ public class APIUtil {
 					playWeight(djczl,YinZhuTask.ER_JIAN);
 					Thread.sleep(2000);
 					playWeight(djczl,YinZhuTask.ER_JIAN);
+					
+					Thread.sleep(2000);
+					
+		    		YinZhuTask.sendMsg(YzZlUtil.get99().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
+					Thread.sleep(2000);
+		    		YinZhuTask.sendMsg(YzZlUtil.get99().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
+					Thread.sleep(2000);
+		    		YinZhuTask.sendMsg(YzZlUtil.get89().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
 					
 		        	System.out.println("抬起二检下磅道闸");
 		        	JdqZlUtil.openErJianXiaBangDz();
