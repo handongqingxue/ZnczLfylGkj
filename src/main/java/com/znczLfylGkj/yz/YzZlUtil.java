@@ -144,6 +144,14 @@ public class YzZlUtil {
 		return getByDuanHao(98);
 	}
 	
+	/**
+	 * 
+	 * @return  请取称重打印票据
+	 */
+	public static String get99() {
+		return getByDuanHao(99);
+	}
+	
 	public static String getByDuanHao(int num) {
 		String zlStr=null;
 		switch (num) {
@@ -440,6 +448,9 @@ public class YzZlUtil {
 			break;
 		case 98:
 			zlStr="F0 01 06 04 62 5D";
+			break;
+		case 99:
+			zlStr="F0 01 06 04 63 5E";
 			break;
 		}
 		return zlStr;
