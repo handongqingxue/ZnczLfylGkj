@@ -88,8 +88,8 @@ public class ClientSocket implements Runnable {
 	
 	public void connectServer() {
 		try {
-			//String serverIp="10.10.99.20";
-			String serverIp="127.0.0.1";
+			String serverIp="10.10.99.20";
+			//String serverIp="127.0.0.1";
 			Socket socket = new Socket(serverIp,8000);//能输入配置
 			System.out.println("连接成功!");
 			out = new OutputStreamWriter(socket.getOutputStream());
