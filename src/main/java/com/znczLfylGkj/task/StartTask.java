@@ -28,8 +28,8 @@ public class StartTask {
 
 		//testLiuCheng();
 		
-		//ClientSocket cs = new ClientSocket();
-		//cs.connectServer();
+		ClientSocket cs = new ClientSocket();
+		cs.connectServer();
 		
 		// 其他线程启动
 		while (true) {

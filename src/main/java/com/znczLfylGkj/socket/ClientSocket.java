@@ -53,16 +53,27 @@ public class ClientSocket implements Runnable {
 			Car car1=new Car();
 			String cph = mesJO.getString("cph");
 			car1.setsLicense(" "+cph);
-			APIUtil.updateYJCPSBDDXX(car1);
+			int jyFlag = mesJO.getInt("jyFlag");
+			System.out.println("jyFlag==="+jyFlag);
+			switch (jyFlag) {
+			case YI_JIAN:
+				System.out.println("1111111111");
+				APIUtil.updateYJCPSBDDXX(car1);
+				break;
+			case ER_JIAN:
+				System.out.println("22222222");
+				APIUtil.updateEJCPSBDDXX(car1);
+				break;
+			}
 			break;
 		}
 	}
 	
 	private void sendName(){
-		int jyFlag= 0;
+		int bfNoFlag= 0;
 		//name = JOptionPane.showInputDialog(f, "请输入姓名:");
-		jyFlag=1;
-		this.sendMessageToServer(jyFlag+"");
+		bfNoFlag=1;
+		this.sendMessageToServer(bfNoFlag+"");
 	}
 	
 	private void sendMessageToServer(String mes){
@@ -77,7 +88,9 @@ public class ClientSocket implements Runnable {
 	
 	public void connectServer() {
 		try {
-			Socket socket = new Socket("127.0.0.1",8000);//能输入配置
+			//String serverIp="10.10.99.20";
+			String serverIp="127.0.0.1";
+			Socket socket = new Socket(serverIp,8000);//能输入配置
 			System.out.println("连接成功!");
 			out = new OutputStreamWriter(socket.getOutputStream());
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
