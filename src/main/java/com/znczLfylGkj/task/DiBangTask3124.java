@@ -116,4 +116,17 @@ public class DiBangTask3124 extends Thread {
         }
         return weight;
     }
+	
+	public static void main(String[] args) {
+		try {
+			YiJianJdq yjjdq=new YiJianJdq();
+			JdqZlUtil.setYjjdq(yjjdq);
+			JdqZlUtil.openYiJianJdq();
+			getWeight();
+			JdqZlUtil.closeYiJianJdq();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

@@ -58,7 +58,7 @@ public class YzZlUtil {
 	
 	/**
 	 * 
-	 * @return  停车熄火等待称重
+	 * @return  停车熄火等待称重，请相关人员及时离开车辆和地磅
 	 */
 	public static String get88() {
 		return getByDuanHao(88);

@@ -432,8 +432,11 @@ public class APIUtil {
 				
 				System.out.println("请确保车辆稳定，15秒后开始一检称重");
 	    		YinZhuTask.sendMsg(YzZlUtil.get88().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
+				Thread.sleep(6000);
+	    		YinZhuTask.sendMsg(YzZlUtil.get88().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 				Thread.sleep(15000);
 	    		YinZhuTask.sendMsg(YzZlUtil.get97().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
+	    		System.out.println("ooooooooooo");
 				
 				Float mz=null;
 				Float pz=null;
@@ -449,6 +452,12 @@ public class APIUtil {
 					pz=(float)DiBangTask3124.getWeight();
 					djczl=pz;
 				}
+	    		System.out.println("pppppppppppp");
+
+				playWeight(djczl,YinZhuTask.YI_JIAN);
+				Thread.sleep(2000);
+				playWeight(djczl,YinZhuTask.YI_JIAN);
+				Thread.sleep(2000);
 				
 				if(djczl>0) {
 					JSONObject ddJO=resultJO.getJSONObject("dingDan");
@@ -490,15 +499,9 @@ public class APIUtil {
 					dd.setYjzt(DingDan.CHENG_ZHONG_ZHONG);
 					dd.setXyjzt(DingDan.DAI_XIA_BANG);
 					APIUtil.editDingDanByZt(dd);
-
+					
 		    		//打印一检过磅记录
 		    		printGbjl(GuoBangJiLu.RU_CHANG_GUO_BANG);
-		    		
-					playWeight(djczl,YinZhuTask.YI_JIAN);
-					Thread.sleep(2000);
-					playWeight(djczl,YinZhuTask.YI_JIAN);
-					
-					Thread.sleep(2000);
 					
 		    		YinZhuTask.sendMsg(YzZlUtil.get99().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 					Thread.sleep(2000);
@@ -843,9 +846,11 @@ public class APIUtil {
 			if("ok".equals(status)) {
 				DingDan dd1=(DingDan)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(resultJO.get("dingDan").toString()), DingDan.class);
 	
-				System.out.println("请确保车辆稳定，5秒后开始二检称重");
+				System.out.println("请确保车辆稳定，15秒后开始二检称重");
 				YinZhuTask.sendMsg(YzZlUtil.get88().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
-				Thread.sleep(5000);
+				Thread.sleep(6000);
+				YinZhuTask.sendMsg(YzZlUtil.get88().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
+				Thread.sleep(15000);
 	    		YinZhuTask.sendMsg(YzZlUtil.get97().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
 				
 				Float mz=null;
@@ -909,7 +914,7 @@ public class APIUtil {
 					APIUtil.editDingDanByZt(dd);
 
 		    		//打印二检过磅记录
-		    		printGbjl(GuoBangJiLu.RU_CHANG_GUO_BANG);
+		    		printGbjl(GuoBangJiLu.CHU_CHANG_GUO_BANG);
 		    		
 					playWeight(djczl,YinZhuTask.ER_JIAN);
 					Thread.sleep(2000);
