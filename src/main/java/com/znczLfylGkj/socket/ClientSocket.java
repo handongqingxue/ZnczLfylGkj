@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import com.znczLfylGkj.cpsbsxt.Car;
 import com.znczLfylGkj.util.APIUtil;
+import com.znczLfylGkj.util.LoadProperties;
 
 import net.sf.json.JSONObject;
 
@@ -88,8 +89,7 @@ public class ClientSocket implements Runnable {
 	
 	public void connectServer() {
 		try {
-			String serverIp="10.10.99.20";
-			//String serverIp="127.0.0.1";
+			String serverIp=LoadProperties.getServerIp();
 			Socket socket = new Socket(serverIp,8000);//能输入配置
 			System.out.println("连接成功!");
 			out = new OutputStreamWriter(socket.getOutputStream());

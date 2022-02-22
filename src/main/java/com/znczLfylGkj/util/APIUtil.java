@@ -436,7 +436,6 @@ public class APIUtil {
 	    		YinZhuTask.sendMsg(YzZlUtil.get88().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 				Thread.sleep(15000);
 	    		YinZhuTask.sendMsg(YzZlUtil.get97().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
-	    		System.out.println("ooooooooooo");
 				
 				Float mz=null;
 				Float pz=null;
@@ -452,7 +451,6 @@ public class APIUtil {
 					pz=(float)DiBangTask3124.getWeight();
 					djczl=pz;
 				}
-	    		System.out.println("pppppppppppp");
 
 				playWeight(djczl,YinZhuTask.YI_JIAN);
 				Thread.sleep(2000);
@@ -876,6 +874,11 @@ public class APIUtil {
 					pz=(float)bdJO.getDouble("pz");
 					jz=dxgmz-pz;
 				}
+	    		
+				playWeight(djczl,YinZhuTask.ER_JIAN);
+				Thread.sleep(2000);
+				playWeight(djczl,YinZhuTask.ER_JIAN);
+				Thread.sleep(2000);
 				
 				if(djczl>0) {
 					System.out.println("根据称重出来的重量，修改订单对应的磅单记录");
@@ -915,12 +918,6 @@ public class APIUtil {
 
 		    		//打印二检过磅记录
 		    		printGbjl(GuoBangJiLu.CHU_CHANG_GUO_BANG);
-		    		
-					playWeight(djczl,YinZhuTask.ER_JIAN);
-					Thread.sleep(2000);
-					playWeight(djczl,YinZhuTask.ER_JIAN);
-					
-					Thread.sleep(2000);
 					
 		    		YinZhuTask.sendMsg(YzZlUtil.get99().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
 					Thread.sleep(2000);

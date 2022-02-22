@@ -615,6 +615,23 @@ public class LoadProperties {
 		
 		return parseInt;
 	}
+
+	/**
+	 * 获得服务器ip
+	 * @return
+	 */
+	public static String getServerIp() {
+		if (prop == null) {
+			prop = Method2();
+		}
+		String trim = prop.getProperty("serverIp").trim();
+		if (StringUtils.isBlank(trim)) {
+			logger.debug("请在配置文件中配置serverIp");
+			return null;
+		}
+		
+		return trim;
+	}
 	
 	
 	
