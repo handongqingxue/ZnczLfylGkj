@@ -478,7 +478,7 @@ public class APIUtil {
 				    	dd2.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 				    	dd2.setYjzt(DingDan.CHENG_ZHONG_ZHONG);
 				    	dd2.setSjzl(mz);
-				    	dd2.setZlceb(dd1.getYzxzl()/mz);
+				    	//dd2.setZlceb(dd1.getYzxzl()/mz);
 				    	APIUtil.editDingDanByZt(dd2);
 			    	}
 	
@@ -907,7 +907,7 @@ public class APIUtil {
 				    	dd2.setYjzt(DingDan.YI_WAN_CHENG);
 				    	dd2.setEjzt(DingDan.SHANG_BANG_ZHONG);
 				    	dd2.setSjzl(mz);
-				    	dd2.setZlceb(dd1.getYzxzl()/mz);
+				    	//dd2.setZlceb(dd1.getYzxzl()/mz);
 				    	APIUtil.editDingDanByZt(dd2);
 			    	}
 				
