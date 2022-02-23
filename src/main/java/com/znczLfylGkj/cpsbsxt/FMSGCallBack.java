@@ -27,6 +27,7 @@ import com.znczLfylGkj.entity.DingDan;
 import com.znczLfylGkj.entity.DingDanZhuangTai;
 import com.znczLfylGkj.task.YinZhuTask;
 import com.znczLfylGkj.util.APIUtil;
+import com.znczLfylGkj.util.BangFang1Util;
 import com.znczLfylGkj.util.LoadProperties;
 import com.znczLfylGkj.yz.ByteUtil;
 import com.znczLfylGkj.yz.GiftTool;
@@ -177,6 +178,7 @@ public class FMSGCallBack implements HCNetSDK.FMSGCallBack
             // 创建台账信息， 台账信息包含【车辆入场时间】、【车辆入场照片】、【台账与订单、车辆建立关系】
             
             try {
+            	int bfh = LoadProperties.getBangFangHao();
             	String ip = car.getIp().trim();
             	if(LoadProperties.getHikvisionYiJianIP().equals(ip)) {
             		//一检车辆识别摄像头
@@ -187,7 +189,11 @@ public class FMSGCallBack implements HCNetSDK.FMSGCallBack
             		if(resultJO!=null) {
 	                    if("ok".equals(resultJO.getString("status"))) {
 	                		//一检车辆识别摄像头
-	                		APIUtil.updateYJCPSBDDXX(car);
+	                    	switch (bfh) {
+							case APIUtil.YI_HAO_BANG_FANG:
+								BangFang1Util.updateYJCPSBDDXX(car);
+								break;
+							}
 	                    }
 	                    else {
 	                		//目前地磅处只有一个摄像头，先用这个摄像头负责二检
@@ -195,7 +201,11 @@ public class FMSGCallBack implements HCNetSDK.FMSGCallBack
 	                		if(resultJO!=null) {
 	    	                    if("ok".equals(resultJO.getString("status"))) {
 	    	                		//二检车辆识别摄像头
-	    	                		APIUtil.updateEJCPSBDDXX(car);
+	    	                    	switch (bfh) {
+									case APIUtil.YI_HAO_BANG_FANG:
+		    	                    	BangFang1Util.updateEJCPSBDDXX(car);
+										break;
+									}
 	    	                    }
 	    	                    else {
 		                        	System.out.println("message==="+resultJO.getString("message"));
@@ -215,7 +225,11 @@ public class FMSGCallBack implements HCNetSDK.FMSGCallBack
             		if(resultJO!=null) {
 	                    if("ok".equals(resultJO.getString("status"))) {
 	                		//二检车辆识别摄像头
-	                		APIUtil.updateEJCPSBDDXX(car);
+	                    	switch (bfh) {
+							case APIUtil.YI_HAO_BANG_FANG:
+		                    	BangFang1Util.updateEJCPSBDDXX(car);
+								break;
+							}
 	                    }
             		}
             	} else {

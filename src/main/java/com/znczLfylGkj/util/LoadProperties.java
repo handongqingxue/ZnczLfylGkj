@@ -25,7 +25,7 @@ public class LoadProperties {
 	private static synchronized Properties Method2() {
 		Properties prop = null;
 		try {
-			InputStream inputStream = LoadProperties.class.getResourceAsStream("/config/config.properties");
+			InputStream inputStream = LoadProperties.class.getResourceAsStream("/config/configBf1.properties");
 
 			prop = new Properties();
 

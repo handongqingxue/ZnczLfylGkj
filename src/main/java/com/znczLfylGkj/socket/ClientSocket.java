@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import com.znczLfylGkj.cpsbsxt.Car;
 import com.znczLfylGkj.util.APIUtil;
+import com.znczLfylGkj.util.BangFang1Util;
 import com.znczLfylGkj.util.LoadProperties;
 
 import net.sf.json.JSONObject;
@@ -49,6 +50,7 @@ public class ClientSocket implements Runnable {
 		JSONObject mesJO = net.sf.json.JSONObject.fromObject(mesJOStr);
 		String action = mesJO.getString("action");
 		System.out.println("action==="+action);
+		int bfh = LoadProperties.getBangFangHao();
 		switch (action) {
 		case PUSH_CPH:
 			Car car1=new Car();
@@ -59,11 +61,19 @@ public class ClientSocket implements Runnable {
 			switch (jyFlag) {
 			case YI_JIAN:
 				System.out.println("1111111111");
-				APIUtil.updateYJCPSBDDXX(car1);
+				switch (bfh) {
+				case APIUtil.YI_HAO_BANG_FANG:
+					BangFang1Util.updateYJCPSBDDXX(car1);
+					break;
+				}
 				break;
 			case ER_JIAN:
 				System.out.println("22222222");
-				APIUtil.updateEJCPSBDDXX(car1);
+				switch (bfh) {
+				case APIUtil.YI_HAO_BANG_FANG:
+					BangFang1Util.updateEJCPSBDDXX(car1);
+					break;
+				}
 				break;
 			}
 			break;
