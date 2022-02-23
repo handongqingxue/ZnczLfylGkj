@@ -113,6 +113,18 @@ public class DingDan {
 	public void setCph(String cph) {
 		this.cph = cph;
 	}
+	public Integer getYjbfh() {
+		return yjbfh;
+	}
+	public void setYjbfh(Integer yjbfh) {
+		this.yjbfh = yjbfh;
+	}
+	public Integer getEjbfh() {
+		return ejbfh;
+	}
+	public void setEjbfh(Integer ejbfh) {
+		this.ejbfh = ejbfh;
+	}
 	public Integer getLxlx() {
 		return lxlx;
 	}
@@ -227,6 +239,8 @@ public class DingDan {
 	private String sjsfzh;
 	private String sjxm;
 	private String cph;
+	private Integer yjbfh=0;//一检磅房号
+	private Integer ejbfh=0;//二检磅房号
 	private Integer lxlx;//流向类型
 	private Float yzxzl;//预装卸重量
 	private Float sjzl;//实际重量

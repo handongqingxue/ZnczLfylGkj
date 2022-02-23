@@ -29,8 +29,8 @@ import com.znczLfylGkj.yz.YzZlUtil;
 
 public class APIUtil {
 	
-	public static final String SERVICE_URL="http://10.10.99.20:8080/ZnczLfyl/gkj/";
-	//public static final String SERVICE_URL="http://localhost:8080/ZnczLfyl/gkj/";
+	//public static final String SERVICE_URL="http://10.10.99.20:8080/ZnczLfyl/gkj/";
+	public static final String SERVICE_URL="http://localhost:8080/ZnczLfyl/gkj/";
 
 	//https://www.cnblogs.com/aeolian/p/7746158.html
 	//https://www.cnblogs.com/bobc/p/8809761.html
@@ -94,10 +94,12 @@ public class APIUtil {
 		}
 	}
 
-	public static JSONObject getDingDanByZt(String ddztMc, Integer yjzt, Integer ejzt) {
+	public static JSONObject getDingDanByZt(Integer yjbfh,Integer ejbfh,String ddztMc, Integer yjzt, Integer ejzt) {
 		JSONObject resultJO = null;
 		try {
 			Map parames = new HashMap<String, String>();
+	        parames.put("yjbfh", yjbfh);
+	        parames.put("ejbfh", ejbfh);
 	        parames.put("ddztMc", ddztMc);
 	        parames.put("yjzt", yjzt);
 	        parames.put("ejzt", ejzt);
@@ -117,6 +119,8 @@ public class APIUtil {
 			Map parames = new HashMap<String, String>();
 	        parames.put("id", dd.getId());
 	        parames.put("ddztMc", dd.getDdztMc());
+	        parames.put("yjbfh", dd.getYjbfh());
+	        parames.put("ejbfh", dd.getEjbfh());
 	        resultJO = APIUtil.doHttp("editDingDan",parames);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -131,6 +135,8 @@ public class APIUtil {
 		JSONObject resultJO = null;
 		try {
 			Map parames = new HashMap<String, String>();
+	        parames.put("yjbfh", dd.getYjbfh());
+	        parames.put("ejbfh", dd.getEjbfh());
 	        parames.put("ddztMc", dd.getDdztMc());
 	        parames.put("yjzt", dd.getYjzt());
 	        parames.put("ejzt", dd.getEjzt());
@@ -230,10 +236,14 @@ public class APIUtil {
 		}
 	}
 	
-	public static JSONObject checkDingDanIfExistByZt(String ddztMc, Integer yjzt, Integer ejzt) {
+	public static JSONObject checkDingDanIfExistByZt(Integer yjbfh,Integer ejbfh,String ddztMc, Integer yjzt, Integer ejzt) {
 		JSONObject resultJO = null;
 		try {
 			Map parames = new HashMap<String, String>();
+			if(yjbfh!=0)
+				parames.put("yjbfh", yjbfh);
+			if(ejbfh!=0)
+				parames.put("ejbfh", ejbfh);
 			parames.put("ddztMc", ddztMc);
 			parames.put("yjzt", yjzt);
 			parames.put("ejzt", ejzt);
@@ -258,7 +268,8 @@ public class APIUtil {
 	        if("ok".equals(resultJO.getString("status"))) {
 	        	System.out.println("存在该订单");
 	        	System.out.println("根据其他订单状态验证是否存在其他订单");
-	        	JSONObject ddExistResult = APIUtil.checkDingDanIfExistByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_SHANG_BANG,DingDan.DAI_SHANG_BANG);
+	        	Integer bfh = LoadProperties.getBangFangHao();
+	        	JSONObject ddExistResult = APIUtil.checkDingDanIfExistByZt(bfh,0,DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_SHANG_BANG,DingDan.DAI_SHANG_BANG);
 	        	if("ok".equals(ddExistResult.getString("status"))) {
 	            	System.out.println("音柱播报：其他订单状态存在其他订单");
 	        	}
@@ -274,6 +285,7 @@ public class APIUtil {
 		        	dd.setId(ddJO.getInt("id"));
 		        	dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 		        	dd.setYjzt(DingDan.DAI_SHANG_BANG);
+		        	dd.setYjbfh(bfh);
 		        	APIUtil.editDingDan(dd);
 		        	
 		    		YinZhuTask.sendMsg(YzZlUtil.get87().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
@@ -315,6 +327,7 @@ public class APIUtil {
 			//yjjdq.open();
 			YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
 			System.out.println("前open1==="+yjjdq.isKgl1Open());
+			Integer bfh = LoadProperties.getBangFangHao();
 			int waitTime=0;
 			while (true) {
 				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
@@ -326,6 +339,7 @@ public class APIUtil {
 					System.out.println("上磅失败，请重新车牌识别");
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待上磅更改为一检排队中");
 					DingDan dd=new DingDan();
+					dd.setYjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 					dd.setXddztMc(DingDanZhuangTai.YI_JIAN_PAI_DUI_ZHONG_TEXT);
 					APIUtil.editDingDanByZt(dd);
@@ -347,6 +361,7 @@ public class APIUtil {
 				if(yjjdq.isKgl1Open()) {
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待上磅更改为上磅中");
 					DingDan dd=new DingDan();
+					dd.setYjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 					dd.setYjzt(DingDan.DAI_SHANG_BANG);
 					dd.setXyjzt(DingDan.SHANG_BANG_ZHONG);
@@ -370,6 +385,7 @@ public class APIUtil {
 			YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
 			System.out.println("前open1==="+yjjdq.isKgl1Open());
 			System.out.println("前open2==="+yjjdq.isKgl2Open());
+			Integer bfh = LoadProperties.getBangFangHao();
 			int waitTime=0;
 			while (true) {
 				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
@@ -382,6 +398,7 @@ public class APIUtil {
 					System.out.println("称重失败，请重新车牌识别");
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待上磅更改为一检排队中");
 					DingDan dd=new DingDan();
+					dd.setYjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 					dd.setXddztMc(DingDanZhuangTai.YI_JIAN_PAI_DUI_ZHONG_TEXT);
 					dd.setYjzt(DingDan.SHANG_BANG_ZHONG);
@@ -404,6 +421,7 @@ public class APIUtil {
 				if(!yjjdq.isKgl1Open()&&!yjjdq.isKgl2Open()) {
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从上磅中更改为待称重");
 					DingDan dd=new DingDan();
+					dd.setYjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 					dd.setYjzt(DingDan.SHANG_BANG_ZHONG);
 					dd.setXyjzt(DingDan.DAI_CHENG_ZHONG);
@@ -425,14 +443,16 @@ public class APIUtil {
 	public static void yiJianChengZhongZhong() {
 		try {
 			System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待称重更改为称重中");
+			Integer bfh = LoadProperties.getBangFangHao();
 			DingDan dd=new DingDan();
+			dd.setYjbfh(bfh);
 			dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 			dd.setYjzt(DingDan.DAI_CHENG_ZHONG);
 			dd.setXyjzt(DingDan.CHENG_ZHONG_ZHONG);
 			APIUtil.editDingDanByZt(dd);
 			
 			System.out.println("查询订单状态为一检上磅，一检状态为称重中的订单");
-			JSONObject resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.CHENG_ZHONG_ZHONG,DingDan.DAI_SHANG_BANG);
+			JSONObject resultJO=APIUtil.getDingDanByZt(bfh,0,DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.CHENG_ZHONG_ZHONG,DingDan.DAI_SHANG_BANG);
 			String status = resultJO.getString("status");
 			if("ok".equals(status)) {
 				DingDan dd1=(DingDan)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(resultJO.get("dingDan").toString()), DingDan.class);
@@ -475,6 +495,7 @@ public class APIUtil {
 			    	if(dd1.getLxlx()==DingDan.SONG_YUN) {
 						System.out.println("更改订单的实际重量、重量差额比");
 				    	DingDan dd2=new DingDan();
+				    	dd2.setYjbfh(bfh);
 				    	dd2.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 				    	dd2.setYjzt(DingDan.CHENG_ZHONG_ZHONG);
 				    	dd2.setSjzl(mz);
@@ -500,6 +521,7 @@ public class APIUtil {
 				
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从称重中更改为待下磅");
 					dd=new DingDan();
+					dd.setYjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 					dd.setYjzt(DingDan.CHENG_ZHONG_ZHONG);
 					dd.setXyjzt(DingDan.DAI_XIA_BANG);
@@ -522,6 +544,7 @@ public class APIUtil {
 				else if(djczl==0) {//地磅上没有车辆
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从称重中更改为待上磅");
 					dd=new DingDan();
+					dd.setYjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 					dd.setYjzt(DingDan.CHENG_ZHONG_ZHONG);
 					dd.setXyjzt(DingDan.DAI_SHANG_BANG);
@@ -534,6 +557,7 @@ public class APIUtil {
 				else if(djczl==-1) {//称重失败
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从称重中更改为待上磅");
 					dd=new DingDan();
+					dd.setYjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 					dd.setXddztMc(DingDanZhuangTai.YI_JIAN_PAI_DUI_ZHONG_TEXT);
 					dd.setYjzt(DingDan.CHENG_ZHONG_ZHONG);
@@ -569,6 +593,7 @@ public class APIUtil {
 		try {
 			YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
 			System.out.println("前open2==="+yjjdq.isKgl2Open());
+			Integer bfh = LoadProperties.getBangFangHao();
 			while (true) {
 				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
 				Thread.sleep(1000);
@@ -577,6 +602,7 @@ public class APIUtil {
 		        	
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待下磅更改为下磅中");
 					DingDan dd=new DingDan();
+					dd.setYjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 					dd.setYjzt(DingDan.DAI_XIA_BANG);
 					dd.setXyjzt(DingDan.XIA_BANG_ZHONG);
@@ -599,6 +625,7 @@ public class APIUtil {
 		try {
 			YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
 			System.out.println("前open2==="+yjjdq.isKgl2Open());
+			Integer bfh = LoadProperties.getBangFangHao();
 			while (true) {
 				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
 				Thread.sleep(1000);
@@ -606,6 +633,7 @@ public class APIUtil {
 				if(!yjjdq.isKgl2Open()) {
 					System.out.println("查找订单状态为一检上磅的订单，更改订单状态为待一检审核、一检状态从下磅中更改为已完成");
 					DingDan dd=new DingDan();
+					dd.setYjbfh(bfh);
 			    	dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
 			    	dd.setXddztMc(DingDanZhuangTai.DAI_YI_JIAN_SHEN_HE_TEXT);
 			    	dd.setYjzt(DingDan.XIA_BANG_ZHONG);
@@ -626,14 +654,15 @@ public class APIUtil {
 	public static void printGbjl(int gblx) {
 		System.out.println("打印小票");
 		JSONObject resultJO = null;
+		Integer bfh = LoadProperties.getBangFangHao();
 		switch (gblx) {
 		case GuoBangJiLu.RU_CHANG_GUO_BANG:
 			System.out.println("查询订单状态为一检上磅，一检状态为待下磅的订单");
-			resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_XIA_BANG,DingDan.DAI_SHANG_BANG);
+			resultJO=APIUtil.getDingDanByZt(bfh,0,DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_XIA_BANG,DingDan.DAI_SHANG_BANG);
 			break;
 		case GuoBangJiLu.CHU_CHANG_GUO_BANG:
 			System.out.println("查询订单状态为二检上磅，二检状态为待下磅的订单");
-			resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT,DingDan.YI_WAN_CHENG,DingDan.DAI_XIA_BANG);
+			resultJO=APIUtil.getDingDanByZt(0,bfh,DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT,DingDan.YI_WAN_CHENG,DingDan.DAI_XIA_BANG);
 			break;
 		}
 		
@@ -678,11 +707,12 @@ public class APIUtil {
 	public static void updateEJCPSBDDXX(Car car) {
 		try {
 			System.out.println("查询订单状态为二检排队中的订单");
+        	Integer bfh = LoadProperties.getBangFangHao();
 			JSONObject resultJO=APIUtil.getDingDan(car.getsLicense(),DingDanZhuangTai.ER_JIAN_PAI_DUI_ZHONG_TEXT);
 	        if("ok".equals(resultJO.getString("status"))) {
 	        	System.out.println("存在该订单");
 	        	System.out.println("根据其他订单状态验证是否存在其他订单");
-	        	JSONObject ddExistResult = APIUtil.checkDingDanIfExistByZt(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT,DingDan.YI_WAN_CHENG,DingDan.DAI_SHANG_BANG);
+	        	JSONObject ddExistResult = APIUtil.checkDingDanIfExistByZt(0,bfh,DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT,DingDan.YI_WAN_CHENG,DingDan.DAI_SHANG_BANG);
 	        	if("ok".equals(ddExistResult.getString("status"))) {
 	            	System.out.println("音柱播报：其他订单状态存在其他订单");
 	        	}
@@ -698,6 +728,7 @@ public class APIUtil {
 		        	dd.setId(ddJO.getInt("id"));
 		        	dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
 		        	dd.setEjzt(DingDan.DAI_SHANG_BANG);
+		        	dd.setEjbfh(bfh);
 		        	APIUtil.editDingDan(dd);
 		        	
 		    		YinZhuTask.sendMsg(YzZlUtil.get87().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
@@ -737,6 +768,7 @@ public class APIUtil {
 			//ejjdq.open();
 			ErJianJdq ejjdq = JdqZlUtil.getEjjdq();
 			System.out.println("前open1==="+ejjdq.isKgl1Open());
+			Integer bfh = LoadProperties.getBangFangHao();
 			int waitTime=0;
 			while (true) {
 				ejjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
@@ -748,6 +780,7 @@ public class APIUtil {
 					System.out.println("上磅失败，请重新车牌识别");
 					System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从待上磅更改为二检排队中");
 					DingDan dd=new DingDan();
+					dd.setEjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
 					dd.setXddztMc(DingDanZhuangTai.ER_JIAN_PAI_DUI_ZHONG_TEXT);
 					APIUtil.editDingDanByZt(dd);
@@ -768,6 +801,7 @@ public class APIUtil {
 				if(ejjdq.isKgl1Open()) {
 					System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从待上磅更改为上磅中");
 					DingDan dd=new DingDan();
+					dd.setEjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
 					dd.setYjzt(DingDan.YI_WAN_CHENG);
 					dd.setEjzt(DingDan.DAI_SHANG_BANG);
@@ -793,6 +827,7 @@ public class APIUtil {
 			ErJianJdq ejjdq = JdqZlUtil.getEjjdq();
 			System.out.println("前open1==="+ejjdq.isKgl1Open());
 			System.out.println("前open2==="+ejjdq.isKgl2Open());
+			Integer bfh = LoadProperties.getBangFangHao();
 			int waitTime=0;
 			while (true) {
 				ejjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
@@ -805,6 +840,7 @@ public class APIUtil {
 					System.out.println("称重失败，请重新车牌识别");
 					System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从待上磅更改为二检排队中");
 					DingDan dd=new DingDan();
+					dd.setEjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
 					dd.setXddztMc(DingDanZhuangTai.ER_JIAN_PAI_DUI_ZHONG_TEXT);
 					dd.setEjzt(DingDan.SHANG_BANG_ZHONG);
@@ -827,6 +863,7 @@ public class APIUtil {
 				if(!ejjdq.isKgl1Open()&&!ejjdq.isKgl2Open()) {
 					System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从上磅中更改为待称重");
 					DingDan dd=new DingDan();
+					dd.setEjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
 					dd.setEjzt(DingDan.SHANG_BANG_ZHONG);
 					dd.setXejzt(DingDan.DAI_CHENG_ZHONG);
@@ -848,14 +885,16 @@ public class APIUtil {
 	public static void erJianChengZhongZhong() {
 		try {
 			System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从待称重更改为称重中");
+			Integer bfh = LoadProperties.getBangFangHao();
 			DingDan dd=new DingDan();
+			dd.setEjbfh(bfh);
 			dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
 			dd.setEjzt(DingDan.DAI_CHENG_ZHONG);
 			dd.setXejzt(DingDan.CHENG_ZHONG_ZHONG);
 			APIUtil.editDingDanByZt(dd);
 			
 			System.out.println("查询订单状态为二检上磅，二检状态为称重中的订单");
-			JSONObject resultJO=APIUtil.getDingDanByZt(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT,DingDan.YI_WAN_CHENG,DingDan.CHENG_ZHONG_ZHONG);
+			JSONObject resultJO=APIUtil.getDingDanByZt(0,bfh,DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT,DingDan.YI_WAN_CHENG,DingDan.CHENG_ZHONG_ZHONG);
 			String status = resultJO.getString("status");
 			if("ok".equals(status)) {
 				DingDan dd1=(DingDan)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(resultJO.get("dingDan").toString()), DingDan.class);
@@ -903,6 +942,7 @@ public class APIUtil {
 					if(dd1.getLxlx()==DingDan.QU_YUN) {
 						System.out.println("更改订单的实际重量、重量差额比");
 				    	DingDan dd2=new DingDan();
+				    	dd2.setEjbfh(bfh);
 				    	dd2.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
 				    	dd2.setYjzt(DingDan.YI_WAN_CHENG);
 				    	dd2.setEjzt(DingDan.SHANG_BANG_ZHONG);
@@ -927,6 +967,7 @@ public class APIUtil {
 				
 					System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从称重中更改为待下磅");
 					dd=new DingDan();
+					dd.setEjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
 					dd.setEjzt(DingDan.CHENG_ZHONG_ZHONG);
 					dd.setXejzt(DingDan.DAI_XIA_BANG);
@@ -949,6 +990,7 @@ public class APIUtil {
 				else if(djczl==0) {//地磅上没有车辆
 					System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从称重中更改为待上磅");
 					dd=new DingDan();
+					dd.setEjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
 					dd.setEjzt(DingDan.CHENG_ZHONG_ZHONG);
 					dd.setXejzt(DingDan.DAI_SHANG_BANG);
@@ -961,6 +1003,7 @@ public class APIUtil {
 				else if(djczl==-1) {//称重失败
 					System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从称重中更改为待上磅");
 					dd=new DingDan();
+					dd.setEjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
 					dd.setXddztMc(DingDanZhuangTai.ER_JIAN_PAI_DUI_ZHONG_TEXT);
 					dd.setEjzt(DingDan.CHENG_ZHONG_ZHONG);
@@ -996,6 +1039,7 @@ public class APIUtil {
 		try {
 			ErJianJdq ejjdq = JdqZlUtil.getEjjdq();
 			System.out.println("前open2==="+ejjdq.isKgl2Open());
+			Integer bfh = LoadProperties.getBangFangHao();
 			while (true) {
 				ejjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
 				Thread.sleep(1000);
@@ -1004,6 +1048,7 @@ public class APIUtil {
 		        	
 					System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从待下磅更改为下磅中");
 					DingDan dd=new DingDan();
+					dd.setEjbfh(bfh);
 					dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
 					dd.setEjzt(DingDan.DAI_XIA_BANG);
 					dd.setXejzt(DingDan.XIA_BANG_ZHONG);
@@ -1026,6 +1071,7 @@ public class APIUtil {
 		try {
 			ErJianJdq ejjdq = JdqZlUtil.getEjjdq();
 			System.out.println("前open2=="+ejjdq.isKgl2Open());
+			Integer bfh = LoadProperties.getBangFangHao();
 			while (true) {
 				ejjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
 				Thread.sleep(1000);
@@ -1033,6 +1079,7 @@ public class APIUtil {
 				if(!ejjdq.isKgl2Open()) {
 			    	System.out.println("查找订单状态为二检上磅的订单，更改订单状态为待二检审核、二检状态从下磅中更改为已完成");
 			    	DingDan dd=new DingDan();
+			    	dd.setEjbfh(bfh);
 			    	dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
 			    	dd.setXddztMc(DingDanZhuangTai.DAI_ER_JIAN_SHEN_HE_TEXT);
 			    	dd.setEjzt(DingDan.XIA_BANG_ZHONG);
@@ -1083,22 +1130,14 @@ public class APIUtil {
 		
 		//APIUtil.checkDingDanIfExistByZt(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT,DingDan.DAI_SHANG_BANG,DingDan.DAI_SHANG_BANG);
 		
-		/*
-		String djczlStr = String.valueOf((int)70.0);
-		System.out.println("djczlStr==="+djczlStr.length());
-		for (int i = 0; i < djczlStr.length(); i++) {
-			System.out.println("i==="+i);
-			char ch = djczlStr.charAt(i);
-			System.out.println("ch==="+ch);
-			String chStr = String.valueOf(ch);
-			System.out.println("chStr==="+chStr);
-			int chi = Integer.parseInt(chStr);
-			if(chi==0)
-				chi=36;
-			System.out.println("chi==="+chi);
-    		YinZhuTask.sendMsg(YzZlUtil.getByDuanHao(chi).replaceAll(" ", ""), 500,YinZhuTask.YI_JIAN);
-		}
-		*/
+		
 		//printGbjl(GuoBangJiLu.RU_CHANG_GUO_BANG);
+		
+		DingDan dd=new DingDan();
+    	dd.setId(83);
+    	dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
+    	dd.setEjzt(DingDan.DAI_SHANG_BANG);
+    	dd.setEjbfh(2);
+    	APIUtil.editDingDan(dd);
 	}
 }
