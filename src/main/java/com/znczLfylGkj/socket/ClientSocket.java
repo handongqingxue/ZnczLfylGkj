@@ -83,7 +83,7 @@ public class ClientSocket implements Runnable {
 	private void sendName(){
 		int bfNoFlag= 0;
 		//name = JOptionPane.showInputDialog(f, "«Î ‰»Î–’√˚:");
-		bfNoFlag=1;
+		bfNoFlag=LoadProperties.getBangFangHao();
 		this.sendMessageToServer(bfNoFlag+"");
 	}
 	

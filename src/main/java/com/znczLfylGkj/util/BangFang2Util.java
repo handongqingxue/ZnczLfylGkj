@@ -612,13 +612,13 @@ public class BangFang2Util {
 				if(dd1.getLxlx()==DingDan.SONG_YUN) {
 					mz=(float)bdJO.getDouble("mz");
 					//pz=(float)1000;
-					dxgpz=(float)DiBangTask3124.getWeight();
+					dxgpz=(float)DiBangTask3190.getWeight();
 					djczl=dxgpz;
 					jz=mz-dxgpz;
 				}
 				else {
 					//mz=(float)5000;
-					dxgmz=(float)DiBangTask3124.getWeight();
+					dxgmz=(float)DiBangTask3190.getWeight();
 					djczl=dxgmz;
 					pz=(float)bdJO.getDouble("pz");
 					jz=dxgmz-pz;
