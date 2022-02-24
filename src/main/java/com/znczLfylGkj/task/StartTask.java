@@ -35,10 +35,14 @@ public class StartTask {
 		while (true) {
 			// main程序一直运行
 			try {
-				Thread.sleep(100000);
+				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			if(cs.isServerClose()) {
+				System.out.println("与服务器端通讯断开了，正在重新建立连接");
+				cs.connectServer();
 			}
 		}
 	}

@@ -23,6 +23,15 @@ public class ClientSocket implements Runnable {
 	public static final String PUSH_CPH="pushCph";
 	private OutputStreamWriter out;
 	private BufferedReader in;
+	private Socket socket;
+
+	public Socket getSocket() {
+		return socket;
+	}
+
+	public void setSocket(Socket socket) {
+		this.socket = socket;
+	}
 
 	@Override
 	public void run() {
@@ -100,7 +109,7 @@ public class ClientSocket implements Runnable {
 	public void connectServer() {
 		try {
 			String serverIp=LoadProperties.getServerIp();
-			Socket socket = new Socket(serverIp,8000);//能输入配置
+			socket = new Socket(serverIp,8000);//能输入配置
 			System.out.println("连接成功!");
 			out = new OutputStreamWriter(socket.getOutputStream());
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -112,8 +121,22 @@ public class ClientSocket implements Runnable {
 			e.printStackTrace();
 		} catch (IOException e) {
 			System.out.println("与服务器建立连接异常...");
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
+	}
+	
+	/**
+	* 判断是否断开连接，断开返回true,没有返回false
+	* @param socket
+	* @return
+	*/ 
+	public Boolean isServerClose(){ 
+	   try{ 
+	    socket.sendUrgentData(0xFF);//发送1个字节的紧急数据，默认情况下，服务器端没有开启紧急数据处理，不影响正常通信 
+	    return false; 
+	   }catch(Exception se){ 
+	    return true; 
+	   } 
 	}
 }
