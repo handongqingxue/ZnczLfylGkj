@@ -8,6 +8,7 @@ import com.znczLfylGkj.db.xk3124.MachineTool;
 import com.znczLfylGkj.jdq.JdqZlUtil;
 import com.znczLfylGkj.jdq.WriteZhiLingConst;
 import com.znczLfylGkj.jdq.YiJianJdq;
+import com.znczLfylGkj.yz.YzZlUtil;
 
 import gnu.io.SerialPort;
 
@@ -119,12 +120,15 @@ public class DiBangTask3124 extends Thread {
 	
 	public static void main(String[] args) {
 		try {
-			YiJianJdq yjjdq=new YiJianJdq();
-			JdqZlUtil.setYjjdq(yjjdq);
-			JdqZlUtil.openYiJianJdq();
-			getWeight();
-			JdqZlUtil.closeYiJianJdq();
-		} catch (InterruptedException e) {
+			//YiJianJdq yjjdq=new YiJianJdq();
+			//JdqZlUtil.setYjjdq(yjjdq);
+			//JdqZlUtil.openYiJianJdq();
+			//getWeight();
+			//JdqZlUtil.closeYiJianJdq();
+			
+			System.out.println("oooooooooooooooo");
+    		YinZhuTask.sendMsg(YzZlUtil.get88().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

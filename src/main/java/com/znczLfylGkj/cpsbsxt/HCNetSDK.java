@@ -38,8 +38,8 @@ public interface HCNetSDK extends StdCallLibrary {
 //    HCNetSDK INSTANCE = (HCNetSDK) Native.loadLibrary(HCNetSDKPath.DLL_PATH + "hikvision" + File.separator + "HCNetSDK",
 //            HCNetSDK.class);
 	 //HCNetSDK INSTANCE = (HCNetSDK) Native.loadLibrary("c:\\weightdll\\hikvision\\HCNetSDK",HCNetSDK.class);
-	 HCNetSDK INSTANCE = (HCNetSDK) Native.loadLibrary("D:\\resource\\HCNetSDK\\HCNetSDK.dll",
-	            HCNetSDK.class);
+	HCNetSDK INSTANCE = (HCNetSDK) Native.loadLibrary("D:\\resource\\HCNetSDK\\HCNetSDK.dll",HCNetSDK.class);
+	//HCNetSDK INSTANCE = (HCNetSDK) Native.loadLibrary("D:\\resource\\aaa\\HCNetSDK.dll",HCNetSDK.class);
     /***宏定义***/
     //常量111118888888111111ghyuytwwwwwwwwww
     public static final int ITC_MAX_POLYGON_POINT_NUM = 20;    //检测区域最多支持20个点的多边形

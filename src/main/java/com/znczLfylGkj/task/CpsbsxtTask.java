@@ -23,6 +23,7 @@ public class CpsbsxtTask extends Thread {
 		
 		//×¢²á1
         String  yiJianDeviceIP = LoadProperties.getHikvisionYiJianIP();//Éè±¸ipµØÖ·
+        System.out.println("yiJianDeviceIP==="+yiJianDeviceIP);
         //String  yiJianDeviceIP = "192.168.1.11";
         int yiJianPort = Integer.parseInt(LoadProperties.getHikvisionYiJianPort());
         //int yiJianPort = 8000;
