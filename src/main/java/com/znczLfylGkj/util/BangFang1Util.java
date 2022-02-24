@@ -228,12 +228,12 @@ public class BangFang1Util {
 					djczl=pz;
 				}
 
-				APIUtil.playWeight(djczl,YinZhuTask.YI_JIAN);
-				Thread.sleep(2000);
-				APIUtil.playWeight(djczl,YinZhuTask.YI_JIAN);
-				Thread.sleep(2000);
-				
 				if(djczl>0) {
+					APIUtil.playWeight(djczl,YinZhuTask.YI_JIAN);
+					Thread.sleep(2000);
+					APIUtil.playWeight(djczl,YinZhuTask.YI_JIAN);
+					Thread.sleep(2000);
+					
 					JSONObject ddJO=resultJO.getJSONObject("dingDan");
 			    	int ddId = ddJO.getInt("id");
 			    	System.out.println("ddId==="+ddId);
@@ -620,12 +620,12 @@ public class BangFang1Util {
 					jz=dxgmz-pz;
 				}
 	    		
-				APIUtil.playWeight(djczl,YinZhuTask.ER_JIAN);
-				Thread.sleep(2000);
-				APIUtil.playWeight(djczl,YinZhuTask.ER_JIAN);
-				Thread.sleep(2000);
-				
 				if(djczl>0) {
+					APIUtil.playWeight(djczl,YinZhuTask.ER_JIAN);
+					Thread.sleep(2000);
+					APIUtil.playWeight(djczl,YinZhuTask.ER_JIAN);
+					Thread.sleep(2000);
+				
 					System.out.println("根据称重出来的重量，修改订单对应的磅单记录");
 					APIUtil.editBangDanJiLu(bdId,dxgmz,dxgpz,jz);
 				
