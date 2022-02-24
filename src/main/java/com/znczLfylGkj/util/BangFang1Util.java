@@ -7,6 +7,7 @@ import com.znczLfylGkj.entity.DingDan;
 import com.znczLfylGkj.entity.DingDanZhuangTai;
 import com.znczLfylGkj.entity.GuoBangJiLu;
 import com.znczLfylGkj.jdq.ErJianJdq;
+import com.znczLfylGkj.jdq.JdqBf1Util;
 import com.znczLfylGkj.jdq.JdqZlUtil;
 import com.znczLfylGkj.jdq.WriteZhiLingConst;
 import com.znczLfylGkj.jdq.YiJianJdq;
@@ -14,6 +15,9 @@ import com.znczLfylGkj.task.DiBangTask3124;
 import com.znczLfylGkj.task.YinZhuTask;
 import com.znczLfylGkj.yz.YzZlUtil;
 
+/**
+ * 北磅房（1号磅房）工具类
+ * */
 public class BangFang1Util {
 
 	
@@ -37,7 +41,7 @@ public class BangFang1Util {
 	            	System.out.println("开启一检继电器");
 		    		JdqZlUtil.openYiJianJdq();
 		        	System.out.println("抬起一检上磅道闸");
-		        	JdqZlUtil.openYiJianShangBangDz();
+		        	JdqBf1Util.openYiJianShangBangDz();
 		        	
 		        	System.out.println("改变订单状态为一检上磅");
 					JSONObject ddJO=resultJO.getJSONObject("dingDan");
@@ -95,7 +99,7 @@ public class BangFang1Util {
 					
 					waitTime+=1000;
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.YI_JIAN);
-					JdqZlUtil.openYiJianXiaBangDz();
+		    		JdqBf1Util.openYiJianXiaBangDz();
 		        	JdqZlUtil.closeYiJianJdq();
 					Thread.sleep(2000);
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.YI_JIAN);
@@ -156,7 +160,7 @@ public class BangFang1Util {
 					
 					waitTime+=1000;
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.YI_JIAN);
-		        	JdqZlUtil.openYiJianXiaBangDz();
+		    		JdqBf1Util.openYiJianXiaBangDz();
 		        	JdqZlUtil.closeYiJianJdq();
 					Thread.sleep(2000);
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.YI_JIAN);
@@ -286,7 +290,7 @@ public class BangFang1Util {
 		    		YinZhuTask.sendMsg(YzZlUtil.get89().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 					
 		        	System.out.println("抬起一检下磅道闸");
-		        	JdqZlUtil.openYiJianXiaBangDz();
+		        	JdqBf1Util.openYiJianXiaBangDz();
 					
 					checkYJXBHWGSState();
 				}
@@ -313,7 +317,7 @@ public class BangFang1Util {
 					dd.setXyjzt(DingDan.DAI_SHANG_BANG);
 					APIUtil.editDingDanByZt(dd);
 					
-		        	JdqZlUtil.openYiJianXiaBangDz();
+					JdqBf1Util.openYiJianXiaBangDz();
 		        	JdqZlUtil.closeYiJianJdq();
 					
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
@@ -420,7 +424,7 @@ public class BangFang1Util {
 	            	System.out.println("开启二检继电器");
 		    		JdqZlUtil.openErJianJdq();
 		        	System.out.println("抬起二检上磅道闸");
-		        	JdqZlUtil.openErJianShangBangDz();
+		        	JdqBf1Util.openErJianShangBangDz();
 		        	
 		        	System.out.println("改变订单状态为二检上磅");
 					JSONObject ddJO=resultJO.getJSONObject("dingDan");
@@ -478,7 +482,7 @@ public class BangFang1Util {
 					
 					waitTime+=1000;
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.ER_JIAN);
-					JdqZlUtil.openErJianXiaBangDz();
+		    		JdqBf1Util.openErJianXiaBangDz();
 		        	JdqZlUtil.closeErJianJdq();
 					Thread.sleep(2000);
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.ER_JIAN);
@@ -539,7 +543,7 @@ public class BangFang1Util {
 					
 					waitTime+=1000;
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.ER_JIAN);
-		        	JdqZlUtil.openYiJianXiaBangDz();
+		    		JdqBf1Util.openYiJianXiaBangDz();
 		        	JdqZlUtil.closeYiJianJdq();
 					Thread.sleep(2000);
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.ER_JIAN);
@@ -673,7 +677,7 @@ public class BangFang1Util {
 		    		YinZhuTask.sendMsg(YzZlUtil.get89().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
 					
 		        	System.out.println("抬起二检下磅道闸");
-		        	JdqZlUtil.openErJianXiaBangDz();
+		        	JdqBf1Util.openErJianXiaBangDz();
 					
 					checkEJXBHWGSState();
 				}
@@ -700,7 +704,7 @@ public class BangFang1Util {
 					dd.setXejzt(DingDan.DAI_SHANG_BANG);
 					APIUtil.editDingDanByZt(dd);
 					
-		        	JdqZlUtil.openErJianXiaBangDz();
+					JdqBf1Util.openErJianXiaBangDz();
 		        	JdqZlUtil.closeErJianJdq();
 					
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);

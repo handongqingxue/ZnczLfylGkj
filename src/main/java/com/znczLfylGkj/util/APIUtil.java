@@ -375,5 +375,7 @@ public class APIUtil {
     	dd.setEjbfh(2);
     	APIUtil.editDingDan(dd);
     	*/
+		
+		//JSONObject resultJO=APIUtil.getDingDan("9005",DingDanZhuangTai.ER_JIAN_PAI_DUI_ZHONG_TEXT);
 	}
 }

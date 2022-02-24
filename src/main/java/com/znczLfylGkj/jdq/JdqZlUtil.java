@@ -55,73 +55,7 @@ public class JdqZlUtil {
 		JdqZlUtil.ejjdq.close();
 	}
 
-	/**
-	 * 抬起一检上磅道闸
-	 */
-	public static void openYiJianShangBangDz() {
-		try {
-			yjjdq.sendData(WriteZhiLingConst.KAI_JI_DIAN_QI1);
-			int yiJianJdqMaiChong = LoadProperties.getYiJianJdqMaiChong();
-			Thread.sleep(yiJianJdqMaiChong);
-			yjjdq.sendData(WriteZhiLingConst.GUAN_JI_DIAN_QI1);//脉冲时间过后执行复位操作
-			//Thread.sleep(1000);
-			//yjjdq.close();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
-	/**
-	 * 抬起一检下磅道闸
-	 */
-	public static void openYiJianXiaBangDz() {
-		try {
-			yjjdq.sendData(WriteZhiLingConst.KAI_JI_DIAN_QI2);
-			int yiJianJdqMaiChong = LoadProperties.getYiJianJdqMaiChong();
-			Thread.sleep(yiJianJdqMaiChong);
-			yjjdq.sendData(WriteZhiLingConst.GUAN_JI_DIAN_QI2);//脉冲时间过后执行复位操作
-			//Thread.sleep(1000);
-			//yjjdq.close();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 抬起二检上磅道闸
-	 */
-	public static void openErJianShangBangDz() {
-		try {
-			ejjdq.sendData(WriteZhiLingConst.KAI_JI_DIAN_QI1);
-			int erJianJdqMaiChong = LoadProperties.getErJianJdqMaiChong();
-			Thread.sleep(erJianJdqMaiChong);
-			ejjdq.sendData(WriteZhiLingConst.GUAN_JI_DIAN_QI1);//脉冲时间过后执行复位操作
-			//Thread.sleep(1000);
-			//yjjdq.close();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 抬起二检下磅道闸
-	 */
-	public static void openErJianXiaBangDz() {
-		try {
-			ejjdq.sendData(WriteZhiLingConst.KAI_JI_DIAN_QI2);
-			int yiJianJdqMaiChong = LoadProperties.getYiJianJdqMaiChong();
-			Thread.sleep(yiJianJdqMaiChong);
-			ejjdq.sendData(WriteZhiLingConst.GUAN_JI_DIAN_QI2);//脉冲时间过后执行复位操作
-			//Thread.sleep(1000);
-			//yjjdq.close();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	public static void main(String[] args) {
 		//YiJianJdq yjjdq=new YiJianJdq();
@@ -132,7 +66,7 @@ public class JdqZlUtil {
 		ErJianJdq ejjdq=new ErJianJdq();
 		JdqZlUtil.setEjjdq(ejjdq);
 		JdqZlUtil.openErJianJdq();
-    	JdqZlUtil.openErJianXiaBangDz();
+		JdqBf1Util.openErJianXiaBangDz();
 		JdqZlUtil.closeErJianJdq();
 	}
 }

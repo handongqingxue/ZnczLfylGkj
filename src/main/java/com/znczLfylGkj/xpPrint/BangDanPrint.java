@@ -44,7 +44,7 @@ public class BangDanPrint implements Printable {
 		float heigth = font.getSize2D();//获取字体的高度  
 		
 		//设置小票的标题标题  
-		g2.drawString("蓝帆健康有限公司",(float)x+25,(float)y+heigth);
+		g2.drawString("山东蓝帆健康有限公司",(float)x+25,(float)y+heigth);
 
 		float line = 2*heigth; //下一行开始打印的高度
 		g2.setFont(new Font("宋体", Font.PLAIN,8));//设置正文字体  
