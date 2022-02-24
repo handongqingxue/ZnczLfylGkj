@@ -12,6 +12,7 @@ import com.znczLfylGkj.jdq.JdqZlUtil;
 import com.znczLfylGkj.jdq.WriteZhiLingConst;
 import com.znczLfylGkj.jdq.YiJianJdq;
 import com.znczLfylGkj.task.DiBangTask3124;
+import com.znczLfylGkj.task.DiBangTask3190;
 import com.znczLfylGkj.task.YinZhuTask;
 import com.znczLfylGkj.yz.YzZlUtil;
 
@@ -222,12 +223,12 @@ public class BangFang2Util {
 				float djczl=0;
 				if(dd1.getLxlx()==DingDan.SONG_YUN) {
 					//mz=(float)5000;
-					mz=(float)DiBangTask3124.getWeight();
+					mz=(float)DiBangTask3190.getWeight();
 					djczl=mz;
 				}
 				else {
 					//pz=(float)1000;
-					pz=(float)DiBangTask3124.getWeight();
+					pz=(float)DiBangTask3190.getWeight();
 					djczl=pz;
 				}
 

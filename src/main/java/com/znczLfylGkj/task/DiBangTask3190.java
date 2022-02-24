@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.znczLfylGkj.db.xk3190.ByteUtil;
 import com.znczLfylGkj.db.xk3190.MachineTool;
+import com.znczLfylGkj.jdq.JdqZlUtil;
+import com.znczLfylGkj.jdq.WriteZhiLingConst;
+import com.znczLfylGkj.jdq.YiJianJdq;
 
 import gnu.io.SerialPort;
 
@@ -29,6 +32,7 @@ public class DiBangTask3190 extends Thread {
         int preWeight=0;
         int weight=0;
         int steadyCount=0;//稳定次数
+        int waitTime=0;
         int i = 1;
         //循环遍历串口
         List<String> serialPorts = MachineTool.uartPortUseAblefind();
@@ -46,10 +50,12 @@ public class DiBangTask3190 extends Thread {
 	                //dataReceive = ByteUtil.byte2hex(bytes);
 	                //在此处可以对数据进行判断处理，识别操作
 	                System.out.println((i++) + ". 从串口" + name + "接收的数据：" + dataReceive);
-	                //String str=ByteUtil.byte2hex(bytes);
+	                String str=ByteUtil.byte2hex(bytes);
 	    			//String str="022B30303030303030314403";
-	    			String str="022B30303030313030314403";
+	    			//String str="022B30303030313030314403";
 	    			//str=str.substring(str.indexOf("022b"), 32);
+	                if(!str.startsWith("022B"))
+	                	continue;
 	    			
 	    			String str5 = str.substring(4, 6);
 	    			String str6 = str.substring(6, 8);
@@ -78,12 +84,28 @@ public class DiBangTask3190 extends Thread {
 						if(steadyCount>5) {
 							break;
 						}
+						if(waitTime>10) {
+							weight=-1;
+							break;
+						}
 						
-						if(weight==preWeight)
-							steadyCount++;
-						else
+						YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
+						yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+						System.out.println("称重中open1==="+yjjdq.isKgl1Open());
+						System.out.println("称重中open2==="+yjjdq.isKgl2Open());
+						if(yjjdq.isKgl1Open()||yjjdq.isKgl2Open()) {
+							System.out.println("光栅被遮挡");
 							steadyCount=0;
-						preWeight=weight;
+							waitTime++;
+						}
+						else {
+							waitTime=0;
+							if(weight<=preWeight+preWeight*0.3||weight>=preWeight-preWeight*0.3)
+								steadyCount++;
+							else
+								steadyCount=0;
+							preWeight=weight;
+						}
 					//}
 	            //} else {
 	            	//System.out.println("串口号：" + name + "接收到的数据为空！");
@@ -94,4 +116,13 @@ public class DiBangTask3190 extends Thread {
         }
         return weight;
     }
+    
+    public static void main(String[] args) {
+		try {
+			getWeight();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
