@@ -654,6 +654,25 @@ public class LoadProperties {
 		
 		return parseInt;
 	}
+
+	/**
+	 * 获得地磅Com口号
+	 * 
+	 * @return
+	 */
+	public static String getDiBangCom() {
+		if (prop == null) {
+			prop = Method2();
+		}
+
+		String trim = prop.getProperty("diBangCom").trim();
+		if (StringUtils.isBlank(trim)) {
+			logger.debug("请在配置文件中配置diBangCom");
+			return null;
+		}
+
+		return trim;
+	}
 	
 	
 	

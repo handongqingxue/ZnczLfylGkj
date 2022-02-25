@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import com.znczLfylGkj.util.LoadProperties;
+
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
@@ -15,7 +17,8 @@ import gnu.io.UnsupportedCommOperationException;
 
 public class MachineTool {
 
-	public static final String USED_PORT_NAME="COM1";
+	//public static final String USED_PORT_NAME="COM1";
+	public static final String USED_PORT_NAME=LoadProperties.getDiBangCom();
 	
 	/**
      * 类方法 不可改变 不接受继承

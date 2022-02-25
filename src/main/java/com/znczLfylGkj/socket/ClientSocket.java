@@ -128,15 +128,16 @@ public class ClientSocket implements Runnable {
 	
 	/**
 	* 判断是否断开连接，断开返回true,没有返回false
+	* https://www.cnblogs.com/wisdo/p/5859857.html
 	* @param socket
 	* @return
 	*/ 
 	public Boolean isServerClose(){ 
 	   try{ 
-	    socket.sendUrgentData(0xFF);//发送1个字节的紧急数据，默认情况下，服务器端没有开启紧急数据处理，不影响正常通信 
-	    return false; 
-	   }catch(Exception se){ 
-	    return true; 
+		   socket.sendUrgentData(0xFF);//发送1个字节的紧急数据，默认情况下，服务器端没有开启紧急数据处理，不影响正常通信 
+		   return false; 
+	   } catch(Exception se){ 
+		   return true; 
 	   } 
 	}
 }

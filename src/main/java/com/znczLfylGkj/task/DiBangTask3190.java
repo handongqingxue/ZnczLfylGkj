@@ -28,7 +28,6 @@ public class DiBangTask3190 extends Thread {
     public static int getWeight() throws InterruptedException {
         SerialPort serialPortTest = null;
         byte[] bytes = null;
-        String dataReceive = null;
         int preWeight=0;
         int weight=0;
         int steadyCount=0;//稳定次数
@@ -47,13 +46,12 @@ public class DiBangTask3190 extends Thread {
 	            bytes = MachineTool.uartReceiveDatafromSingleChipMachine(serialPortTest);
 	            System.out.println("b==="+bytes);
 	            if (bytes != null && bytes.length > 0) {
-	                //dataReceive = ByteUtil.byte2hex(bytes);
-	                //在此处可以对数据进行判断处理，识别操作
-	                System.out.println((i++) + ". 从串口" + name + "接收的数据：" + dataReceive);
 	                String str=ByteUtil.byte2hex(bytes);
+	                //在此处可以对数据进行判断处理，识别操作
 	    			//String str="022B30303030303030314403";
 	    			//String str="022B30303030313030314403";
 	    			//str=str.substring(str.indexOf("022b"), 32);
+	                System.out.println((i++) + ". 从串口" + name + "接收的数据：" + str);
 	                System.out.println("str==="+str);
 	                if(!str.startsWith("022B"))
 	                	continue;

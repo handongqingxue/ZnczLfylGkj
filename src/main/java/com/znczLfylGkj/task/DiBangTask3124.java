@@ -29,7 +29,6 @@ public class DiBangTask3124 extends Thread {
 	public static int getWeight() throws InterruptedException {
         SerialPort serialPortTest = null;
         byte[] bytes = null;
-        String dataReceive = null;
         int preWeight=0;
         int weight=0;
         int steadyCount=0;//稳定次数
@@ -47,12 +46,11 @@ public class DiBangTask3124 extends Thread {
 	            //接收数据
 	            bytes = MachineTool.uartReceiveDatafromSingleChipMachine(serialPortTest);
 	            if (bytes != null && bytes.length > 0) {
-	                //dataReceive = ByteUtil.byte2hex(bytes);
-	                //在此处可以对数据进行判断处理，识别操作
-	                System.out.println((i++) + ". 从串口" + name + "接收的数据：" + dataReceive);
 	                String str=ByteUtil.byte2hex(bytes);
+	                //在此处可以对数据进行判断处理，识别操作
 					//String str="022930203030303030303030303030300D31";
 					//String str="022930203030303037303030303030300D31";
+	                System.out.println((i++) + ". 从串口" + name + "接收的数据：" + str);
 	                if(!str.startsWith("0229"))
 	                	continue;
 	                
@@ -120,14 +118,13 @@ public class DiBangTask3124 extends Thread {
 	
 	public static void main(String[] args) {
 		try {
-			//YiJianJdq yjjdq=new YiJianJdq();
-			//JdqZlUtil.setYjjdq(yjjdq);
-			//JdqZlUtil.openYiJianJdq();
-			//getWeight();
-			//JdqZlUtil.closeYiJianJdq();
+			YiJianJdq yjjdq=new YiJianJdq();
+			JdqZlUtil.setYjjdq(yjjdq);
+			JdqZlUtil.openYiJianJdq();
+			getWeight();
+			JdqZlUtil.closeYiJianJdq();
 			
-			System.out.println("oooooooooooooooo");
-    		YinZhuTask.sendMsg(YzZlUtil.get88().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
+    		//YinZhuTask.sendMsg(YzZlUtil.get88().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
