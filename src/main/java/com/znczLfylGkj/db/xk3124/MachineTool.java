@@ -18,7 +18,6 @@ import gnu.io.UnsupportedCommOperationException;
 public class MachineTool {
 
 	//public static final String USED_PORT_NAME="COM1";
-	public static final String USED_PORT_NAME=LoadProperties.getDiBangCom();
 	
 	/**
      * 类方法 不可改变 不接受继承
@@ -27,6 +26,7 @@ public class MachineTool {
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public static final ArrayList<String> uartPortUseAblefind() {
+    	String comNum = LoadProperties.getDiBangCom();
         //获取当前所有可用串口
         //由CommPortIdentifier类提供方法
         Enumeration<CommPortIdentifier> portList=CommPortIdentifier.getPortIdentifiers();
@@ -35,7 +35,7 @@ public class MachineTool {
         while(portList.hasMoreElements()) {
             String portName=portList.nextElement().getName();
             System.out.println("portName1==="+portName);
-            if(USED_PORT_NAME.equals(portName)) {
+            if(comNum.equals(portName)) {
 	            portNameList.add(portName);
             }
         }
