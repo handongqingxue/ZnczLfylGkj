@@ -345,13 +345,13 @@ public class BangFang2Util {
 	public static void checkYJXBHWGSState() {
 		try {
 			YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
-			System.out.println("前open2==="+yjjdq.isKgl2Open());
+			System.out.println("前open1==="+yjjdq.isKgl1Open());
 			Integer bfh = LoadProperties.getBangFangHao();
 			while (true) {
 				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
 				Thread.sleep(1000);
-				System.out.println("后open2==="+yjjdq.isKgl2Open());
-				if(yjjdq.isKgl2Open()) {
+				System.out.println("后open1==="+yjjdq.isKgl1Open());
+				if(yjjdq.isKgl1Open()) {
 		        	
 					System.out.println("查找订单状态为一检上磅的订单，将一检上磅状态从待下磅更改为下磅中");
 					DingDan dd=new DingDan();
@@ -377,13 +377,13 @@ public class BangFang2Util {
 	public static void checkIfYJXBYwc() {
 		try {
 			YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
-			System.out.println("前open2==="+yjjdq.isKgl2Open());
+			System.out.println("前open1==="+yjjdq.isKgl1Open());
 			Integer bfh = LoadProperties.getBangFangHao();
 			while (true) {
 				yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
 				Thread.sleep(1000);
-				System.out.println("后open2==="+yjjdq.isKgl2Open());
-				if(!yjjdq.isKgl2Open()) {
+				System.out.println("后open1==="+yjjdq.isKgl1Open());
+				if(!yjjdq.isKgl1Open()) {
 					System.out.println("查找订单状态为一检上磅的订单，更改订单状态为待一检审核、一检状态从下磅中更改为已完成");
 					DingDan dd=new DingDan();
 					dd.setYjbfh(bfh);
@@ -732,13 +732,13 @@ public class BangFang2Util {
 	public static void checkEJXBHWGSState() {
 		try {
 			ErJianJdq ejjdq = JdqZlUtil.getEjjdq();
-			System.out.println("前open2==="+ejjdq.isKgl2Open());
+			System.out.println("前open1==="+ejjdq.isKgl1Open());
 			Integer bfh = LoadProperties.getBangFangHao();
 			while (true) {
 				ejjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
 				Thread.sleep(1000);
-				System.out.println("后open2==="+ejjdq.isKgl2Open());
-				if(ejjdq.isKgl2Open()) {
+				System.out.println("后open1==="+ejjdq.isKgl1Open());
+				if(ejjdq.isKgl1Open()) {
 		        	
 					System.out.println("查找订单状态为二检上磅的订单，将二检上磅状态从待下磅更改为下磅中");
 					DingDan dd=new DingDan();
@@ -764,13 +764,13 @@ public class BangFang2Util {
 	public static void checkIfEJXBYwc() {
 		try {
 			ErJianJdq ejjdq = JdqZlUtil.getEjjdq();
-			System.out.println("前open2=="+ejjdq.isKgl2Open());
+			System.out.println("前open1=="+ejjdq.isKgl1Open());
 			Integer bfh = LoadProperties.getBangFangHao();
 			while (true) {
 				ejjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
 				Thread.sleep(1000);
-				System.out.println("后open2==="+ejjdq.isKgl2Open());
-				if(!ejjdq.isKgl2Open()) {
+				System.out.println("后open1==="+ejjdq.isKgl1Open());
+				if(!ejjdq.isKgl1Open()) {
 			    	System.out.println("查找订单状态为二检上磅的订单，更改订单状态为待二检审核、二检状态从下磅中更改为已完成");
 			    	DingDan dd=new DingDan();
 			    	dd.setEjbfh(bfh);

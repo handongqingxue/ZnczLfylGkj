@@ -17,6 +17,9 @@ import org.slf4j.LoggerFactory;
 public class LoadProperties {
 	static Logger logger = LoggerFactory.getLogger(LoadProperties.class);
 	private static Properties prop = null;
+	private static final int CURRENT_BF_NO=1;
+	private static final int YI_HAO_BANG_FANG=1;
+	private static final int ER_HAO_BANG_FANG=2;
 
 	static {
 		prop = Method2();
@@ -25,9 +28,17 @@ public class LoadProperties {
 	private static synchronized Properties Method2() {
 		Properties prop = null;
 		try {
-			//InputStream inputStream = LoadProperties.class.getResourceAsStream("/config/configBf1.properties");
-			InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("configBf1.properties");
-			
+			InputStream inputStream = null;
+			switch (CURRENT_BF_NO) {
+			case YI_HAO_BANG_FANG:
+				inputStream = LoadProperties.class.getResourceAsStream("/config/configBf1.properties");
+				//inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("configBf1.properties");
+				break;
+			case ER_HAO_BANG_FANG:
+				inputStream = LoadProperties.class.getResourceAsStream("/config/configBf2.properties");
+				//inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("configBf2.properties");
+				break;
+			}
 			System.out.println("inputStream==="+inputStream);
 
 			prop = new Properties();
