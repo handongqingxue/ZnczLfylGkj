@@ -47,7 +47,8 @@ public class ClientSocket implements Runnable {
 				this.readMessage(line);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				System.out.println("Connection reset");
 				break;
 			}
 			

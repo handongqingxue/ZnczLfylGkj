@@ -1,5 +1,8 @@
 package com.znczLfylGkj.task;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.znczLfylGkj.cpsbsxt.Car;
 import com.znczLfylGkj.jdq.ErJianJdq;
 import com.znczLfylGkj.jdq.JdqZlUtil;
@@ -8,6 +11,8 @@ import com.znczLfylGkj.socket.ClientSocket;
 import com.znczLfylGkj.util.APIUtil;
 
 public class StartTask {
+	
+	private static SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public static void main(String[] args) {
 		//DiBangTask3124 diBangTask3124=new DiBangTask3124();
@@ -41,7 +46,7 @@ public class StartTask {
 				e.printStackTrace();
 			}
 			if(cs.isServerClose()) {
-				System.out.println("与服务器端通讯断开了，正在重新建立连接");
+				System.out.println("与服务器端通讯断开了，正在重新建立连接,时间:"+sdf.format(new Date()));
 				cs.connectServer();
 			}
 		}
