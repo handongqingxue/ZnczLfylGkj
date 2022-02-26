@@ -136,8 +136,8 @@ public class BangFang2Util {
 	public static void checkYJSBHXBHWGSState() {
 		try {
 			YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
-			System.out.println("前open1==="+yjjdq.isKgl1Open());
-			System.out.println("前open2==="+yjjdq.isKgl2Open());
+			System.out.println("磅和下磅红外光栅状态前open1==="+yjjdq.isKgl1Open());
+			System.out.println("磅和下磅红外光栅状态前open2==="+yjjdq.isKgl2Open());
 			Integer bfh = LoadProperties.getBangFangHao();
 			int waitTime=0;
 			while (true) {
@@ -223,21 +223,21 @@ public class BangFang2Util {
 				float djczl=0;
 				if(dd1.getLxlx()==DingDan.SONG_YUN) {
 					//mz=(float)5000;
-					mz=(float)DiBangTask3190.getWeight();
+					mz=(float)DiBangTask3190.getWeight(GuoBangJiLu.RU_CHANG_GUO_BANG);
 					djczl=mz;
 				}
 				else {
 					//pz=(float)1000;
-					pz=(float)DiBangTask3190.getWeight();
+					pz=(float)DiBangTask3190.getWeight(GuoBangJiLu.RU_CHANG_GUO_BANG);
 					djczl=pz;
 				}
-
-				APIUtil.playWeight(djczl,YinZhuTask.YI_JIAN);
-				Thread.sleep(2000);
-				APIUtil.playWeight(djczl,YinZhuTask.YI_JIAN);
-				Thread.sleep(2000);
 				
 				if(djczl>0) {
+					APIUtil.playWeight(djczl,YinZhuTask.YI_JIAN);
+					Thread.sleep(2000);
+					APIUtil.playWeight(djczl,YinZhuTask.YI_JIAN);
+					Thread.sleep(2000);
+					
 					JSONObject ddJO=resultJO.getJSONObject("dingDan");
 			    	int ddId = ddJO.getInt("id");
 			    	System.out.println("ddId==="+ddId);
@@ -612,24 +612,24 @@ public class BangFang2Util {
 				if(dd1.getLxlx()==DingDan.SONG_YUN) {
 					mz=(float)bdJO.getDouble("mz");
 					//pz=(float)1000;
-					dxgpz=(float)DiBangTask3190.getWeight();
+					dxgpz=(float)DiBangTask3190.getWeight(GuoBangJiLu.CHU_CHANG_GUO_BANG);
 					djczl=dxgpz;
 					jz=mz-dxgpz;
 				}
 				else {
 					//mz=(float)5000;
-					dxgmz=(float)DiBangTask3190.getWeight();
+					dxgmz=(float)DiBangTask3190.getWeight(GuoBangJiLu.CHU_CHANG_GUO_BANG);
 					djczl=dxgmz;
 					pz=(float)bdJO.getDouble("pz");
 					jz=dxgmz-pz;
 				}
-	    		
-				APIUtil.playWeight(djczl,YinZhuTask.ER_JIAN);
-				Thread.sleep(2000);
-				APIUtil.playWeight(djczl,YinZhuTask.ER_JIAN);
-				Thread.sleep(2000);
 				
 				if(djczl>0) {
+					APIUtil.playWeight(djczl,YinZhuTask.ER_JIAN);
+					Thread.sleep(2000);
+					APIUtil.playWeight(djczl,YinZhuTask.ER_JIAN);
+					Thread.sleep(2000);
+					
 					System.out.println("根据称重出来的重量，修改订单对应的磅单记录");
 					APIUtil.editBangDanJiLu(bdId,dxgmz,dxgpz,jz);
 				

@@ -66,7 +66,7 @@ public class JdqZlUtil {
 		ErJianJdq ejjdq=new ErJianJdq();
 		JdqZlUtil.setEjjdq(ejjdq);
 		JdqZlUtil.openErJianJdq();
-		JdqBf1Util.openErJianXiaBangDz();
+		JdqBf2Util.openErJianXiaBangDz();
 		JdqZlUtil.closeErJianJdq();
 	}
 }

@@ -34,11 +34,11 @@ public class StartTask {
 
 		//testLiuCheng();
 		
-		//ClientSocket cs = new ClientSocket();
-		//cs.connectServer();
+		ClientSocket cs = new ClientSocket();
+		cs.connectServer();
 		
-		ClientTest c = new ClientTest();
-		c.connectServer2();
+		//ClientTest c = new ClientTest();
+		//c.connectServer2();
 		
 		// 其他线程启动
 		while (true) {

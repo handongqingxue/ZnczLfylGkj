@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import com.znczLfylGkj.cpsbsxt.Car;
 import com.znczLfylGkj.util.APIUtil;
 import com.znczLfylGkj.util.BangFang1Util;
+import com.znczLfylGkj.util.BangFang2Util;
 import com.znczLfylGkj.util.LoadProperties;
 
 import net.sf.json.JSONObject;
@@ -68,12 +69,15 @@ public class ClientSocket implements Runnable {
 			car1.setsLicense(" "+cph);
 			int jyFlag = mesJO.getInt("jyFlag");
 			System.out.println("jyFlag==="+jyFlag);
+			System.out.println("bfh==="+bfh);
 			switch (jyFlag) {
 			case YI_JIAN:
-				System.out.println("1111111111");
 				switch (bfh) {
 				case APIUtil.YI_HAO_BANG_FANG:
 					BangFang1Util.updateYJCPSBDDXX(car1);
+					break;
+				case APIUtil.ER_HAO_BANG_FANG:
+					BangFang2Util.updateYJCPSBDDXX(car1);
 					break;
 				}
 				break;
@@ -82,6 +86,9 @@ public class ClientSocket implements Runnable {
 				switch (bfh) {
 				case APIUtil.YI_HAO_BANG_FANG:
 					BangFang1Util.updateEJCPSBDDXX(car1);
+					break;
+				case APIUtil.ER_HAO_BANG_FANG:
+					BangFang2Util.updateEJCPSBDDXX(car1);
 					break;
 				}
 				break;
