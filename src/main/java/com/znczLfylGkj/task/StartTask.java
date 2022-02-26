@@ -49,12 +49,10 @@ public class StartTask {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			/*
 			if(cs.isServerClose()) {
 				System.out.println("与服务器端通讯断开了，正在重新建立连接,时间:"+sdf.format(new Date()));
 				cs.connectServer();
 			}
-			*/
 		}
 	}
 	

@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.znczLfylGkj.db.xk3124.ByteUtil;
 import com.znczLfylGkj.db.xk3124.MachineTool;
+import com.znczLfylGkj.entity.GuoBangJiLu;
+import com.znczLfylGkj.jdq.ErJianJdq;
 import com.znczLfylGkj.jdq.JdqZlUtil;
 import com.znczLfylGkj.jdq.WriteZhiLingConst;
 import com.znczLfylGkj.jdq.YiJianJdq;
@@ -19,14 +21,14 @@ public class DiBangTask3124 extends Thread {
 		// TODO Auto-generated method stub
 		System.out.println("开启地磅线程");
 		try {
-			getWeight();
+			getWeight(GuoBangJiLu.RU_CHANG_GUO_BANG);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public static int getWeight() throws InterruptedException {
+	public static int getWeight(int jyFlag) throws InterruptedException {
         SerialPort serialPortTest = null;
         byte[] bytes = null;
         int preWeight=0;
@@ -85,12 +87,27 @@ public class DiBangTask3124 extends Thread {
 							weight=-1;
 							break;
 						}
+						
+						boolean kgl1Open=false;
+						boolean kgl2Open=false;
+						if(jyFlag==GuoBangJiLu.RU_CHANG_GUO_BANG) {
+							YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
+							yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+							kgl1Open=yjjdq.isKgl1Open();
+							kgl2Open=yjjdq.isKgl2Open();
+							System.out.println("称重中open1==="+kgl1Open);
+							System.out.println("称重中open2==="+kgl2Open);
+						}
+						else if(jyFlag==GuoBangJiLu.CHU_CHANG_GUO_BANG) {
+							ErJianJdq ejjdq = JdqZlUtil.getEjjdq();
+							ejjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
+							kgl1Open=ejjdq.isKgl1Open();
+							kgl2Open=ejjdq.isKgl2Open();
+							System.out.println("称重中open1==="+kgl1Open);
+							System.out.println("称重中open2==="+kgl2Open);
+						}
 
-						YiJianJdq yjjdq = JdqZlUtil.getYjjdq();
-						yjjdq.sendData(WriteZhiLingConst.DU_QU_KAI_GUAN_LIANG_ZHUANG_TAI);
-						System.out.println("称重中open1==="+yjjdq.isKgl1Open());
-						System.out.println("称重中open2==="+yjjdq.isKgl2Open());
-						if(yjjdq.isKgl1Open()||yjjdq.isKgl2Open()) {
+						if(kgl1Open||kgl2Open) {
 							System.out.println("光栅被遮挡");
 							steadyCount=0;
 							waitTime++;
@@ -121,7 +138,7 @@ public class DiBangTask3124 extends Thread {
 			YiJianJdq yjjdq=new YiJianJdq();
 			JdqZlUtil.setYjjdq(yjjdq);
 			JdqZlUtil.openYiJianJdq();
-			getWeight();
+			getWeight(GuoBangJiLu.RU_CHANG_GUO_BANG);
 			JdqZlUtil.closeYiJianJdq();
 			
     		//YinZhuTask.sendMsg(YzZlUtil.get88().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);

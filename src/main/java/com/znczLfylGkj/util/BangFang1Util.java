@@ -223,12 +223,12 @@ public class BangFang1Util {
 				float djczl=0;
 				if(dd1.getLxlx()==DingDan.SONG_YUN) {
 					//mz=(float)5000;
-					mz=(float)DiBangTask3124.getWeight();
+					mz=(float)DiBangTask3124.getWeight(GuoBangJiLu.RU_CHANG_GUO_BANG);
 					djczl=mz;
 				}
 				else {
 					//pz=(float)1000;
-					pz=(float)DiBangTask3124.getWeight();
+					pz=(float)DiBangTask3124.getWeight(GuoBangJiLu.RU_CHANG_GUO_BANG);
 					djczl=pz;
 				}
 
@@ -612,13 +612,13 @@ public class BangFang1Util {
 				if(dd1.getLxlx()==DingDan.SONG_YUN) {
 					mz=(float)bdJO.getDouble("mz");
 					//pz=(float)1000;
-					dxgpz=(float)DiBangTask3124.getWeight();
+					dxgpz=(float)DiBangTask3124.getWeight(GuoBangJiLu.CHU_CHANG_GUO_BANG);
 					djczl=dxgpz;
 					jz=mz-dxgpz;
 				}
 				else {
 					//mz=(float)5000;
-					dxgmz=(float)DiBangTask3124.getWeight();
+					dxgmz=(float)DiBangTask3124.getWeight(GuoBangJiLu.CHU_CHANG_GUO_BANG);
 					djczl=dxgmz;
 					pz=(float)bdJO.getDouble("pz");
 					jz=dxgmz-pz;
