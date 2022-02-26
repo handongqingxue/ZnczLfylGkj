@@ -20,6 +20,7 @@ public class LoadProperties {
 	private static final int CURRENT_BF_NO=1;
 	private static final int YI_HAO_BANG_FANG=1;
 	private static final int ER_HAO_BANG_FANG=2;
+	private static final boolean IS_TEST=true;// «∑Ò «≤‚ ‘
 
 	static {
 		prop = Method2();
@@ -31,12 +32,16 @@ public class LoadProperties {
 			InputStream inputStream = null;
 			switch (CURRENT_BF_NO) {
 			case YI_HAO_BANG_FANG:
-				//inputStream = LoadProperties.class.getResourceAsStream("/config/configBf1.properties");
-				inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("configBf1.properties");
+				if(IS_TEST)
+					inputStream = LoadProperties.class.getResourceAsStream("/config/configBf1.properties");
+				else
+					inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("configBf1.properties");
 				break;
 			case ER_HAO_BANG_FANG:
-				inputStream = LoadProperties.class.getResourceAsStream("/config/configBf2.properties");
-				//inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("configBf2.properties");
+				if(IS_TEST)
+					inputStream = LoadProperties.class.getResourceAsStream("/config/configBf2.properties");
+				else
+					inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("configBf2.properties");
 				break;
 			}
 			System.out.println("inputStream==="+inputStream);

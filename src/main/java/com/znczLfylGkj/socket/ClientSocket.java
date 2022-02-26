@@ -82,7 +82,6 @@ public class ClientSocket implements Runnable {
 				}
 				break;
 			case ER_JIAN:
-				System.out.println("22222222");
 				switch (bfh) {
 				case APIUtil.YI_HAO_BANG_FANG:
 					BangFang1Util.updateEJCPSBDDXX(car1);

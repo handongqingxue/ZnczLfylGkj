@@ -28,6 +28,7 @@ import com.znczLfylGkj.entity.DingDanZhuangTai;
 import com.znczLfylGkj.task.YinZhuTask;
 import com.znczLfylGkj.util.APIUtil;
 import com.znczLfylGkj.util.BangFang1Util;
+import com.znczLfylGkj.util.BangFang2Util;
 import com.znczLfylGkj.util.LoadProperties;
 import com.znczLfylGkj.yz.ByteUtil;
 import com.znczLfylGkj.yz.GiftTool;
@@ -193,6 +194,9 @@ public class FMSGCallBack implements HCNetSDK.FMSGCallBack
 							case APIUtil.YI_HAO_BANG_FANG:
 								BangFang1Util.updateYJCPSBDDXX(car);
 								break;
+							case APIUtil.ER_HAO_BANG_FANG:
+								BangFang2Util.updateYJCPSBDDXX(car);
+								break;
 							}
 	                    }
 	                    else {
@@ -204,6 +208,9 @@ public class FMSGCallBack implements HCNetSDK.FMSGCallBack
 	    	                    	switch (bfh) {
 									case APIUtil.YI_HAO_BANG_FANG:
 		    	                    	BangFang1Util.updateEJCPSBDDXX(car);
+										break;
+									case APIUtil.ER_HAO_BANG_FANG:
+										BangFang2Util.updateEJCPSBDDXX(car);
 										break;
 									}
 	    	                    }
