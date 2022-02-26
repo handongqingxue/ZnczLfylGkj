@@ -31,8 +31,8 @@ public class LoadProperties {
 			InputStream inputStream = null;
 			switch (CURRENT_BF_NO) {
 			case YI_HAO_BANG_FANG:
-				inputStream = LoadProperties.class.getResourceAsStream("/config/configBf1.properties");
-				//inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("configBf1.properties");
+				//inputStream = LoadProperties.class.getResourceAsStream("/config/configBf1.properties");
+				inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("configBf1.properties");
 				break;
 			case ER_HAO_BANG_FANG:
 				inputStream = LoadProperties.class.getResourceAsStream("/config/configBf2.properties");

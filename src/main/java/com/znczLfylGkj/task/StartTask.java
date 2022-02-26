@@ -7,6 +7,7 @@ import com.znczLfylGkj.cpsbsxt.Car;
 import com.znczLfylGkj.jdq.ErJianJdq;
 import com.znczLfylGkj.jdq.JdqZlUtil;
 import com.znczLfylGkj.jdq.YiJianJdq;
+import com.znczLfylGkj.socket.ClientTest;
 import com.znczLfylGkj.socket.ClientSocket;
 import com.znczLfylGkj.util.APIUtil;
 
@@ -33,8 +34,11 @@ public class StartTask {
 
 		//testLiuCheng();
 		
-		ClientSocket cs = new ClientSocket();
-		cs.connectServer();
+		//ClientSocket cs = new ClientSocket();
+		//cs.connectServer();
+		
+		ClientTest c = new ClientTest();
+		c.connectServer2();
 		
 		// 其他线程启动
 		while (true) {
@@ -45,10 +49,12 @@ public class StartTask {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			/*
 			if(cs.isServerClose()) {
 				System.out.println("与服务器端通讯断开了，正在重新建立连接,时间:"+sdf.format(new Date()));
 				cs.connectServer();
 			}
+			*/
 		}
 	}
 	
