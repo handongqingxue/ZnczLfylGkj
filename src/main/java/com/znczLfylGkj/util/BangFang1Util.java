@@ -543,8 +543,8 @@ public class BangFang1Util {
 					
 					waitTime+=1000;
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.ER_JIAN);
-		    		JdqBf1Util.openYiJianXiaBangDz();
-		        	JdqZlUtil.closeYiJianJdq();
+		    		JdqBf1Util.openErJianXiaBangDz();
+		        	JdqZlUtil.closeErJianJdq();
 					Thread.sleep(2000);
 		    		YinZhuTask.sendMsg(YzZlUtil.get95().replaceAll(" ", ""), 1000,YinZhuTask.ER_JIAN);
 					break;
