@@ -384,7 +384,7 @@ public class BangFang2Util {
 				Thread.sleep(1000);
 				System.out.println("后open1==="+yjjdq.isKgl1Open());
 				if(!yjjdq.isKgl1Open()) {
-					System.out.println("查找订单状态为一检上磅的订单，更改订单状态为待一检审核、一检状态从下磅中更改为已完成");
+					System.out.println("查找订单状态为一检上磅的订单，更改订单状态为一检待审核、一检状态从下磅中更改为已完成");
 					DingDan dd=new DingDan();
 					dd.setYjbfh(bfh);
 			    	dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
@@ -771,7 +771,7 @@ public class BangFang2Util {
 				Thread.sleep(1000);
 				System.out.println("后open1==="+ejjdq.isKgl1Open());
 				if(!ejjdq.isKgl1Open()) {
-			    	System.out.println("查找订单状态为二检上磅的订单，更改订单状态为待二检审核、二检状态从下磅中更改为已完成");
+			    	System.out.println("查找订单状态为二检上磅的订单，更改订单状态为二检待审核、二检状态从下磅中更改为已完成");
 			    	DingDan dd=new DingDan();
 			    	dd.setEjbfh(bfh);
 			    	dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
