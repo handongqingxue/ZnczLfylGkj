@@ -388,7 +388,7 @@ public class BangFang1Util {
 					DingDan dd=new DingDan();
 					dd.setYjbfh(bfh);
 			    	dd.setDdztMc(DingDanZhuangTai.YI_JIAN_SHANG_BANG_TEXT);
-			    	dd.setXddztMc(DingDanZhuangTai.DAI_YI_JIAN_SHEN_HE_TEXT);
+			    	dd.setXddztMc(DingDanZhuangTai.YI_JIAN_DAI_SHEN_HE_TEXT);
 			    	dd.setYjzt(DingDan.XIA_BANG_ZHONG);
 			    	dd.setXyjzt(DingDan.YI_WAN_CHENG);
 			    	APIUtil.editDingDanByZt(dd);
@@ -775,7 +775,7 @@ public class BangFang1Util {
 			    	DingDan dd=new DingDan();
 			    	dd.setEjbfh(bfh);
 			    	dd.setDdztMc(DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT);
-			    	dd.setXddztMc(DingDanZhuangTai.DAI_ER_JIAN_SHEN_HE_TEXT);
+			    	dd.setXddztMc(DingDanZhuangTai.ER_JIAN_DAI_SHEN_HE_TEXT);
 			    	dd.setEjzt(DingDan.XIA_BANG_ZHONG);
 			    	dd.setXejzt(DingDan.YI_WAN_CHENG);
 			    	APIUtil.editDingDanByZt(dd);
