@@ -13,20 +13,8 @@ import com.znczLfylGkj.jdq.YiJianJdq;
 
 import gnu.io.SerialPort;
 
-public class DiBangTask3190 extends Thread {
+public class DiBangTask3190 {
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		System.out.println("开启地磅线程");
-		try {
-			getWeight(GuoBangJiLu.RU_CHANG_GUO_BANG);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
     public static int getWeight(int jyFlag) throws InterruptedException {
         SerialPort serialPortTest = null;
         byte[] bytes = null;

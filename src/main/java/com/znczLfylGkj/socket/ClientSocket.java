@@ -25,6 +25,15 @@ public class ClientSocket implements Runnable {
 	private OutputStreamWriter out;
 	private BufferedReader in;
 	private Socket socket;
+	private boolean serverOpend;
+
+	public boolean isServerOpend() {
+		return serverOpend;
+	}
+
+	public void setServerOpend(boolean serverOpend) {
+		this.serverOpend = serverOpend;
+	}
 
 	public Socket getSocket() {
 		return socket;
@@ -50,6 +59,7 @@ public class ClientSocket implements Runnable {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				System.out.println("Connection reset");
+				serverOpend=false;
 				break;
 			}
 			
@@ -122,29 +132,34 @@ public class ClientSocket implements Runnable {
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			this.sendName();//第一时间发送一检或二检标志
 			Thread th = new Thread(this);
-			th.start();			
+			th.start();		
+			serverOpend=true;
 		} catch (UnknownHostException e) {
 			System.out.println("服务器不存在...");
-			e.printStackTrace();
+			serverOpend=false;
+			//e.printStackTrace();
 		} catch (IOException e) {
 			System.out.println("与服务器建立连接异常...");
+			serverOpend=false;
 			//e.printStackTrace();
 		}
 
 	}
-	
+
 	/**
-	* 判断是否断开连接，断开返回true,没有返回false
+	* 判断是否断开连接，断开返回true,没有返回false(这个判断与服务器是否断开连接的方法执行次数多了会报Connection reset异常，暂时不用了)
 	* https://www.cnblogs.com/wisdo/p/5859857.html
 	* @param socket
 	* @return
 	*/ 
+	/*
 	public Boolean isServerClose(){ 
 	   try{ 
 		   socket.sendUrgentData(0xFF);//发送1个字节的紧急数据，默认情况下，服务器端没有开启紧急数据处理，不影响正常通信 
 		   return false; 
 	   } catch(Exception se){ 
 		   return true; 
-	   } 
+	   }
 	}
+	*/
 }

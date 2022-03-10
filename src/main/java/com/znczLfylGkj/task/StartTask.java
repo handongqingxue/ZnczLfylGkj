@@ -16,12 +16,6 @@ public class StartTask {
 	private static SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public static void main(String[] args) {
-		//DiBangTask3124 diBangTask3124=new DiBangTask3124();
-		//diBangTask3124.start();
-		
-		//DiBangTask3190 diBangTask3190=new DiBangTask3190();
-		//diBangTask3190.start();
-		
 		// 车牌识别的线程任务
 		CpsbsxtTask cpsbsxtTask = new CpsbsxtTask();
 		cpsbsxtTask.start();
@@ -39,17 +33,17 @@ public class StartTask {
 		
 		//ClientTest c = new ClientTest();
 		//c.connectServer2();
-		
+
 		// 其他线程启动
 		while (true) {
 			// main程序一直运行
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if(cs.isServerClose()) {
+			if(!cs.isServerOpend()) {
 				System.out.println("与服务器端通讯断开了，正在重新建立连接,时间:"+sdf.format(new Date()));
 				cs.connectServer();
 			}
