@@ -7,7 +7,6 @@ import com.znczLfylGkj.cpsbsxt.Car;
 import com.znczLfylGkj.jdq.ErJianJdq;
 import com.znczLfylGkj.jdq.JdqZlUtil;
 import com.znczLfylGkj.jdq.YiJianJdq;
-import com.znczLfylGkj.socket.ClientTest;
 import com.znczLfylGkj.socket.ClientSocket;
 import com.znczLfylGkj.util.APIUtil;
 
@@ -31,9 +30,6 @@ public class StartTask {
 		ClientSocket cs = new ClientSocket();
 		cs.connectServer();
 		
-		//ClientTest c = new ClientTest();
-		//c.connectServer2();
-
 		// 其他线程启动
 		while (true) {
 			// main程序一直运行
