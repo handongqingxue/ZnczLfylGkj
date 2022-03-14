@@ -111,9 +111,15 @@ public class DiBangTask3124 {
 					//}
 					
 	            } 
-	            //else {
-	            	//System.out.println("串口号：" + name + "接收到的数据为空！");
-	            //}
+	            else {
+	            	System.out.println("串口号：" + name + "接收到的数据为空！");
+					if(waitTime>10) {
+						weight=-1;
+						break;
+					}
+					steadyCount=0;
+					waitTime++;
+	            }
 			}
             
             serialPortTest.close();
@@ -123,12 +129,7 @@ public class DiBangTask3124 {
 	
 	public static void main(String[] args) {
 		try {
-			YiJianJdq yjjdq=new YiJianJdq();
-			JdqZlUtil.setYjjdq(yjjdq);
-			JdqZlUtil.openYiJianJdq();
 			getWeight(GuoBangJiLu.RU_CHANG_GUO_BANG);
-			JdqZlUtil.closeYiJianJdq();
-			
     		//YinZhuTask.sendMsg(YzZlUtil.get88().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

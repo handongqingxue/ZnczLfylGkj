@@ -31,7 +31,7 @@ public class DiBangTask3190 {
 			serialPortTest = MachineTool.portParameterOpen(name, 9600);
 			
 			while (true) {
-				Thread.sleep(3000);
+				Thread.sleep(600);
 	            //接收数据
 	            bytes = MachineTool.uartReceiveDatafromSingleChipMachine(serialPortTest);
 	            System.out.println("b==="+bytes);
@@ -112,9 +112,15 @@ public class DiBangTask3190 {
 						}
 					//}
 				} 
-	            //else {
-	            	//System.out.println("串口号：" + name + "接收到的数据为空！");
-	            //}
+	            else {
+	            	System.out.println("串口号：" + name + "接收到的数据为空！");
+					if(waitTime>10) {
+						weight=-1;
+						break;
+					}
+					steadyCount=0;
+					waitTime++;
+	            }
 			}
             
             serialPortTest.close();
