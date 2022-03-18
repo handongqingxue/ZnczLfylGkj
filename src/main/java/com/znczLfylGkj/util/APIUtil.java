@@ -272,8 +272,12 @@ public class APIUtil {
 		*/
 	}
 	
+	/**
+	 * 打印过磅记录小票(现在改成订单所有过磅都完成后一起打印，这个方法暂时不用了)
+	 * @param gblx
+	 */
 	public static void printGbjl(int gblx) {
-		System.out.println("打印小票");
+		System.out.println("打印过磅记录小票");
 		JSONObject resultJO = null;
 		Integer bfh = LoadProperties.getBangFangHao();
 		switch (gblx) {
@@ -295,13 +299,39 @@ public class APIUtil {
 			
 			GuoBangJiLu gbjl=(GuoBangJiLu)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(gbjlResultJO.get("gbjl").toString()), GuoBangJiLu.class);
 			
-	        BangDanPrint bdp=new BangDanPrint(gbjl);
+	        BangDanPrint bdp=new BangDanPrint(gbjl,BangDanPrint.GUO_BANG_JI_LU);
 	        XPPrinter xpp=new XPPrinter(bdp);
 	        xpp.printer();
 		}
 		else {
         	System.out.println("message==="+resultJO.getString("message"));
         	System.out.println("音柱播报：找不到相关过磅记录");
+		}
+	}
+	
+	/**
+	 * 打印磅单记录小票
+	 */
+	public static void printBdjl() {
+		System.out.println("打印磅单记录小票");
+		Integer bfh = LoadProperties.getBangFangHao();
+		System.out.println("查询订单状态为二检上磅，二检状态为待下磅的订单");
+		JSONObject resultJO=getDingDanByZt(0,bfh,DingDanZhuangTai.ER_JIAN_SHANG_BANG_TEXT,DingDan.YI_WAN_CHENG,DingDan.DAI_XIA_BANG);
+		String status = resultJO.getString("status");
+		if("ok".equals(status)) {
+			JSONObject dingDanJO=resultJO.getJSONObject("dingDan");
+			int ddId = dingDanJO.getInt("id");
+			JSONObject bdjlResultJO=selectBangDanJiLuByDdId(ddId);
+
+			BangDanJiLu bdjl=(BangDanJiLu)net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(bdjlResultJO.get("bdjl").toString()), BangDanJiLu.class);
+			
+	        BangDanPrint bdp=new BangDanPrint(bdjl,BangDanPrint.BANG_DAN_JI_LU);
+	        XPPrinter xpp=new XPPrinter(bdp);
+	        xpp.printer();
+		}
+		else {
+        	System.out.println("message==="+resultJO.getString("message"));
+        	System.out.println("音柱播报：找不到相关磅单记录");
 		}
 	}
 	

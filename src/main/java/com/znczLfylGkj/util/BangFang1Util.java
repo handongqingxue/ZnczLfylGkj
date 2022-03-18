@@ -60,7 +60,6 @@ public class BangFang1Util {
 	        else {
 	        	System.out.println("message==="+resultJO.getString("message"));
 	        	System.out.println("音柱播报：没有找到匹配订单");
-	        	//这段代码到现场有了音柱后再打开
 	    		YinZhuTask.sendMsg(YzZlUtil.get86().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 				Thread.sleep(3000);
 	    		YinZhuTask.sendMsg(YzZlUtil.get86().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
@@ -280,13 +279,15 @@ public class BangFang1Util {
 					dd.setXyjzt(DingDan.DAI_XIA_BANG);
 					APIUtil.editDingDanByZt(dd);
 					
-		    		//打印一检过磅记录
+					/*
+		    		//打印一检过磅记录(现在改为完成一次订单一起打印模式，这里暂时不需要打印了)
 					APIUtil.printGbjl(GuoBangJiLu.RU_CHANG_GUO_BANG);
 					
 		    		YinZhuTask.sendMsg(YzZlUtil.get99().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 					Thread.sleep(2000);
 		    		YinZhuTask.sendMsg(YzZlUtil.get99().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 					Thread.sleep(2000);
+					*/
 		    		YinZhuTask.sendMsg(YzZlUtil.get89().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 					
 		        	System.out.println("抬起一检下磅道闸");
@@ -303,7 +304,6 @@ public class BangFang1Util {
 					dd.setXyjzt(DingDan.DAI_SHANG_BANG);
 					APIUtil.editDingDanByZt(dd);
 					
-		        	//这段代码到现场有了音柱后再打开
 		    		YinZhuTask.sendMsg(YzZlUtil.get87().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 					checkYJSBHWGSState();
 				}
@@ -328,7 +328,6 @@ public class BangFang1Util {
 			else {
 				String message = resultJO.getString("message");
 				System.out.println("message==="+message+",语音播报");
-	        	//这段代码到现场有了音柱后再打开
 	    		YinZhuTask.sendMsg(YzZlUtil.get86().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 				Thread.sleep(3000);
 	    		YinZhuTask.sendMsg(YzZlUtil.get86().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
@@ -443,7 +442,6 @@ public class BangFang1Util {
 	        else {
 	        	System.out.println("message==="+resultJO.getString("message"));
 	        	System.out.println("音柱播报：没有找到匹配订单");
-	        	//这段代码到现场有了音柱后再打开
 	    		YinZhuTask.sendMsg(YzZlUtil.get86().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
 	    		Thread.sleep(3000);
 	    		YinZhuTask.sendMsg(YzZlUtil.get86().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
@@ -667,8 +665,12 @@ public class BangFang1Util {
 					dd.setXejzt(DingDan.DAI_XIA_BANG);
 					APIUtil.editDingDanByZt(dd);
 
-		    		//打印二检过磅记录
+					/*
+		    		//打印二检过磅记录(现在改为完成一次订单一起打印模式，这里暂时不需要打印了)
 					APIUtil.printGbjl(GuoBangJiLu.CHU_CHANG_GUO_BANG);
+					*/
+					//打印磅单记录
+					APIUtil.printBdjl();
 					
 		    		YinZhuTask.sendMsg(YzZlUtil.get99().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
 					Thread.sleep(2000);
@@ -690,7 +692,6 @@ public class BangFang1Util {
 					dd.setXejzt(DingDan.DAI_SHANG_BANG);
 					APIUtil.editDingDanByZt(dd);
 
-		        	//这段代码到现场有了音柱后再打开
 		    		YinZhuTask.sendMsg(YzZlUtil.get87().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
 					checkEJSBHWGSState();
 				}
@@ -715,7 +716,6 @@ public class BangFang1Util {
 			else {
 				String message = resultJO.getString("message");
 				System.out.println("message==="+message+",语音播报");
-	        	//这段代码到现场有了音柱后再打开
 	    		YinZhuTask.sendMsg(YzZlUtil.get86().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
 				Thread.sleep(3000);
 	    		YinZhuTask.sendMsg(YzZlUtil.get86().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);

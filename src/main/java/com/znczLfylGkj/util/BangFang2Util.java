@@ -280,13 +280,15 @@ public class BangFang2Util {
 					dd.setXyjzt(DingDan.DAI_XIA_BANG);
 					APIUtil.editDingDanByZt(dd);
 					
-		    		//打印一检过磅记录
+					/*
+		    		//打印一检过磅记录(现在改为完成一次订单一起打印模式，这里暂时不需要打印了)
 					APIUtil.printGbjl(GuoBangJiLu.RU_CHANG_GUO_BANG);
 					
 		    		YinZhuTask.sendMsg(YzZlUtil.get99().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 					Thread.sleep(2000);
 		    		YinZhuTask.sendMsg(YzZlUtil.get99().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 					Thread.sleep(2000);
+					*/
 		    		YinZhuTask.sendMsg(YzZlUtil.get89().replaceAll(" ", ""), 1500,YinZhuTask.YI_JIAN);
 					
 		        	System.out.println("抬起一检下磅道闸");
@@ -667,8 +669,12 @@ public class BangFang2Util {
 					dd.setXejzt(DingDan.DAI_XIA_BANG);
 					APIUtil.editDingDanByZt(dd);
 
-		    		//打印二检过磅记录
+					/*
+		    		//打印二检过磅记录(现在改为完成一次订单一起打印模式，这里暂时不需要打印了)
 					APIUtil.printGbjl(GuoBangJiLu.CHU_CHANG_GUO_BANG);
+					*/
+					//打印磅单记录
+					APIUtil.printBdjl();
 					
 		    		YinZhuTask.sendMsg(YzZlUtil.get99().replaceAll(" ", ""), 1500,YinZhuTask.ER_JIAN);
 					Thread.sleep(2000);
